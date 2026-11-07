@@ -1,0 +1,28 @@
+name: Verify Retail Intelligence
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest httpx
+      - name: Python tests
+        run: python -m pytest tests -q
+      - name: Check Python syntax
+        run: python -m compileall -q backend
+      - name: Check frontend JS syntax
+        run: |
+          node --check frontend/app.js
+          node --check frontend/charts.js
+          node --check frontend/icons.js
+          node --check frontend/api.js

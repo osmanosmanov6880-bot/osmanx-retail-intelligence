@@ -1,0 +1,15 @@
+services:
+  osmanx:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      OSMANX_DEMO_MODE: "${OSMANX_DEMO_MODE:-0}"
+      OSMANX_ADMIN_PASSWORD: "${OSMANX_ADMIN_PASSWORD:-}"
+      OSMANX_SESSION_SECRET: "${OSMANX_SESSION_SECRET:-}"
+      OSMANX_INGEST_KEY: "${OSMANX_INGEST_KEY:-}"
+    volumes:
+      - osmanx_data:/data
+    restart: unless-stopped
+volumes:
+  osmanx_data:
