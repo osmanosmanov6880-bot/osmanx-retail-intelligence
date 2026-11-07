@@ -1,10 +1,11 @@
 let token=sessionStorage.getItem('osmanx_admin_token')||'';
 export const setToken=value=>{token=value||'';if(token)sessionStorage.setItem('osmanx_admin_token',token);else sessionStorage.removeItem('osmanx_admin_token')};
 export const hasToken=()=>!!token;
-export async function api(path,{method='GET',body,auth=false}={}){
+export async function api(path,{method='GET',body,auth=false,kioskToken=null}={}){
   const headers={'Accept':'application/json'};
   if(body!==undefined)headers['Content-Type']='application/json';
   if(auth&&token)headers.Authorization=`Bearer ${token}`;
+  if(kioskToken)headers['X-OSMANX-Kiosk']=kioskToken;
   let result;
   try {result=await fetch(`/api${path}`,{method,headers,body:body===undefined?undefined:JSON.stringify(body),cache:'no-store'})}
   catch{throw new Error('Нет соединения с сервером. Проверьте запуск приложения.')}

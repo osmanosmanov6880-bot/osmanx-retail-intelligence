@@ -9,9 +9,16 @@ services:
       OSMANX_SESSION_SECRET: "${OSMANX_SESSION_SECRET:-}"
       OSMANX_BOOTSTRAP_EMAIL: "${OSMANX_BOOTSTRAP_EMAIL:-owner@osmanx.local}"
       OSMANX_DEVICE_MASTER_SECRET: "${OSMANX_DEVICE_MASTER_SECRET:-}"
-      OSMANX_INGEST_KEY: "${OSMANX_INGEST_KEY:-}"
     volumes:
       - osmanx_data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
     restart: unless-stopped
 volumes:
   osmanx_data:
