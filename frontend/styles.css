@@ -58,3 +58,19 @@ dialog{border:1px solid #37465b;border-radius:18px;padding:0;background:linear-g
 .import-preview .quality-warning{margin:0}
 button:disabled{cursor:not-allowed;opacity:.54}
 @media(max-width:570px){.import-preview .metrics-row{grid-template-columns:repeat(3,minmax(0,1fr))}.import-preview .micro-card{padding:9px}.import-preview .micro-card b{font-size:17px}}
+
+/* R0.5 — scalable premium commerce workspace */
+.sidebar .nav{overflow-y:auto;min-height:0;scrollbar-width:thin;scrollbar-color:#334359 transparent;padding-bottom:14px}
+.commerce-muted{display:block;margin-top:5px;font-size:11px}
+.commerce-highlight{color:var(--green);font-weight:800}
+.commerce-caution{display:flex;align-items:flex-start;gap:11px;color:#c4cddd;font-size:12px;line-height:1.7}
+.commerce-caution svg{flex:none;color:var(--amber);width:19px;height:19px;margin-top:1px}
+.commerce-evidence{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.commerce-evidence>div:first-child{display:grid;gap:10px;max-width:580px;line-height:1.65}
+.commerce-evidence>div:first-child .tag{width:max-content}
+.commerce-evidence>div:first-child strong{font-size:15px}
+.commerce-evidence>div:first-child p{color:var(--muted);font-size:12px}
+.commerce-controls{display:grid;gap:8px;min-width:240px;width:280px}
+.commerce-controls .input,.commerce-controls .select{width:100%;min-width:0}
+.commerce-decision{border-left:2px solid #f3354e88}
+@media(max-width:780px){.commerce-evidence{flex-direction:column}.commerce-controls{width:100%;min-width:0}}

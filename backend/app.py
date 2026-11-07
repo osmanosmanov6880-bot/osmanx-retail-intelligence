@@ -37,6 +37,12 @@ from backend.privacy import reward_allowance
 from backend.kiosk import ensure_schema as ensure_kiosk_schema, policy as kiosk_policy, rotate as rotate_kiosk, disable as disable_kiosk, verify as verify_kiosk
 from backend.pos_webhook import ensure_schema as ensure_pos_schema, new_source, derive_secret, verify_source, apply_receipts
 from backend.operations import quality_report
+from backend.commerce import (
+    ensure_commerce_schema, inventory_with_availability, matching_available,
+    reserve_stock, update_reservation, fitting_report, return_report,
+    record_return, price_report, price_analysis, decision_report,
+    reserved_quantity,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND = ROOT / "frontend"
@@ -58,11 +64,12 @@ async def lifespan(_: FastAPI):
         ensure_import_schema(db)
         ensure_kiosk_schema(db)
         ensure_pos_schema(db)
+        ensure_commerce_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="0.4.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="0.5.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -320,7 +327,16 @@ def get_dashboard(slug: str="central",days:int=30,db:sqlite3.Connection=Depends(
     if days not in (7, 30):
         raise HTTPException(422,"Период должен составлять 7 или 30 дней")
     store=visible_store(db,slug,principal)
-    return dashboard(db,store['id'],days,store['timezone'])
+    result=dashboard(db,store['id'],days,store['timezone'])
+    for opportunity in result.get('stock_matches',[]):
+        allowed=[]
+        for match in opportunity.get('matches',[]):
+            try:check_store_access(db,match['store_id'],principal)
+            except HTTPException:continue
+            allowed.append(match)
+        opportunity['matches']=allowed
+    result['stock_matches']=[x for x in result.get('stock_matches',[]) if x['matches']]
+    return result
 
 
 @app.post("/api/admin/events",status_code=201)
@@ -479,7 +495,7 @@ def ingest_zones(data:ZoneIngest,x_osmanx_ingest_key:str|None=Header(default=Non
         raise HTTPException(410,'Старый общий ключ отключён. Используйте /api/ingest/v2/{тип} с подписью устройства.')
     if not INGEST_KEY or not x_osmanx_ingest_key or not hmac.compare_digest(x_osmanx_ingest_key,INGEST_KEY):
         raise HTTPException(401,'Неверный ключ интеграции')
-    store=visible_store(db,data.slug,principal)
+    store=find_store(db,data.slug)
     zone=db.execute('SELECT id FROM zones WHERE store_id=? AND code=?',(store['id'],data.zone_code)).fetchone()
     if not zone: raise HTTPException(404,'Зона не зарегистрирована')
     when=data.occurred_at.astimezone(timezone.utc).isoformat(timespec='seconds')
@@ -504,7 +520,7 @@ def add_store(data:NewStore,db:sqlite3.Connection=Depends(db_conn),principal:Pri
 @app.get('/api/admin/stock')
 def get_stock(slug:str='central',db:sqlite3.Connection=Depends(db_conn),principal:Principal=Depends(admin)):
     store=visible_store(db,slug,principal)
-    return {'store':slug,'items':stock_for_store(db,store['id'])}
+    return {'store':slug,'items':inventory_with_availability(db,store['id'])}
 
 
 @app.post('/api/admin/stock/import')
@@ -516,6 +532,10 @@ def import_stock(value:StockImport,db:sqlite3.Connection=Depends(db_conn),princi
     skus=[x.sku.strip().casefold() for x in value.items]
     if len(skus)!=len(set(skus)):
         raise HTTPException(422,'Повторяющиеся артикулы в одном импорте')
+    for item in value.items:
+        old=db.execute('SELECT id FROM inventory WHERE store_id=? AND sku=?',(store['id'],item.sku.strip())).fetchone()
+        if old and item.quantity<reserved_quantity(db,old['id']):
+            raise HTTPException(409,'Новый остаток меньше количества действующих резервов для '+item.sku)
     for item in value.items:
         db.execute("""INSERT INTO inventory(store_id,sku,product,size,color,quantity,source,updated_at)
           VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(store_id,sku) DO UPDATE SET
@@ -531,8 +551,13 @@ def import_stock(value:StockImport,db:sqlite3.Connection=Depends(db_conn),princi
 def demand_matches(demand_id:int,db:sqlite3.Connection=Depends(db_conn),principal:Principal=Depends(admin)):
     item=visible_object(db,'demand',demand_id,principal)
     if not item: raise HTTPException(404,'Запрос не найден')
-    return {'matches':stock_matches(db,item['store_id'],item['product'],item['size'],item['color'],principal.organization_id),
-            'method':'Точное совпадение товара, размера и цвета; без проверки доступности для резерва.'}
+    matches=matching_available(db,item['store_id'],item['product'],item['size'],item['color'])
+    allowed=[]
+    for row in matches:
+        try:check_store_access(db,row['store_id'],principal)
+        except HTTPException:continue
+        allowed.append(row)
+    return {'matches':allowed, 'method':'Точное совпадение товара, размера и цвета. Доступность учитывает действующие резервы; фактический остаток следует подтвердить.'}
 
 
 @app.post('/api/admin/demand/{demand_id}/convert')
@@ -908,6 +933,163 @@ def list_import_batches(slug:str='central',principal:Principal=Depends(admin),db
     store=visible_store(db,slug,principal)
     return [dict(r) for r in db.execute('SELECT batch_key,kind,status,preview_json,created_at,applied_at FROM import_batches WHERE organization_id=? AND store_id=? ORDER BY id DESC LIMIT 40',
                                         (principal.organization_id,store['id']))]
+
+
+# R0.5: branch reservations, anonymous fitting observations, returns, pricing and decisions.
+class HoldRequest(BaseModel):
+    demand_id:int=Field(gt=0)
+    inventory_id:int=Field(gt=0)
+    request_id:str=Field(min_length=12,max_length=100)
+    quantity:int=Field(default=1,ge=1,le=20)
+    hours:int=Field(default=24,ge=1,le=72)
+
+class HoldChange(BaseModel):
+    action:Literal['collect','cancel']
+
+class FittingEntry(BaseModel):
+    slug:str=Field(min_length=1,max_length=80)
+    product:str=Field(min_length=2,max_length=120)
+    size:str=Field(default='',max_length=30)
+    trials:int=Field(ge=1,le=500)
+    purchases:int=Field(ge=0,le=500)
+    reason:Literal['none','fit','price','size','quality','other']='none'
+
+class ReturnEntry(BaseModel):
+    slug:str=Field(min_length=1,max_length=80)
+    sale_id:int=Field(gt=0)
+    external_id:str=Field(min_length=12,max_length=100)
+    item:str=Field(min_length=2,max_length=120)
+    amount_kopeks:int=Field(gt=0,le=2_000_000_000)
+    reason:Literal['size','fit','quality','different','other']
+
+class PriceEntry(BaseModel):
+    slug:str=Field(min_length=1,max_length=80)
+    title:str=Field(min_length=3,max_length=120)
+    sku:str=Field(min_length=2,max_length=80)
+    price_kopeks:int=Field(gt=0,le=2_000_000_000)
+    cost_kopeks:int=Field(ge=0,le=2_000_000_000)
+    discount_bps:int=Field(ge=0,le=9000)
+    baseline_units:int=Field(ge=0,le=1000000)
+    planned_units:int=Field(ge=0,le=1000000)
+
+class DecisionUpdate(BaseModel):
+    status:Literal['new','testing','done','dismissed']
+    note:str=Field(default='',max_length=1000)
+
+@app.get('/api/admin/reservations')
+def list_holds(slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    store=visible_store(db,slug,principal)
+    return [dict(r) for r in db.execute('''SELECT r.*,i.sku,i.product,i.size,i.color,s.name AS source_name
+       FROM reservations r JOIN inventory i ON i.id=r.source_inventory_id
+       JOIN stores s ON s.id=r.source_store_id
+       WHERE r.destination_store_id=? ORDER BY r.id DESC LIMIT 100''',(store['id'],))]
+
+@app.post('/api/admin/reservations',status_code=201)
+def create_hold(data:HoldRequest,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    demand=visible_object(db,'demand',data.demand_id,principal)
+    item=db.execute('''SELECT i.*,s.organization_id FROM inventory i JOIN stores s ON s.id=i.store_id
+         WHERE i.id=?''',(data.inventory_id,)).fetchone()
+    if not item or item['organization_id']!=principal.organization_id:
+        raise HTTPException(404,'Товар не найден')
+    check_store_access(db,item['store_id'],principal)
+    result=reserve_stock(db,organization_id=principal.organization_id,demand_id=demand['id'],
+       inventory_id=data.inventory_id,request_id=data.request_id,quantity=data.quantity,hours=data.hours)
+    if not result['duplicate']:
+        audit(db,principal,'reservation.create',f'hold={result["id"]}')
+        db.commit()
+    return result
+
+@app.post('/api/admin/reservations/{hold_id}/action')
+def change_hold(hold_id:int,data:HoldChange,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    row=db.execute('SELECT * FROM reservations WHERE id=? AND organization_id=?',(hold_id,principal.organization_id)).fetchone()
+    if not row:raise HTTPException(404,'Резерв не найден')
+    check_store_access(db,row['source_store_id'],principal)
+    check_store_access(db,row['destination_store_id'],principal)
+    result=update_reservation(db,hold_id,data.action)
+    audit(db,principal,'reservation.'+data.action,f'hold={hold_id}')
+    db.commit()
+    return result
+
+@app.get('/api/admin/fittings')
+def get_fittings(slug:str='central',days:int=30,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    if days not in (7,30):raise HTTPException(422,'Выберите 7 или 30 дней')
+    store=visible_store(db,slug,principal)
+    return fitting_report(db,store['id'],days)
+
+@app.post('/api/admin/fittings',status_code=201)
+def add_fitting(data:FittingEntry,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,data.slug,principal)
+    if data.purchases>data.trials:raise HTTPException(422,'Число покупок не может превышать число примерок')
+    stamp=now_iso()
+    cur=db.execute('''INSERT INTO fitting_observations(store_id,product,size,trials,purchases,reason,observed_at,created_at)
+       VALUES(?,?,?,?,?,?,?,?)''',(store['id'],data.product.strip(),data.size.strip(),data.trials,data.purchases,data.reason,stamp,stamp))
+    audit(db,principal,'fitting.observe',f'entry={cur.lastrowid}')
+    db.commit()
+    return {'created':True,'id':cur.lastrowid}
+
+@app.get('/api/admin/receipts')
+def recent_receipts(slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    store=visible_store(db,slug,principal)
+    return [dict(r) for r in db.execute('''SELECT id,amount_kopeks,source,occurred_at FROM sales
+       WHERE store_id=? ORDER BY id DESC LIMIT 100''',(store['id'],))]
+
+@app.get('/api/admin/returns')
+def get_returns(slug:str='central',days:int=30,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    if days not in (7,30):raise HTTPException(422,'Выберите 7 или 30 дней')
+    store=visible_store(db,slug,principal)
+    return return_report(db,store['id'],days)
+
+@app.post('/api/admin/returns',status_code=201)
+def add_return(data:ReturnEntry,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,data.slug,principal)
+    result=record_return(db,store_id=store['id'],sale_id=data.sale_id,external_id=data.external_id,
+                         item=data.item.strip(),reason=data.reason,amount_kopeks=data.amount_kopeks)
+    if not result['duplicate']:
+        audit(db,principal,'return.record',f'return={result["id"]}')
+        db.commit()
+    return result
+
+@app.get('/api/admin/pricing')
+def get_pricing(slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    store=visible_store(db,slug,principal)
+    return price_report(db,store['id'])
+
+@app.post('/api/admin/pricing',status_code=201)
+def add_pricing(data:PriceEntry,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,data.slug,principal)
+    row=data.model_dump(exclude={'slug'})
+    summary=price_analysis(row)
+    cur=db.execute('''INSERT INTO price_scenarios(store_id,title,sku,price_kopeks,cost_kopeks,
+      discount_bps,baseline_units,planned_units,created_at) VALUES(?,?,?,?,?,?,?,?,?)''',
+      (store['id'],data.title.strip(),data.sku.strip(),data.price_kopeks,data.cost_kopeks,
+       data.discount_bps,data.baseline_units,data.planned_units,now_iso()))
+    audit(db,principal,'pricing.scenario',f'scenario={cur.lastrowid}')
+    db.commit()
+    return {'created':True,'id':cur.lastrowid,'analysis':summary}
+
+@app.get('/api/admin/decisions')
+def get_decisions(slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    store=visible_store(db,slug,principal)
+    return {'items':decision_report(db,store['id']),
+       'methodology':'Только наблюдения с указанием объёма данных. Рекомендации — гипотезы, не прогноз прибыли.'}
+
+@app.patch('/api/admin/decisions/{decision_key}')
+def set_decision(decision_key:str,data:DecisionUpdate,slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,slug,principal)
+    if not any(x['key']==decision_key for x in decision_report(db,store['id'])):
+        raise HTTPException(404,'Актуальное решение не найдено')
+    db.execute('''INSERT INTO decision_tasks(store_id,decision_key,status,note,updated_at) VALUES(?,?,?,?,?)
+      ON CONFLICT(store_id,decision_key) DO UPDATE SET status=excluded.status,note=excluded.note,updated_at=excluded.updated_at''',
+       (store['id'],decision_key,data.status,data.note.strip(),now_iso()))
+    audit(db,principal,'decision.update',decision_key)
+    db.commit()
+    return {'saved':True,'key':decision_key,'status':data.status}
 
 @app.get("/{path:path}",include_in_schema=False)
 def spa(path:str):

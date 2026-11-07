@@ -1,3 +1,14 @@
+# OSMANX Retail Intelligence R0.5
+
+**Five shipped commerce workflows**: cross-branch inventory reservations with transaction-safe stock claims, anonymous fitting-room observations, receipt-linked return logging, scenario-based discount contribution calculations, and a decision center for evidence-based actions. Production deployment remains deferred.
+
+- Release notes and explicit limitations: [R0.5 documentation](docs/RELEASE_R05.md)
+- Local demo (synthetic data only): `OSMANX_DEMO_MODE=1 python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000`
+- Automated checks: `python -m pytest tests -q` and `python scripts/r05_browser_smoke.py` (requires Playwright Chromium).
+- **Reminder**: collecting reserved stock is *not* a POS sale. A manually logged return is *not* a bank refund. Price simulations are *not* revenue forecasts.
+
+---
+
 # OSMANX Retail Intelligence R0.4
 
 **Five working development blocks:** account/session controls, paired survey terminals, signed POS receipt ingestion, source-quality monitoring, and safer SQLite backup/deployment operations. The approved dark navy/red Russian interface is retained. See [R0.4 release notes](docs/RELEASE_R04.md) and [private pilot deployment](docs/DEPLOYMENT.md).
