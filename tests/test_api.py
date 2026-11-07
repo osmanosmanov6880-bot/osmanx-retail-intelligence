@@ -101,13 +101,10 @@ def test_auth_session_is_required_in_real_mode(secure_client):
     assert secure_client.get('/api/admin/dashboard',headers=headers).json()['surveys_count']==1
 
 
-def test_sensor_key_and_idempotence(secure_client):
+def test_legacy_sensor_key_is_retired_in_real_mode(secure_client):
     record={'slug':'central','quantity':5,'external_id':'sensor-001','occurred_at':'2026-11-08T12:00:00Z'}
-    assert secure_client.post('/api/ingest/traffic',json=record).status_code==401
-    first=secure_client.post('/api/ingest/traffic',json=record,headers={'X-OSMANX-Ingest-Key':'sensor-test-key'})
-    second=secure_client.post('/api/ingest/traffic',json=record,headers={'X-OSMANX-Ingest-Key':'sensor-test-key'})
-    assert first.status_code==201 and first.json()['saved']
-    assert second.status_code==201 and second.json()['duplicate']
+    assert secure_client.post('/api/ingest/traffic',json=record).status_code==410
+    assert secure_client.post('/api/ingest/traffic',json=record,headers={'X-OSMANX-Ingest-Key':'sensor-test-key'}).status_code==410
 
 
 def test_static_frontend_and_kiosk_route(demo_client):
@@ -251,21 +248,10 @@ def test_zone_heatmap_and_new_zone(demo_client):
     assert demo_client.get('/api/admin/zones?slug=central').status_code==200
 
 
-def test_secure_zone_ingest_is_authenticated_and_idempotent(secure_client):
-    zone=secure_client.post('/api/admin/zones',json={'slug':'central','code':'fitting-room','name':'Примерочная','x':50,'y':40})
-    assert zone.status_code==401
-    key=secure_client.post('/api/auth/login',json={'password':'top-secret-password-12345'}).json()['token']
-    hdr={'Authorization':'Bearer '+key}
-    assert secure_client.post('/api/admin/zones',json={'slug':'central','code':'fitting-room','name':'Примерочная','x':50,'y':40},headers=hdr).status_code==201
-    payload={'slug':'central','zone_code':'fitting-room','quantity':7,'external_id':'zone-test-010','occurred_at':'2026-11-08T12:00:00Z'}
-    assert secure_client.post('/api/ingest/zones',json=payload).status_code==401
-    ingest_headers={'X-OSMANX-Ingest-Key':'sensor-test-key'}
-    first=secure_client.post('/api/ingest/zones',json=payload,headers=ingest_headers)
-    second=secure_client.post('/api/ingest/zones',json=payload,headers=ingest_headers)
-    assert first.status_code==201 and first.json()['saved']
-    assert second.status_code==201 and second.json()['duplicate']
-    assert secure_client.post('/api/ingest/zones',json={**payload,'zone_code':'unknown'},headers=ingest_headers).status_code==404
-    assert secure_client.get('/api/admin/zones',headers=hdr).json()[0]['code']=='fitting-room'
+def test_legacy_zone_key_is_retired_in_real_mode(secure_client):
+    payload={'slug':'central','zone_code':'fitting','quantity':7,'external_id':'zone-test-010','occurred_at':'2026-11-08T12:00:00Z'}
+    assert secure_client.post('/api/ingest/zones',json=payload).status_code==410
+    assert secure_client.post('/api/ingest/zones',json=payload,headers={'X-OSMANX-Ingest-Key':'sensor-test-key'}).status_code==410
 
 
 def test_non_destructive_upgrade_from_r01(tmp_path,monkeypatch):

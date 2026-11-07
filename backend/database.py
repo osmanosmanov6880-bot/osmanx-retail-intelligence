@@ -56,7 +56,7 @@ CREATE INDEX IF NOT EXISTS idx_surveys_store_date ON surveys(store_id, created_a
 
 def connect() -> sqlite3.Connection:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH, timeout=10)
+    conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA busy_timeout = 5000")
     conn.execute("PRAGMA foreign_keys = ON")
@@ -78,6 +78,9 @@ def initialize_db(demo: bool = False) -> None:
                 ("central", "Мой магазин", "Главный филиал", "", now_iso()))
         from backend.retail import ensure_schema
         ensure_schema(db, demo=demo)
+        from backend.security import ensure_security_schema
+        ensure_security_schema(db, demo=demo, bootstrap_password=os.getenv('OSMANX_ADMIN_PASSWORD',''),
+                               bootstrap_email=os.getenv('OSMANX_BOOTSTRAP_EMAIL','owner@osmanx.local'))
         db.commit()
 
 
