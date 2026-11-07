@@ -3,7 +3,10 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from sqlite3 import Connection
+
+from backend.retail import observations, daily_metrics, stock_matches, zone_heatmap
 
 REASONS = {
     "size": "Не нашёл размер", "price": "Высокая цена",
@@ -19,12 +22,14 @@ def _aggregate(db: Connection, table: str, metric: str, store_id: int, start: st
     return int(row["n"])
 
 
-def dashboard(db: Connection, store_id: int, days: int = 30) -> dict:
-    # Day boundaries in UTC, including current day. No unique-person claim.
-    end_dt = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
-    start_dt = end_dt - timedelta(days=days)
-    prev_dt = start_dt - timedelta(days=days)
-    start, end, prev = (value.isoformat(timespec="seconds") for value in (start_dt, end_dt, prev_dt))
+def dashboard(db: Connection, store_id: int, days: int = 30, timezone_name: str = "Europe/Moscow") -> dict:
+    # Store-local calendar days; persist and query all events in UTC.
+    tz = ZoneInfo(timezone_name)
+    end_local = datetime.now(tz).replace(hour=0,minute=0,second=0,microsecond=0) + timedelta(days=1)
+    start_local = end_local - timedelta(days=days)
+    prev_local = start_local - timedelta(days=days)
+    start, end, prev = (value.astimezone(timezone.utc).isoformat(timespec='seconds')
+                        for value in (start_local,end_local,prev_local))
     visitors = _aggregate(db,"visits","quantity",store_id,start,end)
     purchases = db.execute(
         "SELECT COUNT(*) AS n FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<?",(store_id,start,end)).fetchone()["n"]
@@ -34,14 +39,14 @@ def dashboard(db: Connection, store_id: int, days: int = 30) -> dict:
         (store_id,prev,start)).fetchone()["n"]
     prev_revenue = _aggregate(db,"sales","amount_kopeks",store_id,prev,start) / 100
 
-    visits_by_hour = dict(db.execute(
-        "SELECT CAST(strftime('%H',occurred_at) AS INTEGER) hour, SUM(quantity) n FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<? GROUP BY hour",
-        (store_id,start,end)).fetchall())
-    sales_by_hour = dict(db.execute(
-        "SELECT CAST(strftime('%H',occurred_at) AS INTEGER) hour, COUNT(*) n FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<? GROUP BY hour",
-        (store_id,start,end)).fetchall())
-    hourly = [{"hour": f"{hour:02}:00", "visitors":int(visits_by_hour.get(hour,0)),
-               "purchases":int(sales_by_hour.get(hour,0))} for hour in range(9,22)]
+    visits_by_hour = Counter()
+    sales_by_hour = Counter()
+    for row in db.execute('SELECT occurred_at,quantity FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?',(store_id,start,end)):
+        visits_by_hour[datetime.fromisoformat(row['occurred_at']).astimezone(tz).hour]+=row['quantity']
+    for row in db.execute('SELECT occurred_at FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<?',(store_id,start,end)):
+        sales_by_hour[datetime.fromisoformat(row['occurred_at']).astimezone(tz).hour]+=1
+    hourly = [{"hour": f"{hour:02}:00", "visitors":int(visits_by_hour[hour]),
+               "purchases":int(sales_by_hour[hour])} for hour in range(9,22)]
 
     reasons_rows = db.execute(
         "SELECT reason, COUNT(*) n FROM surveys WHERE store_id=? AND purchased=0 AND reason<>'' AND created_at>=? AND created_at<? GROUP BY reason ORDER BY n DESC",
@@ -56,9 +61,9 @@ def dashboard(db: Connection, store_id: int, days: int = 30) -> dict:
         "SELECT product,size,color, COUNT(*) count FROM demand WHERE store_id=? AND created_at>=? AND created_at<? GROUP BY product,size,color ORDER BY count DESC LIMIT 6",
         (store_id,start,end)).fetchall()]
     latest_demand = [dict(row) for row in db.execute(
-        "SELECT id,product,size,color,status,created_at FROM demand WHERE store_id=? ORDER BY created_at DESC,id DESC LIMIT 40",(store_id,)).fetchall()]
+        "SELECT id,product,size,color,status,sale_id,created_at FROM demand WHERE store_id=? ORDER BY created_at DESC,id DESC LIMIT 40",(store_id,)).fetchall()]
     latest_surveys = [dict(row) for row in db.execute(
-        "SELECT id,rating,purchased,reason,liked,suggestion,created_at FROM surveys WHERE store_id=? ORDER BY created_at DESC,id DESC LIMIT 30",(store_id,)).fetchall()]
+        "SELECT id,rating,purchased,reason,liked,suggestion,liked_tags,improve_tags,created_at FROM surveys WHERE store_id=? ORDER BY created_at DESC,id DESC LIMIT 30",(store_id,)).fetchall()]
     demand_status = [dict(row) for row in db.execute(
         "SELECT status,COUNT(*) n FROM demand WHERE store_id=? AND created_at>=? AND created_at<? GROUP BY status",
         (store_id,start,end)).fetchall()]
@@ -84,7 +89,25 @@ def dashboard(db: Connection, store_id: int, days: int = 30) -> dict:
         recommendations.append({"severity":"info","title":"Начните с измеримой гипотезы",
             "text":"Собирайте посещения, продажи и причины отказов не менее 7 дней. Не делайте выводов о потерянной прибыли без проверки.",
             "type":"next"})
+    evidence=observations(db,store_id,start,end)
+    trend=daily_metrics(db,store_id,timezone_name,days)
+    verified=db.execute('SELECT COUNT(*) AS count FROM demand WHERE store_id=? AND sale_id IS NOT NULL AND created_at>=? AND created_at<?',(store_id,start,end)).fetchone()['count']
+    stock_total=db.execute('SELECT COUNT(*) AS count, SUM(CASE WHEN quantity=0 THEN 1 ELSE 0 END) AS zero FROM inventory WHERE store_id=?',(store_id,)).fetchone()
+    experiments=[dict(r) for r in db.execute('SELECT id,title,hypothesis,metric,baseline,result,status,notes,created_at FROM experiments WHERE store_id=? ORDER BY updated_at DESC LIMIT 25',(store_id,))]
+    matches=[]
+    seen=set()
+    for item in latest_demand:
+        key=(item['product'].casefold(),item['size'].casefold(),item['color'].casefold())
+        if key in seen or len(matches)>=4: continue
+        seen.add(key)
+        if item['status'] in ('open','located'):
+            options=stock_matches(db,store_id,item['product'],item['size'],item['color'])
+            if options:
+                matches.append({'demand_id':item['id'],'product':item['product'],'size':item['size'],'matches':options[:2]})
     return {
+      "timezone":timezone_name, "daily":trend,"zones":zone_heatmap(db,store_id,start,end),"sources":evidence,"verified_sales_from_demand":verified,
+      "stock_count":stock_total['count'],"stock_zero":stock_total['zero'] or 0,
+      "stock_matches":matches,"experiments":experiments,
       "period_days":days, "visitors":visitors, "purchases":purchases,
       "revenue":round(revenue,2),"conversion":percent,
       "avg_receipt":round(revenue/purchases,2) if purchases else 0,

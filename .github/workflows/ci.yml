@@ -6,23 +6,36 @@ on:
 permissions:
   contents: read
 jobs:
-  test:
+  api-and-browser:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
           cache: pip
-      - name: Install dependencies
-        run: pip install -r requirements.txt pytest httpx
-      - name: Python tests
+      - name: Install backend and test dependencies
+        run: pip install -r requirements.txt pytest httpx playwright
+      - name: API, database and migration tests
         run: python -m pytest tests -q
       - name: Check Python syntax
-        run: python -m compileall -q backend
+        run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
         run: |
           node --check frontend/app.js
           node --check frontend/charts.js
           node --check frontend/icons.js
           node --check frontend/api.js
+      - name: Install Chromium for browser checks
+        run: python -m playwright install --with-deps chromium
+      - name: Interactive browser acceptance (desktop, mobile, kiosk)
+        run: python scripts/visual_smoke.py
+      - name: Upload acceptance screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: osmanx-retail-r02-ui
+          path: qa/r02-*.png
+          if-no-files-found: ignore
+          retention-days: 7
