@@ -48,3 +48,13 @@ dialog{border:1px solid #37465b;border-radius:18px;padding:0;background:linear-g
 .zone-point b{position:relative;font-size:15px;font-variant-numeric:tabular-nums;text-shadow:0 2px 8px #121621}.zone-name{position:absolute;top:72px;left:50%;transform:translateX(-50%);background:#0a1320e8;border:1px solid #37495a;border-radius:5px;color:#eef4fb;font-size:10px;padding:4px 8px;white-space:nowrap}
 .zone-legend{display:flex;align-items:center;gap:10px;margin-top:12px;color:#8194aa;font-size:10px}.zone-legend div{flex:1;max-width:170px;height:7px;border-radius:7px;background:linear-gradient(90deg,#273c60,#a83c60,#ed3e58,#ffc457)}
 @media(max-width:570px){.floor-map{height:270px}.zone-point{width:57px;height:57px}.zone-name{top:58px;font-size:9px;padding:3px 5px}.floor-caption{font-size:7px}}
+
+/* R0.3 — accessible provisioning, import review and protected operations. */
+.import-preview{display:grid;gap:13px;margin-top:22px;padding-top:20px;border-top:1px solid #293c50}
+.import-preview h3{font-size:14px;font-weight:800;letter-spacing:-.015em;color:#f3f7fc}
+.import-preview .metrics-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.import-preview .micro-card{padding:12px;min-height:74px}
+.import-preview .micro-card b{font-variant-numeric:tabular-nums}
+.import-preview .quality-warning{margin:0}
+button:disabled{cursor:not-allowed;opacity:.54}
+@media(max-width:570px){.import-preview .metrics-row{grid-template-columns:repeat(3,minmax(0,1fr))}.import-preview .micro-card{padding:9px}.import-preview .micro-card b{font-size:17px}}

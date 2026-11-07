@@ -74,6 +74,7 @@ def ensure_schema(db: sqlite3.Connection, demo: bool = False) -> None:
         },
         "surveys": {
             "request_id": "TEXT",
+            "payload_hash": "TEXT",
             "liked_tags": "TEXT NOT NULL DEFAULT '[]'",
             "improve_tags": "TEXT NOT NULL DEFAULT '[]'",
         },
@@ -144,15 +145,31 @@ def stock_for_store(db: sqlite3.Connection, store_id: int) -> list[dict]:
         FROM inventory WHERE store_id=? ORDER BY product, size LIMIT 500""", (store_id,))]
 
 
-def stock_matches(db: sqlite3.Connection, store_id: int, product: str, size: str, color: str) -> list[dict]:
+def stock_matches(db: sqlite3.Connection, store_id: int, product: str, size: str, color: str, organization_id: int | None = None) -> list[dict]:
     """Conservative matching, not speculative fuzzy matching of similar products."""
     rows = db.execute("""SELECT i.sku,i.product,i.size,i.color,i.quantity,i.updated_at,
        s.slug,s.name AS store_name FROM inventory i JOIN stores s ON s.id=i.store_id
-       WHERE i.quantity>0 AND i.store_id<>? ORDER BY i.quantity DESC""", (store_id,)).fetchall()
+       WHERE i.quantity>0 AND i.store_id<>? AND s.organization_id=(SELECT organization_id FROM stores WHERE id=?) ORDER BY i.quantity DESC""", (store_id,store_id)).fetchall()
     normalize = lambda s: ' '.join(s.casefold().strip().split())
     return [dict(r) for r in rows if normalize(r['product']) == normalize(product)
             and normalize(r['size']) == normalize(size)
             and (not color or normalize(r['color']) == normalize(color))][:20]
+
+
+def traffic_sources(db:sqlite3.Connection,store_id:int,mode:str,start:str,end:str)->tuple[str,...] | None:
+    """Explicit source policy prevents silently adding manual counts to a sensor."""
+    if mode=='manual': return ('manual',)
+    if mode=='sensor': return ('sensor','signed_sensor','demo_sensor')
+    if mode=='auto':
+        active=db.execute("""SELECT COUNT(*) n FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?
+          AND source IN ('sensor','signed_sensor','demo_sensor')""",(store_id,start,end)).fetchone()['n']
+        return ('sensor','signed_sensor','demo_sensor') if active else ('manual',)
+    return None  # combined, explicitly warn if modes overlap
+
+
+def traffic_filter(sources:tuple[str,...]|None) -> tuple[str,list[str]]:
+    if sources is None: return '',[]
+    return ' AND source IN ('+','.join('?' for _ in sources)+')',list(sources)
 
 
 def observations(db: sqlite3.Connection, store_id: int, start: str, end: str) -> dict:
@@ -168,7 +185,7 @@ def observations(db: sqlite3.Connection, store_id: int, start: str, end: str) ->
     if total and receipts > total:
         warnings.append('Чеков больше, чем входов: проверьте период и двойной учёт.')
     manual_sources = [r for r in sources if r['source']=='manual']
-    sensor_sources = [r for r in sources if r['source'] in ('sensor','demo_sensor')]
+    sensor_sources = [r for r in sources if r['source'] in ('sensor','signed_sensor','demo_sensor')]
     if manual_sources and sensor_sources:
         warnings.append('Ручные входы и датчик суммируются: проверьте отсутствие дублей.')
     if any(r['source'].startswith('demo') for r in sources+sale_sources):
@@ -178,14 +195,16 @@ def observations(db: sqlite3.Connection, store_id: int, start: str, end: str) ->
     return {'visits':sources,'sales':sale_sources,'warnings':warnings}
 
 
-def daily_metrics(db: sqlite3.Connection, store_id: int, timezone_name: str, days: int) -> list[dict]:
+def daily_metrics(db: sqlite3.Connection, store_id: int, timezone_name: str, days: int, traffic_mode: str = 'combined') -> list[dict]:
     """Local calendar-day buckets while persisted timestamps remain UTC ISO 8601."""
     tz=ZoneInfo(timezone_name)
     today=datetime.now(tz).date()
     first=today-timedelta(days=days-1)
     start=datetime.combine(first,datetime.min.time(),tzinfo=tz).astimezone(timezone.utc).isoformat(timespec='seconds')
     values={ (first+timedelta(days=i)).isoformat():{'date':(first+timedelta(days=i)).isoformat(), 'visitors':0,'purchases':0,'revenue':0.0} for i in range(days)}
-    for r in db.execute("SELECT quantity,occurred_at FROM visits WHERE store_id=? AND occurred_at>=?",(store_id,start)):
+    filter_sql, source_args=traffic_filter(traffic_sources(db,store_id,traffic_mode,start,now_iso()))
+    for r in db.execute('SELECT quantity,occurred_at FROM visits WHERE store_id=? AND occurred_at>=?'+filter_sql,
+                        (store_id,start,*source_args)):
         key=datetime.fromisoformat(r['occurred_at']).astimezone(tz).date().isoformat()
         if key in values: values[key]['visitors']+=r['quantity']
     for r in db.execute("SELECT amount_kopeks,occurred_at FROM sales WHERE store_id=? AND occurred_at>=?",(store_id,start)):

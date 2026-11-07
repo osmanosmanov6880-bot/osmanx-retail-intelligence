@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from sqlite3 import Connection
 
-from backend.retail import observations, daily_metrics, stock_matches, zone_heatmap
+from backend.retail import observations, daily_metrics, stock_matches, zone_heatmap, traffic_sources, traffic_filter
 
 REASONS = {
     "size": "Не нашёл размер", "price": "Высокая цена",
@@ -30,18 +30,26 @@ def dashboard(db: Connection, store_id: int, days: int = 30, timezone_name: str 
     prev_local = start_local - timedelta(days=days)
     start, end, prev = (value.astimezone(timezone.utc).isoformat(timespec='seconds')
                         for value in (start_local,end_local,prev_local))
-    visitors = _aggregate(db,"visits","quantity",store_id,start,end)
+    policy=db.execute('SELECT traffic_mode FROM stores WHERE id=?',(store_id,)).fetchone()['traffic_mode']
+    active_sources=traffic_sources(db,store_id,policy,start,end)
+    src_where,src_args=traffic_filter(active_sources)
+    visitors=db.execute('SELECT COALESCE(SUM(quantity),0) n FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?'+src_where,
+                        (store_id,start,end,*src_args)).fetchone()['n']
     purchases = db.execute(
         "SELECT COUNT(*) AS n FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<?",(store_id,start,end)).fetchone()["n"]
     revenue = _aggregate(db,"sales","amount_kopeks",store_id,start,end) / 100
-    prev_visitors = _aggregate(db,"visits","quantity",store_id,prev,start)
+    previous_sources=traffic_sources(db,store_id,policy,prev,start)
+    prev_where,prev_args=traffic_filter(previous_sources)
+    prev_visitors=db.execute('SELECT COALESCE(SUM(quantity),0) n FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?'+prev_where,
+                             (store_id,prev,start,*prev_args)).fetchone()['n']
     prev_purchases = db.execute("SELECT COUNT(*) AS n FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<?",
         (store_id,prev,start)).fetchone()["n"]
     prev_revenue = _aggregate(db,"sales","amount_kopeks",store_id,prev,start) / 100
 
     visits_by_hour = Counter()
     sales_by_hour = Counter()
-    for row in db.execute('SELECT occurred_at,quantity FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?',(store_id,start,end)):
+    for row in db.execute('SELECT occurred_at,quantity FROM visits WHERE store_id=? AND occurred_at>=? AND occurred_at<?'+src_where,
+                          (store_id,start,end,*src_args)):
         visits_by_hour[datetime.fromisoformat(row['occurred_at']).astimezone(tz).hour]+=row['quantity']
     for row in db.execute('SELECT occurred_at FROM sales WHERE store_id=? AND occurred_at>=? AND occurred_at<?',(store_id,start,end)):
         sales_by_hour[datetime.fromisoformat(row['occurred_at']).astimezone(tz).hour]+=1
@@ -90,7 +98,7 @@ def dashboard(db: Connection, store_id: int, days: int = 30, timezone_name: str 
             "text":"Собирайте посещения, продажи и причины отказов не менее 7 дней. Не делайте выводов о потерянной прибыли без проверки.",
             "type":"next"})
     evidence=observations(db,store_id,start,end)
-    trend=daily_metrics(db,store_id,timezone_name,days)
+    trend=daily_metrics(db,store_id,timezone_name,days,policy)
     verified=db.execute('SELECT COUNT(*) AS count FROM demand WHERE store_id=? AND sale_id IS NOT NULL AND created_at>=? AND created_at<?',(store_id,start,end)).fetchone()['count']
     stock_total=db.execute('SELECT COUNT(*) AS count, SUM(CASE WHEN quantity=0 THEN 1 ELSE 0 END) AS zero FROM inventory WHERE store_id=?',(store_id,)).fetchone()
     experiments=[dict(r) for r in db.execute('SELECT id,title,hypothesis,metric,baseline,result,status,notes,created_at FROM experiments WHERE store_id=? ORDER BY updated_at DESC LIMIT 25',(store_id,))]
@@ -104,6 +112,11 @@ def dashboard(db: Connection, store_id: int, days: int = 30, timezone_name: str 
             options=stock_matches(db,store_id,item['product'],item['size'],item['color'])
             if options:
                 matches.append({'demand_id':item['id'],'product':item['product'],'size':item['size'],'matches':options[:2]})
+    if policy=='combined' and len(evidence['visits'])>1:
+        evidence['warnings'].append('Режим объединения источников: возможен двойной учёт входов. Выберите основной источник.')
+    evidence['traffic_mode']=policy
+    evidence['selected_visit_sources']=list(active_sources) if active_sources else ['все источники']
+    evidence['confidence']='requires_review' if evidence['warnings'] else 'no_obvious_conflicts'
     return {
       "timezone":timezone_name, "daily":trend,"zones":zone_heatmap(db,store_id,start,end),"sources":evidence,"verified_sales_from_demand":verified,
       "stock_count":stock_total['count'],"stock_zero":stock_total['zero'] or 0,
