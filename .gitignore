@@ -8,3 +8,5 @@ data/
 .DS_Store
 coverage/
 playwright-report/
+qa/
+*.zip

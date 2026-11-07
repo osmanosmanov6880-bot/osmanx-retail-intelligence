@@ -76,6 +76,8 @@ def initialize_db(demo: bool = False) -> None:
         elif not db.execute("SELECT 1 FROM stores LIMIT 1").fetchone():
             db.execute("INSERT INTO stores(slug,name,subtitle,incentive,created_at) VALUES (?,?,?,?,?)",
                 ("central", "Мой магазин", "Главный филиал", "", now_iso()))
+        from backend.retail import ensure_schema
+        ensure_schema(db, demo=demo)
         db.commit()
 
 
