@@ -33,13 +33,16 @@ jobs:
         run: python scripts/visual_smoke.py
       - name: R0.3 browser acceptance (imports, devices, team, mobile)
         run: python scripts/r03_browser_smoke.py
+      - name: R0.4 browser acceptance (paired kiosk, POS, quality, mobile)
+        run: python scripts/r04_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-retail-r03-ui
+          name: osmanx-retail-r04-ui
           path: |
             qa/r02-*.png
             qa/r03-*.png
+            qa/r04-*.png
           if-no-files-found: ignore
           retention-days: 7

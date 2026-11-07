@@ -1,3 +1,15 @@
+# OSMANX Retail Intelligence R0.4
+
+**Five working development blocks:** account/session controls, paired survey terminals, signed POS receipt ingestion, source-quality monitoring, and safer SQLite backup/deployment operations. The approved dark navy/red Russian interface is retained. See [R0.4 release notes](docs/RELEASE_R04.md) and [private pilot deployment](docs/DEPLOYMENT.md).
+
+**Local demo only** (synthetic numbers and intentionally open admin access): `OSMANX_DEMO_MODE=1 python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000`. Visit `/`, `/kiosk/central`, and `/api/ready`.
+
+**Verification:** `PYTHONPATH=. python -m pytest tests -q`, `python scripts/visual_smoke.py`, `python scripts/r03_browser_smoke.py`, `python scripts/r04_browser_smoke.py`.
+
+> Do not expose demo mode to the internet. Real deployment requires TLS, secure credentials, a backup plan, privacy review and actual hardware adapters. R0.4 does not automatically connect to 1C or cameras.
+
+---
+
 # OSMANX RETAIL INTELLIGENCE
 
 **R0.3 — реальное веб-приложение аналитики магазинов одежды.** Функциональный терминал опросов, обезличенный учёт посещений и зон, спрос на отсутствующие товары, остатки по филиалам, подтверждённые покупки, аналитика руководителя, права доступа и безопасный импорт данных. Дизайн: тёмный navy, красные акценты, русский язык, адаптация под планшет и телефон.

@@ -34,6 +34,9 @@ from backend.security import (Principal, check_password, hash_password, issue_se
     visible_store, visible_object, require_role, audit, check_store_access, device_secret, verify_device_signature, utc_iso)
 from backend.imports import ensure_import_schema, preview_import, apply_import
 from backend.privacy import reward_allowance
+from backend.kiosk import ensure_schema as ensure_kiosk_schema, policy as kiosk_policy, rotate as rotate_kiosk, disable as disable_kiosk, verify as verify_kiosk
+from backend.pos_webhook import ensure_schema as ensure_pos_schema, new_source, derive_secret, verify_source, apply_receipts
+from backend.operations import quality_report
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND = ROOT / "frontend"
@@ -53,11 +56,13 @@ async def lifespan(_: FastAPI):
     initialize_db(demo=DEMO)
     with connect() as db:
         ensure_import_schema(db)
+        ensure_kiosk_schema(db)
+        ensure_pos_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="0.3.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="0.4.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -66,7 +71,10 @@ app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 async def response_guards(request: Request, call_next):
     result = await call_next(request)
     result.headers["X-Content-Type-Options"] = "nosniff"
-    result.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    result.headers["Referrer-Policy"] = "no-referrer"
+    result.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    if request.url.scheme == "https":
+        result.headers["Strict-Transport-Security"] = "max-age=31536000"
     result.headers["X-Frame-Options"] = "SAMEORIGIN"
     result.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
     if request.url.path.startswith('/api/admin/') or request.url.path.startswith('/api/auth/'):
@@ -191,9 +199,18 @@ def health():
     return {"status":"ok","service":"osmanx-retail-intelligence","demo":DEMO}
 
 
+@app.get("/api/ready")
+def ready(db: sqlite3.Connection=Depends(db_conn)):
+    try:
+        db.execute("SELECT 1 FROM stores LIMIT 1").fetchone()
+    except sqlite3.Error:
+        raise HTTPException(503, "Database not ready") from None
+    return {"status":"ready","database":"ok"}
+
+
 @app.get("/api/config")
 def config():
-    return {"demo":DEMO,"auth_required":not DEMO,"features":{"camera":"not_connected","pos":"manual_or_json_import","surveys":"active","inventory":"manual_and_batch","rewards":"optional_manual_validation","experiments":"active"}}
+    return {"demo":DEMO,"auth_required":not DEMO,"features":{"camera":"not_connected","pos":"manual_or_json_import","surveys":"active","inventory":"manual_and_batch","rewards":"optional_manual_validation","experiments":"active","paired_kiosk":"optional","signed_pos_webhook":"available"}}
 
 
 @app.post("/api/auth/login")
@@ -208,6 +225,37 @@ def login(value: Login,request: Request,db:sqlite3.Connection=Depends(db_conn)):
     return {'token':issue_session(user,SECRET),'expires_in':28800,'role':user['role']}
 
 
+class PasswordChange(BaseModel):
+    current_password: str = Field(min_length=1,max_length=512)
+    new_password: str = Field(min_length=12,max_length=512)
+
+
+@app.post('/api/auth/change-password')
+def change_password(value: PasswordChange, principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    if principal.demo:
+        raise HTTPException(409,'Password changes are disabled in demo mode')
+    row=db.execute('SELECT * FROM users WHERE id=? AND active=1',(principal.user_id,)).fetchone()
+    if row is None or not check_password(value.current_password,row['password_hash']):
+        raise HTTPException(401,'Wrong current password')
+    if value.new_password==value.current_password:
+        raise HTTPException(422,'New password must be different')
+    db.execute('UPDATE users SET password_hash=?,session_version=session_version+1 WHERE id=?',
+               (hash_password(value.new_password),principal.user_id))
+    audit(db,principal,'auth.password_change',f'user={principal.user_id}')
+    db.commit()
+    refreshed=db.execute('SELECT * FROM users WHERE id=?',(principal.user_id,)).fetchone()
+    return {'changed':True,'token':issue_session(refreshed,SECRET),'sessions_revoked':True}
+
+
+@app.post('/api/auth/logout-all')
+def logout_all(principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    if principal.demo:return {'revoked':True}
+    db.execute('UPDATE users SET session_version=session_version+1 WHERE id=?',(principal.user_id,))
+    audit(db,principal,'auth.logout_all',f'user={principal.user_id}')
+    db.commit()
+    return {'revoked':True}
+
+
 @app.get('/api/admin/me')
 def me(principal:Principal=Depends(admin)):
     return {'email':principal.email,'role':principal.role,'organization_id':principal.organization_id,'demo':principal.demo}
@@ -216,13 +264,14 @@ def me(principal:Principal=Depends(admin)):
 @app.get("/api/public/store/{slug}")
 def public_store(slug: str,db: sqlite3.Connection=Depends(db_conn)):
     row = find_store(db,slug)
-    return {"slug":row["slug"],"name":row["name"],"subtitle":row["subtitle"],"incentive":row["incentive"],"reward_enabled":bool(row["reward_enabled"]),"reward_label":row["reward_label"],"survey_retention_days":row["survey_retention_days"]}
+    return {"slug":row["slug"],"name":row["name"],"subtitle":row["subtitle"],"incentive":row["incentive"],"reward_enabled":bool(row["reward_enabled"]),"reward_label":row["reward_label"],"survey_retention_days":row["survey_retention_days"],"kiosk_required":bool(kiosk_policy(db,row["id"])["enabled"])}
 
 
 @app.post("/api/public/survey/{slug}",status_code=201)
-def create_survey(slug: str, value: Survey,request: Request,db: sqlite3.Connection=Depends(db_conn)):
+def create_survey(slug: str, value: Survey,request: Request,x_osmanx_kiosk:str|None=Header(default=None),db: sqlite3.Connection=Depends(db_conn)):
     rate_limit(request,'survey',120,300)
     store=find_store(db,slug)
+    verify_kiosk(db,store['id'],x_osmanx_kiosk)
     if value.purchased and value.reason:
         raise HTTPException(422,'Причина отказа допустима только без покупки')
     canonical=value.model_dump(exclude={'request_id'},mode='json')
@@ -258,7 +307,8 @@ def create_survey(slug: str, value: Survey,request: Request,db: sqlite3.Connecti
 @app.get("/api/admin/stores")
 def stores(db:sqlite3.Connection=Depends(db_conn),principal:Principal=Depends(admin)):
     rows=db.execute("""SELECT s.slug,s.name,s.subtitle,s.incentive,s.timezone,s.reward_enabled,s.reward_label,
-      s.traffic_mode,s.reward_daily_limit,s.survey_retention_days FROM stores s
+      s.traffic_mode,s.reward_daily_limit,s.survey_retention_days,
+      EXISTS(SELECT 1 FROM kiosk_policies k WHERE k.store_id=s.id AND k.enabled=1) kiosk_required FROM stores s
       WHERE s.organization_id=? AND (?='owner' OR EXISTS
         (SELECT 1 FROM user_store_access a WHERE a.store_id=s.id AND a.user_id=?)) ORDER BY s.id""",
         (principal.organization_id,principal.role,principal.user_id)).fetchall()
@@ -345,18 +395,9 @@ def import_pos(data:PosBatch,db:sqlite3.Connection=Depends(db_conn),principal:Pr
     return {"imported":imported,"duplicates":len(data.sales)-imported}
 
 
-@app.post("/api/ingest/traffic",status_code=201)
-def ingest_traffic(data:TrafficIngest,x_osmanx_ingest_key:str|None=Header(default=None),db:sqlite3.Connection=Depends(db_conn)):
-    if not DEMO:
-        raise HTTPException(410,'Старый общий ключ отключён. Используйте /api/ingest/v2/{тип} с подписью устройства.')
-    if not INGEST_KEY or not x_osmanx_ingest_key or not hmac.compare_digest(x_osmanx_ingest_key,INGEST_KEY):
-        raise HTTPException(401,"Неверный ключ интеграции")
-    store=visible_store(db,data.slug,principal)
-    when=data.occurred_at.astimezone(timezone.utc).isoformat(timespec="seconds")
-    cur=db.execute("INSERT OR IGNORE INTO visits(store_id,quantity,source,occurred_at,external_id) VALUES(?,?,?,?,?)",
-       (store["id"],data.quantity,"sensor",when,data.external_id))
-    db.commit()
-    return {"saved":bool(cur.rowcount),"duplicate":not bool(cur.rowcount)}
+@app.post("/api/ingest/traffic",status_code=410)
+def ingest_traffic_legacy():
+    raise HTTPException(410,'Legacy unauthenticated ingestion disabled; use signed v2')
 
 
 class StockItem(BaseModel):
@@ -755,6 +796,96 @@ async def ingest_signed(kind:Literal['traffic','zones'],request:Request,
         db.rollback()
         raise
     return {'saved':True,'duplicate':False}
+
+class PosSourceCreate(BaseModel):
+    slug: str = Field(min_length=1,max_length=80)
+    name: str = Field(min_length=2,max_length=100)
+
+
+@app.post('/api/admin/kiosks/{slug}/rotate')
+def pair_kiosk(slug:str,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,slug,principal)
+    token,generation=rotate_kiosk(db,store['id'])
+    audit(db,principal,'kiosk.rotate',f'store={slug} generation={generation}')
+    db.commit()
+    return {'slug':slug,'token':token,'generation':generation,
+            'pair_url_fragment':'#access='+token,'note':'Copy token now; it cannot be displayed again.'}
+
+
+@app.delete('/api/admin/kiosks/{slug}')
+def unpair_kiosk(slug:str,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,slug,principal)
+    disable_kiosk(db,store['id'])
+    audit(db,principal,'kiosk.disable',f'store={slug}')
+    db.commit()
+    return {'disabled':True}
+
+
+@app.get('/api/admin/pos/sources')
+def list_pos_sources(slug:str='central',principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    store=visible_store(db,slug,principal)
+    require_role(principal,'owner','manager','analyst')
+    return [dict(x) for x in db.execute('''SELECT p.public_id,p.name,p.active,p.generation,p.created_at,
+        MAX(e.received_at) last_seen,COUNT(e.id) accepted_events FROM pos_sources p
+        LEFT JOIN pos_events e ON e.source_id=p.id WHERE p.store_id=? GROUP BY p.id ORDER BY p.id''',(store['id'],))]
+
+
+@app.post('/api/admin/pos/sources',status_code=201)
+def create_pos_source(value:PosSourceCreate,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    store=visible_store(db,value.slug,principal)
+    source=new_source(db,principal.organization_id,store['id'],value.name,DEVICE_MASTER)
+    audit(db,principal,'pos.create',source['source_id'])
+    db.commit()
+    return {**source,'note':'Keep the secret safe; it is shown only once.'}
+
+
+def owned_pos_source(db:sqlite3.Connection,public_id:str,principal:Principal)->sqlite3.Row:
+    row=db.execute('SELECT * FROM pos_sources WHERE public_id=? AND organization_id=?',
+                   (public_id,principal.organization_id)).fetchone()
+    if not row:raise HTTPException(404,'POS source not found')
+    check_store_access(db,row['store_id'],principal)
+    return row
+
+
+@app.post('/api/admin/pos/sources/{public_id}/rotate')
+def rotate_pos_source(public_id:str,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    row=owned_pos_source(db,public_id,principal)
+    db.execute('UPDATE pos_sources SET generation=generation+1,active=1 WHERE id=?',(row['id'],))
+    updated=db.execute('SELECT * FROM pos_sources WHERE id=?',(row['id'],)).fetchone()
+    audit(db,principal,'pos.rotate',public_id)
+    db.commit()
+    return {'source_id':public_id,'secret':derive_secret(updated,DEVICE_MASTER),'generation':updated['generation']}
+
+
+@app.delete('/api/admin/pos/sources/{public_id}')
+def revoke_pos_source(public_id:str,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    require_role(principal,'owner','manager')
+    row=owned_pos_source(db,public_id,principal)
+    db.execute('UPDATE pos_sources SET active=0,generation=generation+1 WHERE id=?',(row['id'],))
+    audit(db,principal,'pos.revoke',public_id)
+    db.commit()
+    return {'revoked':True}
+
+
+@app.post('/api/ingest/pos',status_code=201)
+async def signed_pos(request:Request,x_osmanx_source:str|None=Header(default=None),
+       x_osmanx_timestamp:str|None=Header(default=None),x_osmanx_signature:str|None=Header(default=None),
+       db:sqlite3.Connection=Depends(db_conn)):
+    raw=await request.body()
+    if len(raw)>131_072:raise HTTPException(413,'POS payload too large')
+    source=verify_source(db,x_osmanx_source,x_osmanx_timestamp,x_osmanx_signature,raw,DEVICE_MASTER)
+    return apply_receipts(db,source,raw)
+
+
+@app.get('/api/admin/operations/quality')
+def get_quality(slug:str='central',days:int=7,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
+    if days not in (7,30):raise HTTPException(422,'Period must be 7 or 30 days')
+    return quality_report(db,visible_store(db,slug,principal),days)
+
 
 @app.post('/api/admin/imports/preview',status_code=201)
 def preview_batch(data:ImportDraft,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
