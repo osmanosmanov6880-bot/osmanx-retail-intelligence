@@ -139,6 +139,9 @@ def apply_import(db:sqlite3.Connection,*,batch_key:str,organization_id:int,check
                 existing=db.execute('SELECT id FROM inventory WHERE store_id=? AND sku=? COLLATE NOCASE',
                                     (job['store_id'],row['sku'])).fetchone()
                 if existing:
+                    from backend.commerce import reserved_quantity
+                    if row['quantity']<reserved_quantity(db,existing['id']):
+                        raise HTTPException(409,'Остаток ниже действующих резервов: '+row['sku'])
                     db.execute('''UPDATE inventory SET sku=?,product=?,size=?,color=?,quantity=?,source=?,updated_at=? WHERE id=?''',
                                (row['sku'],row['product'],row['size'],row['color'],row['quantity'],'reviewed_import',now_iso(),existing['id']))
                 else:

@@ -1,6 +1,7 @@
 import {api,setToken,hasToken,downloadReport} from './api.js';
 import {icon} from './icons.js';
 import {lineChart,barChart,donut} from './charts.js';
+import {reservationsView,fittingsView,returnsView,pricingView,decisionsView} from './commerce_ui.js';
 
 const root=document.querySelector('#app');
 const toastTarget=document.querySelector('#toast');
@@ -10,12 +11,17 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const shortDate=s=>{try{return new Date(s).toLocaleDateString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch{return '—'}};
 const reasonLabels={size:'Не нашёл нужный размер',price:'Высокая цена',assortment:'Не подошёл ассортимент',service:'Не дождался помощи',just_looking:'Просто смотрел',other:'Другое'};
 const statusLabels={open:'Открыт',located:'Найден',notified:'Уведомлён',converted:'Купил',closed:'Закрыт'};
-const menu=[{id:'overview',label:'Главная',ico:'home'},{id:'traffic',label:'Посетители',ico:'users'},{id:'zones',label:'Карта магазина',ico:'grid'},{id:'demand',label:'Спрос и размеры',ico:'shirt'},{id:'stock',label:'Склады и остатки',ico:'layers'},{id:'feedback',label:'Опросы и отзывы',ico:'clipboard'},{id:'actions',label:'Рекомендации',ico:'sparkle'},{id:'monitor',label:'Контроль данных',ico:'activity'},{id:'integrations',label:'Интеграции',ico:'plug'},{id:'settings',label:'Настройки',ico:'settings'},{id:'team',label:'Сотрудники и доступ',ico:'shield'}];
+const menu=[{id:'overview',label:'Главная',ico:'home'},{id:'traffic',label:'Посетители',ico:'users'},{id:'zones',label:'Карта магазина',ico:'grid'},{id:'demand',label:'Спрос и размеры',ico:'shirt'},
+{id:'reservations',label:'Резервы',ico:'layers'},
+{id:'fittings',label:'Примерочные',ico:'target'},
+{id:'returns',label:'Возвраты',ico:'clipboard'},
+{id:'pricing',label:'Скидки и маржа',ico:'tag'},
+{id:'decisions',label:'Центр решений',ico:'sparkle'},{id:'stock',label:'Склады и остатки',ico:'layers'},{id:'feedback',label:'Опросы и отзывы',ico:'clipboard'},{id:'actions',label:'Рекомендации',ico:'sparkle'},{id:'monitor',label:'Контроль данных',ico:'activity'},{id:'integrations',label:'Интеграции',ico:'plug'},{id:'settings',label:'Настройки',ico:'settings'},{id:'team',label:'Сотрудники и доступ',ico:'shield'}];
 const requestId=()=>crypto.randomUUID?.() || `browser-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const freshKiosk=()=>({rating:0,purchased:null,reason:'',liked:'',suggestion:'',liked_tags:[],improve_tags:[],request_id:requestId()});
 const likedOptions={assortment:'Ассортимент',quality:'Качество вещей',service:'Обслуживание',atmosphere:'Атмосфера',fitting:'Примерочная'};
 const improveOptions={size:'Наличие размеров',assortment:'Больше моделей',price:'Цены',service:'Помощь сотрудников',fitting:'Примерочные',queue:'Скорость обслуживания'};
-const state={config:null,user:null,quality:null,posSources:[],kioskToken:null,kioskLink:null,devices:[],team:[],imports:[],pendingImport:null,stores:[],store:null,data:null,stock:[],experiments:[],slug:'central',days:30,page:'overview',menuOpen:false,kioskStep:0,kiosk:freshKiosk(),kioskReward:null,error:'',loading:false};
+const state={config:null,user:null,quality:null,posSources:[],kioskToken:null,kioskLink:null,reservations:[],fittings:null,returns:null,pricing:[],decisions:null,receipts:[],devices:[],team:[],imports:[],pendingImport:null,stores:[],store:null,data:null,stock:[],experiments:[],slug:'central',days:30,page:'overview',menuOpen:false,kioskStep:0,kiosk:freshKiosk(),kioskReward:null,error:'',loading:false};
 let toastTimeout;
 function toast(message,isError=false){clearTimeout(toastTimeout);toastTarget.innerHTML=`<div class="toast-content ${isError?'toast-error':''}">${esc(message)}</div>`;toastTimeout=setTimeout(()=>toastTarget.innerHTML='',4400)}
 const featureTag=()=>state.config?.demo?'<span class="tag demo">● ДЕМО · пример данных</span>':'<span class="tag">● Рабочие данные</span>';
@@ -45,7 +51,7 @@ async function refresh(){
     if(!state.stores.length)state.stores=await api('/admin/stores',{auth:true});
     if(!state.stores.some(s=>s.slug===state.slug))state.slug=state.stores[0]?.slug||'central';
     state.store=state.stores.find(s=>s.slug===state.slug)||null;
-    [state.data,state.stock,state.experiments,state.imports,state.devices,state.team,state.quality,state.posSources]=await Promise.all([
+    [state.data,state.stock,state.experiments,state.imports,state.devices,state.team,state.quality,state.posSources,state.reservations,state.fittings,state.returns,state.pricing,state.decisions,state.receipts]=await Promise.all([
       api(`/admin/dashboard?slug=${encodeURIComponent(state.slug)}&days=${state.days}`,{auth:true}),
       api(`/admin/stock?slug=${encodeURIComponent(state.slug)}`,{auth:true}).then(r=>r.items),
       api(`/admin/experiments?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
@@ -53,7 +59,13 @@ async function refresh(){
       state.user.role==='viewer'?Promise.resolve([]):api(`/admin/devices?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
       state.user.role==='owner'?api('/admin/team',{auth:true}):Promise.resolve([]),
       api(`/admin/operations/quality?slug=${encodeURIComponent(state.slug)}&days=${state.days}`,{auth:true}),
-      state.user.role==='viewer'?Promise.resolve([]):api(`/admin/pos/sources?slug=${encodeURIComponent(state.slug)}`,{auth:true})
+      state.user.role==='viewer'?Promise.resolve([]):api(`/admin/pos/sources?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
+      api(`/admin/reservations?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
+      api(`/admin/fittings?slug=${encodeURIComponent(state.slug)}&days=${state.days}`,{auth:true}),
+      api(`/admin/returns?slug=${encodeURIComponent(state.slug)}&days=${state.days}`,{auth:true}),
+      api(`/admin/pricing?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
+      api(`/admin/decisions?slug=${encodeURIComponent(state.slug)}`,{auth:true}),
+      api(`/admin/receipts?slug=${encodeURIComponent(state.slug)}`,{auth:true})
     ]);
     state.loading=false;render();
   }catch(e){state.loading=false;state.error=e.message;if(e.message.includes('Требуется вход')||e.message.includes('Сессия'))renderLogin();else renderError()}
@@ -73,7 +85,8 @@ function render(){
   </div>`;
   if(state.menuOpen){const aside=document.querySelector('.sidebar');aside?.addEventListener('mouseleave',()=>{if(innerWidth>890)return;state.menuOpen=false;aside.classList.remove('open')},{once:true})}
 }
-function pageHtml(){switch(state.page){case'overview':return overview();case'traffic':return traffic();case'zones':return zonesPage();case'demand':return demand();case'stock':return stock();case'feedback':return feedback();case'actions':return actions();case'integrations':return integrations();case'monitor':return monitoring();case'settings':return settings();case'team':return teamPage();default:return overview()}}
+function commerceContext(){return {state,heading,pane,icon,integer,esc,shortDate,cardStat,miniEmpty,money}}
+function pageHtml(){switch(state.page){case'reservations':return reservationsView(commerceContext());case'fittings':return fittingsView(commerceContext());case'returns':return returnsView(commerceContext());case'pricing':return pricingView(commerceContext());case'decisions':return decisionsView(commerceContext());case'overview':return overview();case'traffic':return traffic();case'zones':return zonesPage();case'demand':return demand();case'stock':return stock();case'feedback':return feedback();case'actions':return actions();case'integrations':return integrations();case'monitor':return monitoring();case'settings':return settings();case'team':return teamPage();default:return overview()}}
 function dailyBars(items){const max=Math.max(1,...items.map(x=>x.visitors));return `<div class="daily-bars" role="img" aria-label="Входы по дням">${items.map(d=>`<div class="daily-day" title="${d.date}: ${d.visitors} входов, ${d.purchases} чеков"><div class="daily-col" style="height:${Math.max(2,100*d.visitors/max)}%"><i style="height:${Math.max(0,100*d.purchases/Math.max(1,d.visitors))}%"></i></div><small>${d.date.slice(8)}</small></div>`).join('')}</div>`}
 function qualityPanel(s){return `<div class="quality-box"><p class="tip">Режим подсчёта: <strong>${esc({combined:'все источники (возможны дубли)',auto:'автовыбор источника',manual:'только ручной',sensor:'только датчики'}[s.traffic_mode]||s.traffic_mode)}</strong></p><div class="quality-head"><span>${icon('shield',19)} Источники входов</span><b>${s.visits.length} типов</b></div>${s.visits.map(v=>`<div class="quality-line"><span>${esc(v.source)}</span><b>${integer(v.count)} входов</b></div>`).join('')||'<p class="tip">Подключите датчик входов или ручной учёт.</p>'}<div class="quality-head" style="margin-top:17px"><span>${icon('bag',19)} Источники чеков</span></div>${s.sales.map(v=>`<div class="quality-line"><span>${esc(v.source)}</span><b>${integer(v.count)} чеков</b></div>`).join('')}${s.warnings.map(w=>`<p class="quality-warning">${icon('alert',16)} ${esc(w)}</p>`).join('')||'<p class="quality-ok">Критичных несоответствий не обнаружено в доступных данных.</p>'}</div>`}
 function stockOpportunities(items){return items.length?`<div class="opportunity-list">${items.map(d=>`<div class="opportunity"><span class="opportunity-icon">${icon('layers',21)}</span><div><strong>${esc(d.product)} · ${esc(d.size||'—')}</strong><p>${d.matches.map(m=>`${esc(m.store_name)}: ${integer(m.quantity)} шт.`).join(' · ')}</p><small>Наличие требует подтверждения у филиала перед резервом</small></div><button class="secondary-btn small-btn" data-matches="${d.demand_id}">Проверить</button></div>`).join('')}</div>`:miniEmpty('layers','Нет совпадений','При появлении остатков в других филиалах они отобразятся здесь.')}
@@ -128,7 +141,7 @@ function stock(){const items=state.stock;const zero=items.filter(x=>x.quantity==
  <div class="span-3">${cardStat('Артикулов',integer(items.length),'layers',null,'в текущем филиале')}</div>
  <div class="span-3">${cardStat('Нет в наличии',integer(zero),'alert',null,'нулевой остаток')}</div>
  <div class="span-6">${pane('Импорт для одной точки',`<p class="tip">Ручное добавление и JSON-импорт не подключают 1С автоматически. Повторный артикул обновляет остаток — операция идемпотентна.</p><div class="separated"><button class="secondary-btn" data-dialog="stock-batch">${icon('download')} Импорт набора товаров</button></div>`)}</div>
- <div class="span-12">${pane('Каталог текущего филиала',items.length?`<div class="panel-overflow"><table class="list-table"><thead><tr><th>Артикул</th><th>Товар</th><th>Размер</th><th>Цвет</th><th>Остаток</th><th>Источник</th><th>Обновлено</th></tr></thead><tbody>${items.map(x=>`<tr><td class="nowrap">${esc(x.sku)}</td><td><strong>${esc(x.product)}</strong></td><td>${esc(x.size||'—')}</td><td>${esc(x.color||'—')}</td><td><span class="status ${x.quantity===0?'open':'converted'}">${integer(x.quantity)} шт.</span></td><td>${esc(x.source)}</td><td>${shortDate(x.updated_at)}</td></tr>`).join('')}</tbody></table></div>`:miniEmpty('layers','Каталог пуст','Загрузите остатки или внесите первый товар.'))}</div>
+ <div class="span-12">${pane('Каталог текущего филиала',items.length?`<div class="panel-overflow"><table class="list-table"><thead><tr><th>Артикул</th><th>Товар</th><th>Размер</th><th>Цвет</th><th>Всего</th><th>Резерв</th><th>Доступно</th><th>Источник</th><th>Обновлено</th></tr></thead><tbody>${items.map(x=>`<tr><td class="nowrap">${esc(x.sku)}</td><td><strong>${esc(x.product)}</strong></td><td>${esc(x.size||'—')}</td><td>${esc(x.color||'—')}</td><td><span class="status ${x.quantity===0?'open':'converted'}">${integer(x.quantity)} шт.</span></td><td>${integer(x.reserved||0)} шт.</td><td><strong>${integer(x.available??x.quantity)} шт.</strong></td><td>${esc(x.source)}</td><td>${shortDate(x.updated_at)}</td></tr>`).join('')}</tbody></table></div>`:miniEmpty('layers','Каталог пуст','Загрузите остатки или внесите первый товар.'))}</div>
 </div>`}
 function feedback(){const d=state.data;return `${heading('Опросы и обратная связь','Мнения покупателей, причины отказов и добровольная оценка магазина.',`<button class="secondary-btn" data-export="surveys">${icon('download')} CSV</button><button class="primary-btn" data-action="open-kiosk">${icon('smartphone')} Открыть терминал</button>`)}<div class="content-grid">
  <div class="span-3">${cardStat('Опросов',integer(d.surveys_count),'clipboard',null)}</div><div class="span-3">${cardStat('Средняя оценка',(d.rating||0).toString().replace('.',',')+'/5','star',null)}</div><div class="span-6">${pane('Причины ухода без покупки',donut(d.reasons))}</div>
@@ -202,7 +215,13 @@ function renderKiosk(){
 }
 function openDialog(type){const dialog=document.getElementById('entry-dialog');if(!dialog)return;
  let title='',body='';
- if(type==='team'){
+ if(type==='fitting'){
+ title='Записать итоги примерок';body=`<form id="fitting-form" class="dialog-body"><p class="dialog-note">Анонимный агрегированный итог без видео и персональных данных. Записывайте реальные наблюдения.</p><div class="field"><label>Модель</label><input class="input" name="product" required minlength="2" maxlength="120" placeholder="Жакет классический" /></div><div class="field"><label>Размер</label><input class="input" name="size" maxlength="30" placeholder="M"/></div><div class="field-row"><div class="field"><label>Примерок</label><input class="input" type="number" name="trials" min="1" max="500" required value="10" /></div><div class="field"><label>Покупок после примерки</label><input class="input" type="number" name="purchases" min="0" max="500" required value="2" /></div></div><div class="field"><label>Основная причина отказа, если известна</label><select class="select" name="reason"><option value="none">Не установлена</option><option value="fit">Не подошла посадка</option><option value="size">Размер</option><option value="price">Цена</option><option value="quality">Качество</option><option value="other">Другое</option></select></div><button class="primary-btn" type="submit">Сохранить наблюдение</button></form>`;
+ }else if(type==='return'){
+ title='Зарегистрировать возврат';body=`<form id="return-form" class="dialog-body"><p class="dialog-note">Это аналитический журнал, а не операция возврата денег. Выберите уже зарегистрированный чек.</p><input type="hidden" name="external_id" value="${requestId()}"/><div class="field"><label>Чек</label><select class="select" name="sale_id" required>${state.receipts.length?state.receipts.map(x=>`<option value="${x.id}">№${x.id} · ${shortDate(x.occurred_at)} · ${money(x.amount_kopeks/100)}</option>`).join(''):'<option value="">Нет зарегистрированных чеков</option>'}</select></div><div class="field"><label>Товар со слов сотрудника</label><input class="input" name="item" minlength="2" maxlength="120" required placeholder="Куртка"/></div><div class="field"><label>Сумма возврата, ₽</label><input class="input" type="number" name="amount_rub" min="0.01" max="20000000" step="0.01" required /></div><div class="field"><label>Причина</label><select class="select" name="reason"><option value="size">Размер</option><option value="fit">Посадка</option><option value="quality">Качество</option><option value="different">Не соответствует ожиданиям</option><option value="other">Другое</option></select></div><button type="submit" class="primary-btn">Зафиксировать причину возврата</button></form>`;
+ }else if(type==='pricing'){
+ title='Рассчитать экономику скидки';body=`<form id="pricing-form" class="dialog-body"><p class="dialog-note">Цена и себестоимость — в рублях. Продажи по обоим сценариям вводятся вручную.</p><div class="field"><label>Название расчёта</label><input class="input" name="title" required minlength="3" maxlength="120" placeholder="Скидка на зимнюю куртку"/></div><div class="field"><label>Артикул</label><input class="input" name="sku" required minlength="2" maxlength="80" placeholder="JACKET-XL"/></div><div class="field-row"><div class="field"><label>Цена без скидки, ₽</label><input class="input" type="number" name="price" required min="0.01" step="0.01" value="10000"/></div><div class="field"><label>Себестоимость, ₽</label><input class="input" type="number" name="cost" required min="0" step="0.01" value="6000"/></div></div><div class="field"><label>Скидка, %</label><input class="input" type="number" name="discount" required min="0" max="90" step="0.01" value="20"/></div><div class="field-row"><div class="field"><label>Без скидки продадим, шт.</label><input class="input" type="number" name="baseline_units" required min="0" value="10" /></div><div class="field"><label>Со скидкой предполагаем, шт.</label><input class="input" type="number" name="planned_units" required min="0" value="20" /></div></div><button class="primary-btn" type="submit">Сохранить сценарий</button></form>`;
+ }else if(type==='team'){
  title='Добавить сотрудника';body=`<form id="team-form" class="dialog-body"><div class="field"><label>Имя</label><input class="input" name="name" required minlength="2" maxlength="100" /></div><div class="field"><label>E-mail</label><input type="email" name="email" class="input" required /></div><div class="field"><label>Временный пароль (12+ символов)</label><input type="password" name="password" class="input" minlength="12" required autocomplete="new-password" /></div><div class="field"><label>Роль</label><select class="select" name="role"><option value="manager">Управляющий</option><option value="analyst">Аналитик</option><option value="viewer">Наблюдатель</option></select></div><div class="field"><label>Доступ к филиалу</label><select class="select" name="store">${state.stores.map(x=>`<option value="${esc(x.slug)}">${esc(x.name)}</option>`).join('')}</select></div><button type="submit" class="primary-btn">Создать аккаунт</button></form>`;
  }else if(type==='device'){
  title='Подключить датчик';body=`<form id="device-form" class="dialog-body"><p class="dialog-note">Создайте отдельную учётную запись для физического счётчика. Это только серверная регистрация: инженер должен настроить устройство на отправку подписанных событий.</p><div class="field"><label>Название</label><input class="input" name="name" minlength="2" maxlength="100" required placeholder="Счётчик у входа"/></div><div class="field"><label>Тип</label><select class="select" name="kind"><option value="traffic">Счётчик входов</option><option value="zones">События зон</option></select></div><button class="primary-btn" type="submit">Выдать отдельный ключ</button></form>`;
@@ -223,7 +242,7 @@ function openDialog(type){const dialog=document.getElementById('entry-dialog');i
  }
  dialog.innerHTML=`<div class="dialog-head"><h2>${esc(title)}</h2><button class="dialog-x" type="button" data-action="close-dialog" aria-label="Закрыть">×</button></div>${body}`;dialog.showModal();
 }
-async function showMatches(id){try{const result=await api(`/admin/demand/${id}/matches`,{auth:true});const dialog=document.querySelector('#entry-dialog');if(!dialog)return;dialog.innerHTML=`<div class="dialog-head"><h2>Поиск по филиалам</h2><button class="dialog-x" type="button" data-action="close-dialog">×</button></div><div class="dialog-body">${result.matches.length?result.matches.map(m=>`<div class="quality-line"><span><b>${esc(m.store_name)}</b><small style="display:block">${esc(m.product)} · ${esc(m.size)} · ${esc(m.color)}</small></span><strong>${integer(m.quantity)} шт.</strong></div>`).join(''):'<p class="tip">Совпадающих товаров с положительным остатком пока нет.</p>'}<div class="note separated">${esc(result.method)}</div></div>`;dialog.showModal()}catch(e){toast(e.message,true)}}
+async function showMatches(id){try{const result=await api(`/admin/demand/${id}/matches`,{auth:true});const dialog=document.querySelector('#entry-dialog');if(!dialog)return;dialog.innerHTML=`<div class="dialog-head"><h2>Поиск по филиалам</h2><button class="dialog-x" type="button" data-action="close-dialog">×</button></div><div class="dialog-body">${result.matches.length?result.matches.map(m=>`<div class="quality-line"><span><b>${esc(m.store_name)}</b><small style="display:block">${esc(m.product)} · ${esc(m.size)} · ${esc(m.color)}</small></span><div class="inline-actions"><strong>${integer(m.available??m.quantity)} свободно</strong>${['owner','manager'].includes(state.user?.role)?`<button class="secondary-btn small-btn" data-reserve="${id}:${m.id}">Зарезервировать</button>`:''}</div></div>`).join(''):'<p class="tip">Совпадающих товаров с положительным остатком пока нет.</p>'}<div class="note separated">${esc(result.method)}</div></div>`;dialog.showModal()}catch(e){toast(e.message,true)}}
 function confirmDemandDialog(id){const dialog=document.querySelector('#entry-dialog');if(!dialog)return;dialog.innerHTML=`<div class="dialog-head"><h2>Подтвердить завершённую покупку</h2><button type="button" class="dialog-x" data-action="close-dialog">×</button></div><form id="confirm-demand-form" class="dialog-body"><input type="hidden" name="demand_id" value="${id}"/><p class="dialog-note">Система зачтёт результат только с чеком этого магазина, оформленным после запроса покупателя. Один чек нельзя дважды привязать к разным запросам.</p><div class="field"><label>Внутренний ID чека в OSMANX</label><input name="sale_id" type="number" class="input" min="1" required placeholder="Например, 123" /></div><button type="submit" class="primary-btn">${icon('check')} Привязать чек</button></form>`;dialog.showModal()}
 function editExperiment(id){const e=state.experiments.find(x=>x.id===id);if(!e)return;const dialog=document.querySelector('#entry-dialog');if(!dialog)return;dialog.innerHTML=`<div class="dialog-head"><h2>Результат эксперимента</h2><button class="dialog-x" type="button" data-action="close-dialog">×</button></div><form id="experiment-update-form" class="dialog-body"><input name="id" type="hidden" value="${e.id}"/><strong>${esc(e.title)}</strong><p class="dialog-note">Не завершайте пилот без измеренного результата. При сравнении учтите сезонность и внешние факторы.</p><div class="field"><label>Статус</label><select name="status" class="select">${Object.entries({planned:'Планируется',running:'В работе',finished:'Завершён',cancelled:'Отменён'}).map(([k,v])=>`<option value="${k}" ${e.status===k?'selected':''}>${v}</option>`).join('')}</select></div><div class="field"><label>Фактически измеренная метрика</label><input class="input" name="result" type="number" min="0" step="any" value="${e.result??''}" placeholder="Например, 21.5"/></div><div class="field"><label>Что делали и что выяснили</label><textarea name="notes" class="textarea" maxlength="1000" rows="4">${esc(e.notes||'')}</textarea></div><button class="primary-btn" type="submit">${icon('check')} Сохранить</button></form>`;dialog.showModal()}
 function updateScenario(){const pp=Number(document.getElementById('scenario-pp')?.value||2),margin=Number(document.getElementById('scenario-margin')?.value||45);const label=document.getElementById('scenario-pp-label');const revenue=document.getElementById('scenario-revenue');const profit=document.getElementById('scenario-profit');if(!label||!revenue||!profit)return;label.textContent=`${pp.toString().replace('.',',')} п.п.`;const d=state.data;const potential=d.visitors*pp/100*d.avg_receipt;revenue.textContent=money(potential);profit.textContent=money(potential*Math.min(100,Math.max(0,margin))/100)}
@@ -235,6 +254,27 @@ async function handleClick(event){
  if(button.dataset.dialog){openDialog(button.dataset.dialog);return}
  if(button.dataset.matches){await showMatches(Number(button.dataset.matches));return}
  if(button.dataset.confirmDemand){confirmDemandDialog(Number(button.dataset.confirmDemand));return}
+ if(button.dataset.reserve){
+    const [demandId,stockId]=button.dataset.reserve.split(':').map(Number);
+    if(!confirm('Создать резерв на 24 часа? Физическая выдача подтверждается отдельно.'))return;
+    try{await api('/admin/reservations',{method:'POST',auth:true,body:{demand_id:demandId,inventory_id:stockId,quantity:1,hours:24,request_id:requestId()}});
+       document.querySelector('#entry-dialog')?.close();state.page='reservations';await refresh();toast('Резерв создан на 24 часа');}
+    catch(e){toast(e.message,true)}return;
+ }
+ if(button.dataset.holdAction){
+    const [id,action]=button.dataset.holdAction.split(':');
+    if(!confirm(action==='collect'?'Подтвердить реальную выдачу товара? Это не создаст чек.':'Отменить резерв и освободить товар?'))return;
+    try{await api(`/admin/reservations/${id}/action`,{method:'POST',auth:true,body:{action}});await refresh();toast('Статус резерва обновлён')}
+    catch(e){toast(e.message,true)}return;
+ }
+ if(button.dataset.decisionSave){
+    const key=button.dataset.decisionSave;
+    const status=document.querySelector(`[data-decision-status="${key}"]`)?.value;
+    const note=document.querySelector(`[data-decision-note="${key}"]`)?.value||'';
+    try{await api(`/admin/decisions/${encodeURIComponent(key)}?slug=${encodeURIComponent(state.slug)}`,{method:'PATCH',auth:true,body:{status,note}});
+       await refresh();toast('Решение сохранено')}
+    catch(e){toast(e.message,true)}return;
+ }
  if(button.dataset.experimentId){editExperiment(Number(button.dataset.experimentId));return}
  if(button.dataset.export){try{await downloadReport(`/admin/export/${button.dataset.export}.csv?slug=${encodeURIComponent(state.slug)}`,`osmanx-${button.dataset.export}-${state.slug}.csv`);toast('Отчёт скачан')}catch(e){toast(e.message,true)}return}
  if(button.dataset.kioskTag){const kind=button.dataset.kioskTagKind,key=button.dataset.kioskTag;const tags=state.kiosk[kind];if(kind==='improve_tags'){state.kiosk.liked=document.querySelector('#liked')?.value||state.kiosk.liked;state.kiosk.suggestion=document.querySelector('#suggestion')?.value||state.kiosk.suggestion}state.kiosk[kind]=tags.includes(key)?tags.filter(x=>x!==key):[...tags,key];renderKiosk();return}
@@ -337,6 +377,22 @@ async function handleSubmit(event){const form=event.target;if(!form?.id)return;e
     catch(error){if(state.store?.kiosk_required&&/token|401|доступ|access/i.test(error.message)){sessionStorage.removeItem(`osmanx_kiosk_${state.slug}`);state.kioskToken=null;renderKiosk()}throw error}
     state.kioskReward=submitted.reward||null;
     state.kioskStep=5;renderKiosk();return;
+  }
+  if(form.id==='fitting-form'){
+    await api('/admin/fittings',{method:'POST',auth:true,body:{slug:state.slug,product:data.product,size:data.size,
+      trials:Number(data.trials),purchases:Number(data.purchases),reason:data.reason}});
+    document.querySelector('#entry-dialog')?.close();await refresh();toast('Примерки записаны');return;
+  }
+  if(form.id==='return-form'){
+    await api('/admin/returns',{method:'POST',auth:true,body:{slug:state.slug,sale_id:Number(data.sale_id),
+      external_id:data.external_id,item:data.item,amount_kopeks:Math.round(Number(data.amount_rub)*100),reason:data.reason}});
+    document.querySelector('#entry-dialog')?.close();await refresh();toast('Причина возврата записана');return;
+  }
+  if(form.id==='pricing-form'){
+    await api('/admin/pricing',{method:'POST',auth:true,body:{slug:state.slug,title:data.title,sku:data.sku,
+      price_kopeks:Math.round(Number(data.price)*100),cost_kopeks:Math.round(Number(data.cost)*100),
+      discount_bps:Math.round(Number(data.discount)*100),baseline_units:Number(data.baseline_units),planned_units:Number(data.planned_units)}});
+    document.querySelector('#entry-dialog')?.close();await refresh();toast('Сценарий маржи сохранён');return;
   }
   if(form.id==='demand-form'){
     await api('/admin/demand',{method:'POST',auth:true,body:{slug:state.slug,product:data.product,size:data.size,color:data.color}});

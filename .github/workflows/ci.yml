@@ -24,6 +24,7 @@ jobs:
       - name: Check frontend JS syntax
         run: |
           node --check frontend/app.js
+          node --check frontend/commerce_ui.js
           node --check frontend/charts.js
           node --check frontend/icons.js
           node --check frontend/api.js
@@ -35,14 +36,17 @@ jobs:
         run: python scripts/r03_browser_smoke.py
       - name: R0.4 browser acceptance (paired kiosk, POS, quality, mobile)
         run: python scripts/r04_browser_smoke.py
+      - name: R0.5 browser acceptance (reservations, fitting, returns, discounts, decisions)
+        run: python scripts/r05_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-retail-r04-ui
+          name: osmanx-retail-r05-ui
           path: |
             qa/r02-*.png
             qa/r03-*.png
             qa/r04-*.png
+            qa/r05-*.png
           if-no-files-found: ignore
           retention-days: 7

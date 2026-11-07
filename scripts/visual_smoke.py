@@ -30,7 +30,7 @@ def page_content():
 
 
 def javascript(kiosk=False):
-    modules=['icons.js','charts.js','api.js','app.js']
+    modules=['icons.js','charts.js','api.js','commerce_ui.js','app.js']
     script='\n'.join((ROOT/'frontend'/name).read_text() for name in modules)
     script=re.sub(r'^import .*?;\s*$', '', script,flags=re.M)
     script=re.sub(r'\bexport\s+(?=(?:function|const|async function))', '', script)

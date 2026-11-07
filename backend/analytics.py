@@ -6,7 +6,8 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from sqlite3 import Connection
 
-from backend.retail import observations, daily_metrics, stock_matches, zone_heatmap, traffic_sources, traffic_filter
+from backend.retail import observations, daily_metrics, zone_heatmap, traffic_sources, traffic_filter
+from backend.commerce import matching_available
 
 REASONS = {
     "size": "Не нашёл размер", "price": "Высокая цена",
@@ -109,9 +110,9 @@ def dashboard(db: Connection, store_id: int, days: int = 30, timezone_name: str 
         if key in seen or len(matches)>=4: continue
         seen.add(key)
         if item['status'] in ('open','located'):
-            options=stock_matches(db,store_id,item['product'],item['size'],item['color'])
+            options=matching_available(db,store_id,item['product'],item['size'],item['color'])
             if options:
-                matches.append({'demand_id':item['id'],'product':item['product'],'size':item['size'],'matches':options[:2]})
+                matches.append({'demand_id':item['id'],'product':item['product'],'size':item['size'],'matches':[{**m,'quantity':m['available']} for m in options[:2]]})
     if policy=='combined' and len(evidence['visits'])>1:
         evidence['warnings'].append('Режим объединения источников: возможен двойной учёт входов. Выберите основной источник.')
     evidence['traffic_mode']=policy
