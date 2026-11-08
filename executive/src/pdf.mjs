@@ -38,7 +38,7 @@ function paint({answers={},plan=[],date}) {
  c.fillStyle='#bea17d';c.font=`700 14px ${font}`;c.fillText('OSMANX WORLD  ·  DEMONSTRATION DATA',84,1720);
  return canvas;
 }
-function encodePdf(jpegData,w,h){
+export function encodePdf(jpegData,w,h){
  const decoder=atob(jpegData.split(',')[1]);const jpg=new Uint8Array(decoder.length);for(let i=0;i<decoder.length;i++)jpg[i]=decoder.charCodeAt(i);
  const encoder=new TextEncoder();const chunks=[];let length=0;const offsets=[0];
  const append=part=>{const bytes=typeof part==='string'?encoder.encode(part):part;chunks.push(bytes);length+=bytes.length;};
