@@ -17,8 +17,12 @@ jobs:
           cache: pip
       - name: Install backend and test dependencies
         run: pip install -r requirements.txt pytest httpx playwright
-      - name: API, database and migration tests
-        run: python -m pytest tests -q
+      - name: Core API and database tests
+        run: python -m pytest tests/test_analytics.py tests/test_api.py tests/test_r03.py tests/test_r04.py tests/test_r05.py tests/test_r06.py tests/test_r06_main_compat.py -q
+      - name: R0.7 and R0.8 regression tests
+        run: python -m pytest tests/test_r07.py tests/test_r08.py -q
+      - name: R0.9 integration, isolation and accounting tests
+        run: python -m pytest tests/test_r09.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
@@ -33,6 +37,7 @@ jobs:
           node --check frontend/operations.js
           node --check frontend/assist.js
           node --check frontend/strategy.js
+          node --check frontend/evidence.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -49,11 +54,13 @@ jobs:
         run: python scripts/r07_browser_smoke.py
       - name: R0.8 decision-center browser acceptance
         run: python scripts/r08_browser_smoke.py
+      - name: R0.9 evidence lab browser acceptance
+        run: python scripts/r09_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-retail-r08-ui
+          name: osmanx-retail-r09-ui
           path: |
             qa/r02-*.png
             qa/r03-*.png
@@ -62,5 +69,6 @@ jobs:
             qa/r06-*.png
             qa/r07-*.png
             qa/r08-*.png
+            qa/r09-*.png
           if-no-files-found: ignore
           retention-days: 7
