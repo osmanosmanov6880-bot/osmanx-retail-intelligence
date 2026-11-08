@@ -26,6 +26,7 @@ def page_content():
     css=re.sub(r'@import\s+url\([^)]*\)\s*;', '', css)
     html=re.sub(r'<link[^>]+styles\.css[^>]+>', '', html)
     html=re.sub(r'<script[^>]+src="/static/app.js"[^>]*></script>', '', html)
+    html=re.sub(r'<script[^>]+src="/static/r06_shortcut.js"[^>]*></script>', '', html)
     return html.replace('</head>',f'<style>{css}</style></head>')
 
 

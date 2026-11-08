@@ -92,11 +92,13 @@ def seed_demo(db: sqlite3.Connection) -> None:
         ("central", "Бутик Центральный", "OSMANX · демонстрационный филиал", "Покажите экран сотруднику, чтобы узнать о бонусах", stamp))
     store_id = db.execute("SELECT id FROM stores WHERE slug='central'").fetchone()[0]
     rng = random.Random(291106)
-    today = datetime.now(timezone.utc).replace(hour=12, minute=0, second=0, microsecond=0)
+    today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
     for day in range(32):
         date = today - timedelta(days=day)
         weekend = 1.27 if date.weekday() in (5, 6) else 1.0
         for hour, weight in enumerate([.38, .53, .72, .89, 1.04, 1.23, 1.37, 1.34, 1.09, .65], start=10):
+            if day == 0 and hour > datetime.now(timezone.utc).hour:
+                continue
             visitors = max(1, int((16.9 + rng.uniform(-4, 4)) * weight * weekend))
             orders = min(visitors, max(0, int(visitors * (0.18 + 0.08 * (hour >= 16)) + rng.uniform(-2, 2))))
             when = date.replace(hour=hour).isoformat(timespec="seconds")

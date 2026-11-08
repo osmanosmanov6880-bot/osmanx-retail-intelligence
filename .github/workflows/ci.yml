@@ -28,6 +28,8 @@ jobs:
           node --check frontend/charts.js
           node --check frontend/icons.js
           node --check frontend/api.js
+          node --check frontend/workflows.js
+          node --check frontend/r06_shortcut.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -38,6 +40,8 @@ jobs:
         run: python scripts/r04_browser_smoke.py
       - name: R0.5 browser acceptance (reservations, fitting, returns, discounts, decisions)
         run: python scripts/r05_browser_smoke.py
+      - name: R0.6 browser acceptance (demand, purchasing, revenue, experiments)
+        run: python scripts/r06_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,5 +52,6 @@ jobs:
             qa/r03-*.png
             qa/r04-*.png
             qa/r05-*.png
+            qa/r06-*.png
           if-no-files-found: ignore
           retention-days: 7

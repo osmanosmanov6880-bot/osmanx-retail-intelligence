@@ -1,3 +1,9 @@
+# OSMANX Retail Intelligence R0.6
+
+Five linked production-oriented workflows: demand recovery, supplier purchasing, recorded SKU sales and gross margin, before/after pilot evaluations, and an owner action center. Server deployment intentionally deferred. Tests: `python -m pytest tests -q` and Chromium `python scripts/r06_browser_smoke.py`. Read [R0.6 release details](docs/RELEASE_R06.md). The new operational interface is `/static/workflows.html`.
+
+---
+
 # OSMANX Retail Intelligence R0.5
 
 **Five shipped commerce workflows**: cross-branch inventory reservations with transaction-safe stock claims, anonymous fitting-room observations, receipt-linked return logging, scenario-based discount contribution calculations, and a decision center for evidence-based actions. Production deployment remains deferred.
