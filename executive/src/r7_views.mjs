@@ -5,18 +5,18 @@ import {decisionEvidenceGate,networkRebalance,capitalAllocation,privacySimulatio
 const r7_e=x=>esc(String(x??''));
 const r7_m=x=>MONEY(x??0);
 const r7_n=x=>NUMBER(x??0);
-const r7_stamp='<p class="r7-demo-r7_stamp">ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ · НЕ РЕАЛЬНАЯ ИНТЕГРАЦИЯ</p>';
-const r7_head=(number,eyebrow,title,sub)=>`<section class="r7-r7_head"><div class="r7-serial"><span>OSMANX</span><span>ATELIER / R7</span><span>${number} / 05</span></div><p class="r7-eyebrow">${r7_e(eyebrow)}</p><h1>${title}</h1><p class="r7-sub">${r7_e(sub)}</p></section>`;
-const r7_stat=(name,value,sub='',tone='')=>`<div class="r7-r7_stat ${tone}"><span>${r7_e(name)}</span><strong>${r7_e(value)}</strong><small>${r7_e(sub)}</small></div>`;
-const r7_notes=lines=>`<div class="r7-r7_notes">${lines.map(x=>`<p>${icon('shield',15)}${r7_e(x)}</p>`).join('')}</div>`;
-const r7_pane=(title,inner,extra='')=>`<section class="r7-r7_pane ${extra}"><div class="r7-r7_pane-heading"><h2>${r7_e(title)}</h2></div>${inner}</section>`;
-const r7_field=(key,label,value,config={})=>`<label class="r7-r7_field"><span>${r7_e(label)}</span><input data-r7-r7_field="${r7_e(key)}" inputmode="decimal" type="number" min="${config.min??0}" max="${config.max??1000000}" step="${config.step??1}" value="${r7_e(value)}" /></label>`;
-const r7_select=(key,label,value,options)=>`<label class="r7-r7_field"><span>${r7_e(label)}</span><r7_select data-r7-r7_field="${r7_e(key)}">${options.map(([v,t])=>`<option value="${r7_e(v)}" ${String(v)===String(value)?'selected':''}>${r7_e(t)}</option>`).join('')}</r7_select></label>`;
-const r7_btn=(action,label,disabled=false,cls='')=>`<button type="button" class="r7-r7_btn ${cls}" data-action="${action}" ${disabled?'disabled':''}>${r7_e(label)} ${icon('arrow',16)}</button>`;
-const r7_evidence=ids=>`<div class="r7-r7_evidence"><span>ИСТОЧНИКИ</span><div>${(ids||[]).slice(0,9).map(x=>`<code>${r7_e(x)}</code>`).join('')||'<em>Нет привязанных событий</em>'}</div></div>`;
+const r7_stamp='<p class="r7-demo-stamp">ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ · НЕ РЕАЛЬНАЯ ИНТЕГРАЦИЯ</p>';
+const r7_head=(number,eyebrow,title,sub)=>`<section class="r7-head"><div class="r7-serial"><span>OSMANX</span><span>ATELIER / R7</span><span>${number} / 05</span></div><p class="r7-eyebrow">${r7_e(eyebrow)}</p><h1>${title}</h1><p class="r7-sub">${r7_e(sub)}</p></section>`;
+const r7_stat=(name,value,sub='',tone='')=>`<div class="r7-stat ${tone}"><span>${r7_e(name)}</span><strong>${r7_e(value)}</strong><small>${r7_e(sub)}</small></div>`;
+const r7_notes=lines=>`<div class="r7-notes">${lines.map(x=>`<p>${icon('shield',15)}${r7_e(x)}</p>`).join('')}</div>`;
+const r7_pane=(title,inner,extra='')=>`<section class="r7-pane ${extra}"><div class="r7-pane-heading"><h2>${r7_e(title)}</h2></div>${inner}</section>`;
+const r7_field=(key,label,value,config={})=>`<label class="r7-field"><span>${r7_e(label)}</span><input data-r7-field="${r7_e(key)}" inputmode="decimal" type="number" min="${config.min??0}" max="${config.max??1000000}" step="${config.step??1}" value="${r7_e(value)}" /></label>`;
+const r7_select=(key,label,value,options)=>`<label class="r7-field"><span>${r7_e(label)}</span><select data-r7-field="${r7_e(key)}">${options.map(([v,t])=>`<option value="${r7_e(v)}" ${String(v)===String(value)?'selected':''}>${r7_e(t)}</option>`).join('')}</select></label>`;
+const r7_btn=(action,label,disabled=false,cls='')=>`<button type="button" class="r7-btn ${cls}" data-action="${action}" ${disabled?'disabled':''}>${r7_e(label)} ${icon('arrow',16)}</button>`;
+const r7_evidence=ids=>`<div class="r7-evidence"><span>ИСТОЧНИКИ</span><div>${(ids||[]).slice(0,9).map(x=>`<code>${r7_e(x)}</code>`).join('')||'<em>Нет привязанных событий</em>'}</div></div>`;
 const r7_banners=(r7_banners=[])=>`<div class="r7-alerts">${r7_banners.map(x=>`<p>${r7_e(x)}</p>`).join('')}</div>`;
 const r7_fmtStore=id=>STORES.find(s=>s.id===id)?.short||id;
-const r7_badge=(text,kind='muted')=>`<span class="r7-r7_badge ${kind}">${r7_e(text)}</span>`;
+const r7_badge=(text,kind='muted')=>`<span class="r7-badge ${kind}">${r7_e(text)}</span>`;
 const r7_errors=r=>r.valid?'':r7_banners(r.errors);
 const r7_actionGroup=(buttons)=>`<div class="r7-actions">${buttons.join('')}</div>`;
 
@@ -35,7 +35,7 @@ export function renderR7Rebalance(dataset,scope,params,selectedId){
  return r7_head('02','NETWORK REBALANCE','Товар есть в сети. <em>Но где он нужен?</em>','Перераспределяем текущий запас, сохраняя резерв, не удваивая единицы и не выдавая прогноз за проданную вещь.')+
  `<div class="r7-stats">${r7_stat('Маршрутов для проверки',r.routes.length,'Не складские документы')}${r7_stat('Единиц в сценарии',r.reservedUnits,'Без физического списания')}${r7_stat('Валовая прибыль сценария',r7_m(r.scenarioGross),'Ожидаемая, не подтверждённая')}${r7_stat('Эффект после затрат',r7_m(r.net),'Сценарный расчёт, не прирост')}</div>`+
  r7_pane('Условия сценария',`<div class="r7-controls">${r7_field('moveReserve','Резерв в источнике, шт.',params.reserve,{max:100})}${r7_field('moveProbability','Вероятность покупки, %',params.probability,{max:100})}${r7_field('moveFixed','Фиксированная логистика, ₽',params.fixedCost,{max:10000000,step:50})}${r7_field('moveUnitCost','Логистика на шт., ₽',params.unitCost,{max:1000000,step:50})}${r7_field('moveUnits','Лимит на маршрут, шт.',params.maxUnits,{min:1,max:100})}${r7_field('moveDemand','Минимум запросов',params.minDemand,{min:1,max:1000})}</div>${r7_errors(r)}`)+
- `<div class="r7-two">${r7_pane('Допустимые маршруты',r.routes.length?`<div class="r7-list">${r.routes.map(x=>`<button type="button" class="r7-choice ${row?.id===x.id?'active':''}" data-action="r7-move-r7_select" data-value="${r7_e(x.id)}"><span><b>${r7_e(r7_fmtStore(x.sourceStore))} → ${r7_e(r7_fmtStore(x.destinationStore))}</b><small>${r7_e(x.product)} · ${r7_e(x.size)} · ${r7_e(x.units)} шт.</small></span><strong>${r7_m(x.net)}</strong></button>`).join('')}</div>`:'<p>При выбранных ограничениях нет экономически допустимых перемещений.</p>')}
+ `<div class="r7-two">${r7_pane('Допустимые маршруты',r.routes.length?`<div class="r7-list">${r.routes.map(x=>`<button type="button" class="r7-choice ${row?.id===x.id?'active':''}" data-action="r7-move-select" data-value="${r7_e(x.id)}"><span><b>${r7_e(r7_fmtStore(x.sourceStore))} → ${r7_e(r7_fmtStore(x.destinationStore))}</b><small>${r7_e(x.product)} · ${r7_e(x.size)} · ${r7_e(x.units)} шт.</small></span><strong>${r7_m(x.net)}</strong></button>`).join('')}</div>`:'<p>При выбранных ограничениях нет экономически допустимых перемещений.</p>')}
  ${r7_pane('Проверить конкретный маршрут',row?`<p class="r7-decision">${r7_e(row.product)} / ${r7_e(row.color)} / ${r7_e(row.size)}</p><div class="r7-ledger"><div><span>Источник</span><b>${r7_e(r7_fmtStore(row.sourceStore))}</b></div><div><span>Филиал назначения</span><b>${r7_e(r7_fmtStore(row.destinationStore))}</b></div><div><span>В сценарии</span><b>${r7_n(row.units)} шт.</b></div><div><span>Валовая маржа за штуку</span><b>${r7_m(row.unitGross)}</b></div><div><span>Расчёт</span><b>${r7_m(row.scenarioGross)} − ${r7_m(row.cost)} = ${r7_m(row.net)}</b></div></div>${r7_evidence(row.evidenceIds)}${r7_actionGroup([r7_btn('r7-move-csv','Экспорт маршрутов'),r7_btn('r7-move-task','Проверить в филиале',false,'primary')])}`:'<p>Увеличьте период или измените параметры.</p>','r7-accent')}</div>`+
  r7_notes([r.disclaimer||'Данные условные.',`Не распределено по выбранным условиям: ${r7_n(r.unserved)} сигналов, часть из них требует физической проверки.`])+r7_stamp;
 }

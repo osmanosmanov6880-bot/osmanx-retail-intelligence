@@ -24,3 +24,16 @@ test('privacy action explicitly warns no real data deletion',()=>{assert.match(a
 test('R7 route navigation is compatible with hash, mobile sidebar and offline build',()=>{
  assert.match(app,/NAV.flatMap/);assert.match(app,/data-r7-field/);assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/r7.css/);
 });
+
+test('all R7 rendered screens have actual CSS classes and browser-recognized fields',()=>{
+ for(const [route,render] of screens){const html=render();
+  assert.match(html,/class="r7-head"/);assert.match(html,/class="r7-demo-stamp"/);
+  assert.doesNotMatch(html,/r7-r7_|<r7_select|data-r7-r7_field|r7-move-r7_select/);
+ }
+});
+test('R7 interaction attributes map to application event handlers',()=>{
+ const dom=renderR7Rebalance(d,scope,{reserve:0,probability:55,fixedCost:300,unitCost:250,maxUnits:3,minDemand:1},'');
+ assert.match(dom,/data-action="r7-move-select"/);assert.match(dom,/data-r7-field="moveProbability"/);
+ const priv=renderR7Privacy(d,scope,{retentionDays:30,requireConsent:true},[]);
+ assert.match(priv,/<select data-r7-field="privacyConsent"/);assert.match(priv,/<\/select>/);
+});
