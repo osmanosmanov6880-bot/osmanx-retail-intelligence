@@ -1,3 +1,7 @@
+# OSMANX Retail Intelligence R1.5 — Pilot Studio
+
+Five verified commercial pilot workflows: frozen test definition, documented source checks, store-local daily metrics, immutable intervention costs and SHA-256 sealed executive evidence. This release is local/private; no real POS, cameras, 1C or public deployment. [Full R1.5 documentation](docs/RELEASE_R15.md). Open `/static/pilot.html` after starting the local application.
+
 # OSMANX Retail Intelligence R1.4 — Integrity Center
 
 Five integrated modules: protected event inbox, receipt reconciliation with exception CSV, gift-cost evidence linked to R1.2 coupons, durable incident history, and executive integrity reporting. Existing R1.3 Merchant Control Room is preserved. **No public deployment.**
