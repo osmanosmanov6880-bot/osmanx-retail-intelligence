@@ -34,7 +34,7 @@ function toast(message,error=false){clearTimeout(toastTimer);notice.innerHTML=`<
 function shell(){root.innerHTML=`<main class="app">
  <header class="top"><div><div class="brand">OSMAN<span>X</span></div><div class="brandline">Retail Intelligence · Evidence Lab R0.9</div></div>
  <div class="toplinks"><select id="lab-store" class="store-select" aria-label="Филиал">${state.stores.map(s=>`<option value="${esc(s.slug)}" ${s.slug===state.slug?'selected':''}>${esc(s.name)}</option>`).join('')}</select>
- <a href="/static/strategy.html" class="toplink primary">Центр стратегии</a><a href="/" class="toplink">Главная</a></div></header>
+ <a href="/static/experience.html" class="toplink primary">Experience R1.0</a><a href="/static/strategy.html" class="toplink">Стратегия</a><a href="/" class="toplink">Главная</a></div></header>
  <section class="evidence-intro"><div class="evidence-kicker">OSMANX / Executive Intelligence / R0.9</div><h1>Не просто цифры.<br>Проверяемые решения.</h1>
  <p>От запроса на отсутствующий размер — до подтверждённого чека и оценки эффекта. Каждая цифра имеет источник, а недостаток данных не скрывается красивым графиком.</p></section>
  ${state.config.demo?'<div class="banner">ДЕМО: данные искусственные. Не выдавать показатели за результаты реального магазина.</div>':''}

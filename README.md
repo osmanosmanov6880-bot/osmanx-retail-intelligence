@@ -1,3 +1,14 @@
+# OSMANX Retail Intelligence R1.0 — Executive Experience
+
+Пять модулей: сопоставление филиалов, планирование смен, нормативы обслуживания, анонимные опросы на привязанном терминале и журнал инцидентов. Работают в общей SQLite и с действующими правами. **Публичный запуск отложен**.
+
+- [Релиз R1.0: API, ограничения и приёмка](docs/RELEASE_R10.md)
+- Кабинет: `/static/experience.html` · экран опроса: `/static/pulse.html?store=central` (с ключом привязки).
+- Проверки: `python -m pytest tests/test_r10.py -q` и `python scripts/r10_browser_smoke.py`.
+- Удаление старых анонимных ответов: `python -m scripts.purge_pulse_r10` (dry-run), `--apply` (удаление).
+
+---
+
 # OSMANX Retail Intelligence R0.9 — Evidence Lab
 
 Five real workflows: demand radar, verified recovery cases, finance integrity, pre-registered experiments and immutable evidence dossiers. The software remains local/private — **no public deployment**.

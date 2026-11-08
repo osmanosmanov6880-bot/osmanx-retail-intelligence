@@ -38,6 +38,8 @@ jobs:
           node --check frontend/assist.js
           node --check frontend/strategy.js
           node --check frontend/evidence.js
+          node --check frontend/experience.js
+          node --check frontend/pulse.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -56,11 +58,13 @@ jobs:
         run: python scripts/r08_browser_smoke.py
       - name: R0.9 evidence lab browser acceptance
         run: python scripts/r09_browser_smoke.py
+      - name: R1.0 experience browser acceptance
+        run: python scripts/r10_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-retail-r09-ui
+          name: osmanx-retail-r10-ui
           path: |
             qa/r02-*.png
             qa/r03-*.png
@@ -70,5 +74,6 @@ jobs:
             qa/r07-*.png
             qa/r08-*.png
             qa/r09-*.png
+            qa/r10-*.png
           if-no-files-found: ignore
           retention-days: 7
