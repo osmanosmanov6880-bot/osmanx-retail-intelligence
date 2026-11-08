@@ -192,7 +192,7 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  else if(a==='dismiss-toast'){state.toast=null;render();}
  else if(a==='select-bar'){state.toast='Столбец: '+(target.title||'события');render();}
 }
-function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
+function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
  if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
@@ -209,9 +209,15 @@ root.addEventListener('change',e=>{
  }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
  else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
 });
-root.addEventListener('input',e=>{if(e.target.matches('[data-calc]'))handleField(e.target);});
+root.addEventListener('input',e=>{
+ if(e.target.matches('[data-calc]'))handleField(e.target);
+ else if(e.target.matches('[data-r3-pilot]')){
+  const element=e.target,key=element.dataset.r3Pilot,value=element.value;
+  preserveRerender(element,()=>{state.r3Pilot[key]=value;});
+ }
+});
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
-window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
+window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
 render();

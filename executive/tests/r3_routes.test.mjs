@@ -62,3 +62,11 @@ test('ATELIER R3 / dashboard links to decision labs without exposing navigation 
  for(const route of ['evidence','transfer-lab','pilot-lab','journal'])assert.match(root.innerHTML,new RegExp(`data-page="${route}"`));
  assert.match(root.innerHTML,/aria-hidden="true"/);
 });
+
+test('ATELIER R3 / pilot control values update on every input event rather than only on blur',()=>{
+ state.navigate('pilot-lab');
+ listeners.input({target:{matches:(selector)=>selector==='[data-r3-pilot]',dataset:{r3Pilot:'controlRequests'},value:'70'}});
+ listeners.input({target:{matches:(selector)=>selector==='[data-r3-pilot]',dataset:{r3Pilot:'controlPurchases'},value:'5'}});
+ assert.equal(state.pilot.controlRequests,'70');assert.equal(state.pilot.controlPurchases,'5');
+ assert.match(root.innerHTML,/Сравнение описательное/);
+});

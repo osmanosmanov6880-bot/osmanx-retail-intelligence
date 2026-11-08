@@ -74,7 +74,9 @@ try:
   page.evaluate('window.__OSMANX_DIAGNOSTICS__.navigate("pilot-lab")')
   assert 'Недостаточно данных' in page.locator('.r3-card').last.inner_text()
   page.locator('input[data-r3-pilot="controlRequests"]').fill('60')
+  assert page.evaluate('window.__OSMANX_DIAGNOSTICS__.pilot.controlRequests')=='60'
   page.locator('input[data-r3-pilot="controlPurchases"]').fill('4')
+  assert page.evaluate('window.__OSMANX_DIAGNOSTICS__.pilot.controlPurchases')=='4'
   page.locator('input[data-r3-pilot="controlPurchases"]').press('Tab')
   assert 'Сравнение описательное' in page.locator('.r3-card').last.inner_text()
   page.locator('button[data-action="r3-pilot-save"]').click()
