@@ -1,3 +1,16 @@
+# OSMANX Retail Intelligence — Executive ATELIER R7
+
+**Пять новых работающих разделов:** проверка источников, сценарное перемещение запасов без двойного распределения, бюджетные ограничения, симуляция жизненного цикла клиентских данных и проверяемое досье собственника с PDF/CSV. Русский премиальный интерфейс доступен на ноутбуке и телефоне.
+
+- **Открыть автономную сборку:** `executive/OSMANX_EXECUTIVE_OFFLINE.html` — без интернета, npm и ключей.
+- **Запуск разработчика:** из каталога `executive` выполнить `python3 -m http.server 4173 --bind 127.0.0.1`; открыть `http://127.0.0.1:4173`.
+- **Тесты:** `npm test`, `python3 scripts/build_standalone.py`, `python3 scripts/r7_browser_smoke.py` (последний требует Playwright Chromium).
+- **Документация:** [R7 — границы достоверности и новые функции](docs/RELEASE_R7.md).
+
+**Никаких подключений к живой 1С или складских списаний.** Финансовые показатели синтетические; предположения не выдаются за прибыль.
+
+---
+
 # OSMANX RETAIL INTELLIGENCE — ATELIER R6
 
 **Five new, working executive rooms:** local CSV field mapping with atomic validation; demand-to-receipt evidence; return-cohort risk with Wilson intervals; sample-size and allocation design for a controlled pilot; and a local accountability board with state transitions and evidence-backed outcomes.
