@@ -1,0 +1,6 @@
+﻿"id";"date";"storeId";"kind";"referenceId";"amount";"fee";"method";"batchId"
+"op-01";"2026-11-01";"store-A";"capture";"s-101";8900;180;"card";"batch-A"
+"op-02";"2026-11-01";"store-A";"capture";"s-101";8900;0;"cash";""
+"op-03";"2026-11-02";"store-B";"capture";"s-102";8900;178;"card";"batch-B"
+"op-04";"2026-11-03";"store-C";"capture";"s-103";7000;140;"card";"batch-C"
+"op-05";"2026-11-05";"store-B";"refund";"r-101";8900;0;"card";"batch-B-ref"

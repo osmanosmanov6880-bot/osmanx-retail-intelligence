@@ -1,0 +1,5 @@
+﻿"id";"date";"storeId";"batchId";"netAmount"
+"sett-01";"2026-11-02";"store-A";"batch-A";8720
+"sett-02";"2026-11-03";"store-B";"batch-B";8722
+"sett-03";"2026-11-04";"store-C";"batch-C";6860
+"sett-04";"2026-11-06";"store-B";"batch-B-ref";-8900
