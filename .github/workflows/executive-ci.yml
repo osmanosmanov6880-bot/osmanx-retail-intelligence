@@ -1,4 +1,4 @@
-name: OSMANX Executive ATELIER R9 - payment reconciliation, bank close, exceptions, CFO
+name: OSMANX Executive ATELIER R10 - local provenance, demand, SKU margin, coverage, decision packet
 on:
   push:
     paths:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Test all legacy and R9 decision workflows
+      - name: Test all legacy and R10 decision workflows
         run: npm test
       - name: Rebuild offline executive edition
         run: python3 scripts/build_standalone.py
@@ -46,6 +46,8 @@ jobs:
           node --check src/r9_core.mjs
           node --check src/r9_views.mjs
           node --check src/r9_pdf.mjs
+          node --check src/r10_core.mjs
+          node --check src/r10_views.mjs
           node --check build_check.js
           git diff --exit-code -- OSMANX_EXECUTIVE_OFFLINE.html
       - name: Verify required offline assets
@@ -59,6 +61,7 @@ jobs:
           test -s src/r7.css
           test -s src/r8.css
           test -s src/r9.css
+          test -s src/r10.css
           test -s assets/atelier-scene.webp
           test -s fixtures/r9_operations.csv
           test -s fixtures/r9_settlements.csv
