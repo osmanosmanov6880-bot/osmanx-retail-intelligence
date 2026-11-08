@@ -151,11 +151,14 @@ def test_action_idempotency_conflict_and_costs(site):
 
 def test_close_prevents_early_data_approval(site):
     c,h,_=site
+    # Compare dates in the store's Europe/Moscow timezone, not runner UTC.
+    from zoneinfo import ZoneInfo
+    store_today=datetime.now(ZoneInfo('Europe/Moscow')).date()
     x,_=pilot(c,h,request_id='valid-future-window',**{
-        'before_start':str(date.today()-timedelta(days=14)),
-        'before_end':str(date.today()-timedelta(days=8)),
-        'after_start':str(date.today()-timedelta(days=6)),
-        'after_end':str(date.today())})
+        'before_start':str(store_today-timedelta(days=14)),
+        'before_end':str(store_today-timedelta(days=8)),
+        'after_start':str(store_today-timedelta(days=6)),
+        'after_end':str(store_today)})
     assert x.status_code==201,x.text
     pid=x.json()['id'];c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h);action(c,h,pid)
     res=c.post(f'/api/admin/r15/pilots/{pid}/close',json={'decision':'completed','note':'Проверка закончена, результаты фиксируем'},headers=h)
