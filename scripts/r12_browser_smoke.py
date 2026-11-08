@@ -95,7 +95,7 @@ def main():
             f.locator('[name="coupon_code"]').fill(coupon)
             f.locator('button[type="submit"]').click()
             page.get_by_text('Результат проверки',exact=True).wait_for(timeout=10000)
-            assert page.get_by_text('issued',exact=True).count()>0
+            # Wait for the async coupon lookup to render its status before asserting.\n            page.get_by_text('issued',exact=True).wait_for(timeout=10000)
             verify=client.post(f'/api/admin/r11/campaigns/{cid}/redeem',json={'coupon_code':coupon,'sale_id':sale_id})
             assert verify.status_code==200,verify.text
             f=page.locator('[data-form="fulfill"]')
