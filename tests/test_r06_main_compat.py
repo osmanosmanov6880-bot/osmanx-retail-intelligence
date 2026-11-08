@@ -5,6 +5,11 @@ from test_r06 import site
 
 def replace_legacy_tables_with_published_r05_layout(db):
     with db.connect() as conn:
+        # The existing R0.5 schema must not be recreated in production or CI.
+        columns={row['name'] for row in conn.execute('PRAGMA table_info(reservations)')}
+        has_returns=conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='merchandise_returns'").fetchone()
+        if 'source_inventory_id' in columns and has_returns:
+            return
         conn.execute('PRAGMA foreign_keys=OFF')
         for name in ('reservations','returns_log','decisions'):
             conn.execute(f'DROP TABLE IF EXISTS {name}')
