@@ -6,6 +6,9 @@ import {renderEvidencePage,renderTransferPage,renderPilotPage,renderJournalPage}
 import {auditEvidence,matchDemand,discountStress,prioritizePortfolio,dossierSnapshot,dossierCsv,auditCsv,matchingCsv,portfolioCsv} from './r4_core.mjs';
 import {renderTrustPage,renderMatchPage,renderMarginPage,renderPortfolioPage,renderDossierPage} from './r4_views.mjs';
 import {exportDossierPdf} from './r4_dossier.mjs';
+import {reviewImport,reviewedCsv,sampleCsv,retentionCohorts,cohortCsv,collectionPlan,collectionCsv,serviceHealth,serviceCsv,branchBenchmark,benchmarkCsv} from './r5_core.mjs';
+import {renderR5DataRoom,renderR5Cohorts,renderR5Collection,renderR5Service,renderR5Benchmark} from './r5_views.mjs';
+import {exportBranchPdf} from './r5_report.mjs';
 
 const MODULES=[
  ['Невидимый спрос','INVISIBLE DEMAND','Увидеть запросы, которые не стали чеками.','Запросы покупателей и связанные продажи','Запустить добровольные уведомления о размере'],
@@ -22,6 +25,7 @@ const MODULES=[
 const svgLogo=`<span class="brand-name">OSMAN<span>X</span></span><span class="brand-sub">RETAIL INTELLIGENCE</span>`;
 const NAV=[
  {label:'ОБЗОР',items:[['dashboard','Финансовые возможности','grid'],['demo','Executive Demo · 30 секунд','play'],['decisions','Решения на сегодня','bolt'],['evidence','Проверка цифр','shield'],['transfer-lab','Перемещения: расчёт','layers'],['pilot-lab','Пилотный эксперимент','chart'],['journal','Журнал решений','file'],['calculator','Финансовый симулятор','chart'],['trust-lab','Качество данных','shield'],['demand-match','Поиск размеров по сети','layers'],['margin-stress','Экономика скидок','chart'],['portfolio','Приоритеты и бюджет','target'],['dossier','Документ решений','file']]},
+ {label:'ATELIER R5 · ПРОВЕРКА И РЕШЕНИЯ',items:[['data-room','Проверка CSV-выгрузки','shield'],['cohort-lab','Когорты повторных покупок','chart'],['collection-lab','План будущей коллекции','layers'],['service-lab','Протокол сервиса','target'],['branch-lab','Сравнение филиалов','shops']]},
  {label:'АНАЛИТИЧЕСКИЕ МОДУЛИ',items:MODULES.map((m,i)=>['module:'+i,`${String(i+1).padStart(2,'0')} · ${m[0]}`,i===0?'target':i===7?'chart':'layers'])},
  {label:'ВНЕДРЕНИЕ',items:[['diagnostic','Диагностика за 60 секунд','file'],['presentation','Режим переговоров','shops'],['sources','Источники и 1С','shield']]}
 ];
@@ -54,11 +58,16 @@ if(recovered.r4&&typeof recovered.r4==='object'){
   }
  }
 }
+state.r5Data={kind:'sales',text:'',preview:null,validatedSales:[],staged:[]}; // Never persisted: file content stays in RAM only.
+state.r5Cohort={weeks:4,minCohort:5};state.r5CohortSelected='';
+state.r5Collection={budget:80000,cap:12,reserve:1,leadDays:21,category:'all',seasonFactor:1};state.r5CollectionSelected='';
+state.r5Service={sla:120,minSamples:10};state.r5ServiceFocus='all';
+state.r5Benchmark={metric:'grossProfit',minDays:7};state.r5BenchmarkFocus='s1';
 let data=buildDataset('balanced'),timer=null;
 const root=document.getElementById('app');
 const scoped=()=>scopeData(data,{period:state.period,from:state.from,to:state.to,store:state.store,category:state.category,model:state.model,size:state.size});
 const demoScope=()=>scopeData(data,{period:14});
-function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
+function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
 function optionList(options,value){return options.map(([v,l])=>`<option value="${esc(v)}" ${value===v?'selected':''}>${esc(l)}</option>`).join('');}
 function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-open':''}" aria-label="Полная навигация" aria-hidden="${state.mobileOpen?'false':'true'}">
  <div class="drawer-top"><div class="brand"><div class="brand-mark"><span></span><span></span></div><div>${svgLogo}</div></div><button type="button" class="drawer-close" data-action="toggle-menu" aria-label="Закрыть разделы">${icon('close',23)}</button></div>
@@ -144,7 +153,7 @@ function renderSources(){const rows=[
  ['Продажа произошла благодаря системе','Контролируемый пилот / сравнение','Нельзя автоматически','Гипотеза до проверки']
 ];return `${renderHeading('1С остаётся. <em>Добавляются вопросы.</em>','DATA ORIGINS / TRUST','Учётная система может быть источником фактов. OSMANX объединяет их с новыми событиями и помогает проверить решения.')}<section class="panel source-panel"><div class="section-title"><div><p class="eyebrow">DATA SOURCE MATRIX</p><h2>Что откуда действительно известно</h2></div>${icon('shield',23)}</div><div class="table-scroll"><table><thead><tr><th>Показатель</th><th>Источник</th><th>Можно получить из учёта?</th><th>Качество вывода</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="integration-note">${icon('lock',19)} <div><strong>1С не подключена в этой демонстрации.</strong><p>Здесь нет фиктивных API, имитации реальных синхронизаций или пользовательских коммерческих данных. Для подключения нужны согласование формата выгрузки, права и контроль качества.</p></div></div></section><section class="source-cards"><div><p class="eyebrow">ФАКТ</p><h3>Подтверждаемое событие</h3><p>Чек, зарегистрированный запрос, физическая сверка, возврат или согласие.</p></div><div><p class="eyebrow">ОЦЕНКА</p><h3>Модель с параметрами</h3><p>Считаем сумму и раскрываем допущения, но не называем предотвращённым убытком.</p></div><div><p class="eyebrow">ГИПОТЕЗА</p><h3>Вопрос для пилота</h3><p>Проверяем причинность контролируемым измерением и отслеживанием расходов.</p></div></section>`;}
 function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>Демонстрационные данные · По состоянию на ${AS_OF}</span></footer>`;}
-function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
+function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
 function stopAuto(){state.auto=false;if(timer){clearInterval(timer);timer=null;}}
 const DURATIONS=[5000,6000,7000,7000,5000];
 function startAuto(){stopAuto();state.auto=true;state.stageStart=performance.now();timer=setInterval(()=>{const elapsed=performance.now()-state.stageStart;const progress=(DURATIONS.slice(0,state.scene).reduce((a,b)=>a+b,0)+Math.min(elapsed,DURATIONS[state.scene]))/30000;const el=document.getElementById('demo-progress-fill');if(el)el.style.width=`${(100*progress).toFixed(2)}%`;if(elapsed>=DURATIONS[state.scene]){if(state.scene===4){stopAuto();render();}else{state.scene++;state.stageStart=performance.now();render();}}},75);render();}
@@ -194,6 +203,47 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  }
  else if(a==='r4-dossier-csv'){r4DownloadCsv('OSMANX_R4_DECISION_DOSSIER.csv',dossierCsv(dossierSnapshot(data,scoped(),state.r4Portfolio)));}
  else if(a==='r4-dossier-pdf'){try{exportDossierPdf(dossierSnapshot(data,scoped(),state.r4Portfolio));state.toast='PDF сформирован локально. Это не реальный аудит.';render();}catch(err){toast('PDF не сформирован: '+err.message);}}
+ else if(a==='r5-sample'){state.r5Data.text=sampleCsv(state.r5Data.kind);state.r5Data.preview=null;render();}
+ else if(a==='r5-review'){state.r5Data.preview=reviewImport(state.r5Data.text,state.r5Data.kind,state.r5Data.validatedSales);render();}
+ else if(a==='r5-clear'){state.r5Data.text='';state.r5Data.preview=null;state.r5Data.validatedSales=[];state.r5Data.staged=[];render();}
+ else if(a==='r5-stage'){
+  const checked=state.r5Data.preview;
+  if(!checked?.valid){toast('Есть ошибки проверки CSV');return;}
+  if(checked.kind==='sales')state.r5Data.validatedSales=checked.rows;
+  state.r5Data.staged=checked.rows;state.r5Data.text='';state.r5Data.preview=null;
+  toast('Проверенный пакет сохранён только в памяти вкладки, не в 1С и не в демоаналитике.');
+ }
+ else if(a==='r5-export'){const r=state.r5Data.preview;if(r?.valid)r4DownloadCsv('OSMANX_R5_VALIDATED_'+r.kind+'.csv',reviewedCsv(r));}
+ else if(a==='r5-cohort-select'){state.r5CohortSelected=value;render();}
+ else if(a==='r5-cohort-csv'){const r=retentionCohorts(data,scoped(),state.r5Cohort);if(r.valid)r4DownloadCsv('OSMANX_R5_COHORTS.csv',cohortCsv(r));}
+ else if(a==='r5-cohort-journal'){
+  const r=retentionCohorts(data,scoped(),state.r5Cohort),selected=r.cohorts.find(x=>x.start===state.r5CohortSelected)||r.cohorts[0];
+  if(!selected){toast('Недостаточно связанных чеков');return;}
+  r4AddJournal('Проверить повторные покупки: когорта '+selected.start,'r5-retention',selected.firstReceiptIds);
+ }
+ else if(a==='r5-collection-open'){state.r5CollectionSelected=value;render();}
+ else if(a==='r5-collection-csv'){const r=collectionPlan(data,scoped(),state.r5Collection);if(r.valid)r4DownloadCsv('OSMANX_R5_COLLECTION_PLAN.csv',collectionCsv(r));}
+ else if(a==='r5-collection-journal'){
+  const r=collectionPlan(data,scoped(),state.r5Collection),selected=r.rows.find(x=>x.key===state.r5CollectionSelected)||r.rows[0];
+  if(!selected||selected.orderUnits<1){toast('Нет подтверждённых оснований для пилота');return;}
+  r4AddJournal(`Проверить закупку ${selected.product}, ${selected.size}, ${selected.storeId}, ${selected.orderUnits} ед.`,'r5-collection',selected.ids);
+ }
+ else if(a==='r5-service-open'){state.r5ServiceFocus=value;render();}
+ else if(a==='r5-service-csv'){const r=serviceHealth(scoped(),state.r5Service);if(r.valid)r4DownloadCsv('OSMANX_R5_SERVICE.csv',serviceCsv(r));}
+ else if(a==='r5-service-journal'){
+  const r=serviceHealth(scoped(),state.r5Service),selected=r.byStore.find(x=>x.storeId===state.r5ServiceFocus)||r.all;
+  if(!selected?.adequate){toast('Не хватает событий для пилота');return;}
+  r4AddJournal('Проверить норматив ответа '+r.sla+' сек / '+(selected.storeId==='all'?'сеть':selected.storeId),'r5-service',selected.evidenceIds.concat(selected.fittingIds));
+ }
+ else if(a==='r5-benchmark-open'){state.r5BenchmarkFocus=value;render();}
+ else if(a==='r5-benchmark-csv'){const r=branchBenchmark(data,scoped(),state.r5Benchmark);if(r.valid)r4DownloadCsv('OSMANX_R5_BRANCHES.csv',benchmarkCsv(r));}
+ else if(a==='r5-benchmark-pdf'){try{exportBranchPdf(branchBenchmark(data,scoped(),state.r5Benchmark));toast('PDF-сравнение сформировано локально.');}catch(e){toast('PDF не сформирован: '+e.message);}}
+ else if(a==='r5-benchmark-drill'){state.store=state.r5BenchmarkFocus;goto('dashboard');}
+ else if(a==='r5-benchmark-journal'){
+  const r=branchBenchmark(data,scoped(),state.r5Benchmark),selected=r.rows.find(x=>x.id===state.r5BenchmarkFocus)||r.rows[0];
+  if(!selected?.evidenceIds.length){toast('Недостаточно событий');return;}
+  r4AddJournal('Проверить различия филиала '+selected.name+': '+r.label,'r5-branch',selected.evidenceIds);
+ }
  else if(a==='r3-pilot-save'){
   const r=evaluatePilot({testRequests:scoped().requests.length,testPurchases:scoped().requests.filter(x=>x.purchased&&x.saleId).length,controlRequests:state.r3Pilot.controlRequests===''?null:Number(state.r3Pilot.controlRequests),controlPurchases:state.r3Pilot.controlPurchases===''?null:Number(state.r3Pilot.controlPurchases),unitGross:Number(state.r3Pilot.unitGross),pilotCost:Number(state.r3Pilot.pilotCost)});
   if(!r.valid){state.toast=r.errors.join('; ');render();return;}
@@ -238,7 +288,7 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  else if(a==='dismiss-toast'){state.toast=null;render();}
  else if(a==='select-bar'){state.toast='Столбец: '+(target.title||'события');render();}
 }
-function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
+function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
  if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
@@ -257,6 +307,25 @@ function r4UpdateField(element){
  };
  if(element.tagName==='INPUT')preserveRerender(element,changes);else{changes();render();}
 }
+function r5UpdateField(element){
+ const k=element.dataset.r5Field,value=element.value,number=value===''?null:Number(value);
+ const change=()=>{
+  if(k==='kind'){state.r5Data.kind=value;state.r5Data.preview=null;}
+  else if(k==='cohortWeeks')state.r5Cohort.weeks=number;
+  else if(k==='cohortMin')state.r5Cohort.minCohort=number;
+  else if(k==='collectionBudget')state.r5Collection.budget=number;
+  else if(k==='collectionCap')state.r5Collection.cap=number;
+  else if(k==='collectionReserve')state.r5Collection.reserve=number;
+  else if(k==='collectionLead')state.r5Collection.leadDays=number;
+  else if(k==='collectionFactor')state.r5Collection.seasonFactor=number;
+  else if(k==='collectionCategory')state.r5Collection.category=value;
+  else if(k==='serviceSla')state.r5Service.sla=number;
+  else if(k==='serviceMin')state.r5Service.minSamples=number;
+  else if(k==='benchmarkMetric')state.r5Benchmark.metric=value;
+  else if(k==='benchmarkMinDays')state.r5Benchmark.minDays=number;
+ };
+ if(element.tagName==='INPUT')preserveRerender(element,change);else{change();render();}
+}
 root.addEventListener('click',handleClick);
 root.addEventListener('change',e=>{
  if(e.target.matches('[data-field]'))handleField(e.target);
@@ -266,7 +335,10 @@ root.addEventListener('change',e=>{
   state.r3TransferPlan=null;render();
  }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
  else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
- else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}
+ else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-file]')){
+  const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r5Data.preview={valid:false,errors:['Файл больше 1,2 МБ'],issues:[],inspected:0};render();return;}
+  file.text().then(t=>{state.r5Data.text=t;state.r5Data.preview=null;render();}).catch(err=>toast('Файл не прочитан: '+err.message));
+ }
 });
 root.addEventListener('input',e=>{
  if(e.target.matches('[data-calc]'))handleField(e.target);
@@ -274,10 +346,10 @@ root.addEventListener('input',e=>{
   const element=e.target,key=element.dataset.r3Pilot,value=element.value;
   preserveRerender(element,()=>{state.r3Pilot[key]=value;});
  }
- else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}
+ else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
 });
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
-window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
+window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get r5(){const scope=scoped();const c=collectionPlan(data,scope,state.r5Collection),s=serviceHealth(scope,state.r5Service),b=branchBenchmark(data,scope,state.r5Benchmark),h=retentionCohorts(data,scope,state.r5Cohort);return {import:state.r5Data.preview?.valid??null,cohortMembers:h.members,collection:{valid:c.valid,units:c.units,spent:c.spent},service:{valid:s.valid,p90:s.all?.p90},benchmark:{valid:b.valid,metric:b.metric,values:b.rows.map(x=>x.value)}};},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
 render();

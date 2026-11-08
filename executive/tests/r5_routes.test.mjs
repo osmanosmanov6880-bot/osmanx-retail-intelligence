@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {buildDataset,scopeData} from '../src/model.mjs';
+import {renderR5DataRoom,renderR5Cohorts,renderR5Collection,renderR5Service,renderR5Benchmark} from '../src/r5_views.mjs';
+const d=buildDataset(),s=scopeData(d,{period:14});
+test('R5/UI-01 data room requires explicit review and never depicts automatic 1C synchronization',()=>{const html=renderR5DataRoom({kind:'sales',text:'',preview:null,validatedSales:[]});assert.match(html,/data-r5-file/);assert.match(html,/r5-review/);assert.match(html,/не меняет цифры/);});
+test('R5/UI-02 invalid uploaded file displays issues and disables confirmation',()=>{const html=renderR5DataRoom({kind:'sales',text:'bad',validatedSales:[],preview:{valid:false,errors:[],issues:[{row:2,id:'x',reason:'ошибка'}],inspected:1}});assert.match(html,/ошибка/);assert.doesNotMatch(html,/data-action="r5-stage"/);});
+test('R5/UI-03 valid file can be exported and staged separately',()=>{const html=renderR5DataRoom({kind:'sales',text:'',validatedSales:[],preview:{valid:true,issues:[],errors:[],totals:{gross:4000},inspected:1}});assert.match(html,/r5-export/);assert.match(html,/r5-stage/);});
+test('R5/UI-04 cohort heatmap masks future weeks',()=>{const html=renderR5Cohorts(d,s,{weeks:4,minCohort:5},'');assert.match(html,/r5-cohort-csv/);assert.match(html,/r5-future/);});
+test('R5/UI-05 collection page has adjustable spend and detail events',()=>{const html=renderR5Collection(d,s,{budget:80000,cap:12,reserve:1,leadDays:21,category:'all',seasonFactor:1},'');assert.match(html,/data-r5-field="collectionBudget"/);assert.match(html,/r5-collection-journal/);});
+test('R5/UI-06 valid service diagnoses recorded and unknown causes separately',()=>{const html=renderR5Service(s,{sla:120,minSamples:10},'all');assert.match(html,/Причина неизвестна/);assert.match(html,/r5-service-csv/);});
+test('R5/UI-07 branch comparator offers genuine local PDF and CSV actions',()=>{const html=renderR5Benchmark(d,s,{metric:'grossProfit',minDays:7},'s1');assert.match(html,/r5-benchmark-pdf/);assert.match(html,/r5-benchmark-csv/);assert.match(html,/r5-benchmark-drill/);});
+test('R5/UI-08 source labels remain unambiguous in all five routes',()=>{const html=[renderR5DataRoom({kind:'sales',text:'',preview:null,validatedSales:[]}),renderR5Cohorts(d,s,{weeks:4,minCohort:5},''),renderR5Collection(d,s,{budget:80000,cap:12,reserve:1,leadDays:21,category:'all',seasonFactor:1},''),renderR5Service(s,{sla:120,minSamples:10},'all'),renderR5Benchmark(d,s,{metric:'grossProfit',minDays:7},'s1')];for(const x of html){assert.match(x,/ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ/);assert.match(x,/НЕ ПОДКЛЮЧЕНО К 1С/);assert.equal((x.match(/<h1>/g)||[]).length,1);}});

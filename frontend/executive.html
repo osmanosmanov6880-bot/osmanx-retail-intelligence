@@ -472,6 +472,80 @@ em,.page-heading h1 em{color:var(--gold)!important}
 .r4-dashboard-links button>span{color:#a99579;font-size:9px}
 @media(max-width:900px){.r4-dashboard-links{align-items:flex-start;flex-direction:column}.r4-dashboard-links>div{flex:auto}.r4-dashboard-links nav{justify-content:flex-start}}
 @media(max-width:480px){.r4-dashboard-links nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.r4-dashboard-links button{padding:11px 8px;justify-content:space-between;min-width:0;font-size:10px}}
+
+/* OSMANX ATELIER R5 / quiet luxury. Reuse restrained R4 material system. */
+.r5-heading{margin:0 0 26px;padding:clamp(22px,3vw,46px) 0 24px;max-width:1200px;border-bottom:1px solid rgba(214,183,146,.22)}
+.r5-overline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:500 10px/1.5 Arial,sans-serif;letter-spacing:.14em;color:#d2b38c;margin:0 0 24px}
+.r5-overline span{font-size:9px;color:#928b81;letter-spacing:.09em}
+.r5-heading>small{display:block;font:400 10px/1.45 Arial,sans-serif;letter-spacing:.27em;color:#c7a47b;margin:0 0 14px}
+.r5-heading h1{font:400 clamp(37px,5.4vw,69px)/1.08 Georgia,'Times New Roman',serif;letter-spacing:-.049em;color:#f4eee6;margin:0 0 19px}
+.r5-heading em{font-style:normal;color:#d9bc95}
+.r5-heading>p:last-child{font:400 13px/1.75 Arial,sans-serif;color:#b1a99e;max-width:720px;margin:0}
+.r5-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.r5-stat{border:1px solid #383531;background:linear-gradient(145deg,#1c1d1d,#121416);min-width:0;padding:19px;display:flex;flex-direction:column;min-height:125px;gap:9px;justify-content:space-between}
+.r5-stat>span,.r5-stat small{color:#afa397;font:400 11px/1.5 Arial,sans-serif}
+.r5-stat strong{font:400 clamp(23px,2.65vw,40px)/1.1 Georgia,serif;letter-spacing:-.04em;color:#eee4d8;overflow-wrap:anywhere}
+.r5-stat small{font-size:10px;color:#a08d75}
+.r5-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,1fr);align-items:start;gap:17px;margin:0 0 22px}
+.r5-panel{min-width:0;padding:clamp(18px,2.2vw,35px);background:linear-gradient(146deg,#1c1d1d,#121416);border:1px solid #3b3732}
+.r5-panel-focus{border-color:#544637;background:linear-gradient(145deg,#24201b,#131517 72%)}
+.r5-panel p{font:400 12px/1.7 Arial,sans-serif;color:#aaa59e}
+.r5-label{font:400 clamp(23px,2.5vw,35px)/1.18 Georgia,serif;color:#f2e6d6;letter-spacing:-.025em;margin:0 0 23px}
+.r5-toolbar{display:flex;flex-wrap:wrap;align-items:end;gap:12px;padding:18px 0 24px}
+.r5-control{display:flex;flex-direction:column;gap:8px;min-width:0;margin:0 0 15px;flex:1 1 175px;font-family:Arial,sans-serif}
+.r5-control>span{font:400 11px/1.35 Arial,sans-serif;color:#b1a79c}
+.r5-control input,.r5-control select,.r5-control textarea{display:block;max-width:100%;width:100%;min-height:45px;border:1px solid #585044;background:#131516;color:#eee9df;border-radius:2px;font:400 13px/1.45 Arial,sans-serif;padding:10px 13px;outline:none}
+.r5-control select{appearance:auto}
+.r5-control textarea{resize:vertical;min-height:185px;font:400 11px/1.5 ui-monospace,Menlo,monospace}
+.r5-control input:focus-visible,.r5-control select:focus-visible,.r5-control textarea:focus-visible{border-color:#dfc8a8;box-shadow:0 0 0 2px rgba(222,189,145,.15)}
+.r5-upload{background:#201e1b;border:1px dashed #74624e;padding:12px;min-height:94px}
+.r5-upload input{border:0;padding:7px 0;background:transparent;color:#dcc7ad;font-size:12px}
+.r5-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:16px 0}
+.r5-primary,.r5-outline,.r5-quiet-btn{display:inline-flex;min-height:43px;align-items:center;justify-content:center;gap:8px;border-radius:3px;font:500 12px/1.35 Arial,sans-serif;padding:11px 16px;cursor:pointer}
+.r5-primary{background:#d5b890;border:1px solid #d5b890;color:#1b1814}
+.r5-outline{background:transparent;color:#e3c8a9;border:1px solid #90795d}
+.r5-quiet-btn{background:transparent;color:#aba399;border:1px solid #4c4741}
+.r5-primary:hover{background:#e7cba7}.r5-outline:hover,.r5-quiet-btn:hover{background:#302820}
+.r5-primary:focus-visible,.r5-outline:focus-visible,.r5-quiet-btn:focus-visible,.r5-select:focus-visible,.r5-branch:focus-visible{outline:2px solid #e5c596;outline-offset:3px}
+.r5-primary:disabled,.r5-outline:disabled{opacity:.38;cursor:not-allowed}
+.r5-big{font:400 clamp(47px,5vw,72px)/1.02 Georgia,serif;color:#d9c09e;letter-spacing:-.045em;overflow-wrap:anywhere;margin:22px 0}
+.r5-big small{display:block;font:400 12px/1.6 Arial,sans-serif;color:#ada295;letter-spacing:0;margin-top:8px}
+.r5-big.r5-risk{color:#d39c8b}
+.r5-rule{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 0;border-bottom:1px solid #413b33}
+.r5-rule span{font:400 11px/1.5 Arial,sans-serif;color:#aaa097}
+.r5-rule b{font:400 12px/1.6 Arial,sans-serif;color:#eddfd1;max-width:62%;text-align:right;overflow-wrap:anywhere}
+.r5-small,.r5-panel p.r5-small{font:400 10px/1.7 Arial,sans-serif;color:#968d83;margin:16px 0}
+.r5-warning,.r5-panel p.r5-warning{display:flex;gap:10px;align-items:start;font:400 11px/1.55 Arial,sans-serif;color:#ad9e89;margin:13px 0}
+.r5-warning svg{flex:0 0 auto;color:#bfa079}
+.r5-separator{height:1px;background:#3d3833;margin:25px 0}
+.r5-stamp{font:400 9px/1.5 Arial,sans-serif;letter-spacing:.12em;color:#94887b;text-align:center;padding:15px 0 25px;margin:0}
+.r5-evidence{display:flex;flex-direction:column;gap:5px;margin:13px 0;padding:12px 14px;background:#131517;border-left:2px solid #b69a77;word-break:break-word}
+.r5-evidence span{font:400 11px/1.45 Arial,sans-serif;color:#b7ab9d}
+.r5-evidence code{font:400 10px/1.65 ui-monospace,monospace;color:#d3b99a;overflow-wrap:anywhere}
+.r5-table-wrap{overflow-x:auto;width:100%;scrollbar-width:thin}
+.r5-table{width:100%;border-collapse:collapse;min-width:490px;font:400 11px/1.5 Arial,sans-serif;color:#e4d6c4}
+.r5-table th{color:#b5a38d;font-weight:500;text-align:left;padding:12px 13px;border-bottom:1px solid #5b5046;white-space:nowrap}
+.r5-table td{padding:12px 13px;border-bottom:1px solid #38342e;vertical-align:middle}
+.r5-table button{color:#ead1ae;background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.r5-table tr.is-active{background:#28221c}.r5-table td.r5-strong{background:#39443d;color:#bfe1c0}.r5-table td.r5-weak{background:#36312a;color:#e0c09f}.r5-table td.r5-future{color:#7e7a74}
+.r5-empty{color:#aaa095;padding:25px 0}
+.r5-row-list{max-height:620px;overflow:auto;scrollbar-width:thin}
+.r5-select{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;text-align:left;width:100%;padding:16px 11px;border:0;border-bottom:1px solid #3d3832;background:transparent;color:#e5d8c7;cursor:pointer}
+.r5-select.is-active,.r5-select:hover{background:#29251f;box-shadow:inset 2px 0 0 #c5a67d}
+.r5-select>span{min-width:0;display:flex;flex-direction:column;gap:5px}
+.r5-select>span:last-child{text-align:right}
+.r5-select b{font:500 12px/1.45 Arial,sans-serif;overflow-wrap:anywhere}
+.r5-select small{font:400 10px/1.5 Arial,sans-serif;color:#a89a88}
+.r5-bars{display:flex;flex-direction:column;gap:9px}
+.r5-branch{display:flex;flex-direction:column;gap:13px;padding:17px 12px;text-align:left;width:100%;background:#191a1a;border:1px solid #34322f;color:#e5d7c6;cursor:pointer}
+.r5-branch.is-active,.r5-branch:hover{border-color:#bfa581;background:#25221d}
+.r5-branch-head{display:flex;justify-content:space-between;gap:15px;align-items:baseline;font:400 12px/1.45 Arial,sans-serif}
+.r5-branch-head b{font:400 25px/1.1 Georgia,serif;color:#d6b890}
+.r5-track{width:100%;height:4px;background:#45413b;overflow:hidden}.r5-track i{height:100%;background:#d4b68d;display:block}
+.r5-branch small{color:#a49a8e;font:400 11px/1.55 Arial,sans-serif}
+@media(max-width:1050px){.r5-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.r5-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.r5-heading{padding:19px 0 25px}.r5-heading h1{font-size:clamp(32px,9vw,46px)}.r5-stats{gap:8px}.r5-stat{min-height:112px;padding:14px}.r5-stat strong{font-size:clamp(22px,5.7vw,30px)}.r5-panel{padding:17px}.r5-toolbar{gap:9px}.r5-control{flex:1 1 calc(50% - 8px)}.r5-actions>*{flex:1 1 130px}.r5-select{grid-template-columns:minmax(0,1fr) 92px}.r5-overline span{display:block}.r5-branch-head b{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.r5-branch,.r5-select,.r5-primary,.r5-outline{transition:none!important}}
 </style></head>
 <body><div id="app"><div class="boot">OSMAN<span>X</span><small>RETAIL INTELLIGENCE</small></div></div>
 <script>// MODULE model.mjs
@@ -1525,7 +1599,358 @@ function exportDossierPdf(snapshot){
  setTimeout(()=>URL.revokeObjectURL(url),20000);return blob;
 }
 
+// MODULE r5_core.mjs
+/** ATELIER R5: local data-contract, privacy-safe reporting and decision labs.
+ * No external APIs. Imported rows are intentionally isolated from demo analytics.
+ */
+
+const storeIds=new Set(STORES.map(x=>x.id));
+const productIds=new Set(CATALOG.map(x=>x.id));
+const SUM=(xs,f)=>xs.reduce((a,x)=>a+f(x),0);
+const r5Finite=n=>typeof n==='number'&&Number.isFinite(n);
+const money=n=>Math.round((n+Number.EPSILON)*100)/100;
+const integer=(n,max)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
+const validDate=x=>{if(typeof x!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(x))return false;const d=new Date(x+'T12:00:00Z');return Number.isFinite(d.valueOf())&&d.toISOString().slice(0,10)===x;};
+const dateMs=x=>Date.parse(x+'T12:00:00Z');
+const required={
+ sales:['id','date','storeId','modelId','size','paidPrice','cost'],
+ returns:['id','date','storeId','saleId','modelId','size','refundedPrice','reversedCost'],
+ stock:['id','asOf','storeId','modelId','size','color','quantity']
+};
+const numeric={sales:['paidPrice','cost'],returns:['refundedPrice','reversedCost'],stock:['quantity']};
+
+/** RFC 4180 style quoting, BOM, \n/\r\n and Excel's semicolon delimiter. */
+function csvRows(text){
+ if(typeof text!=='string'||text.length>1200000)throw Error('CSV должен быть текстом до 1,2 МБ');
+ const input=text.replace(/^\uFEFF/,'');const head=input.slice(0,input.indexOf('\n')===-1?input.length:input.indexOf('\n'));
+ const delimiter=(head.match(/;/g)||[]).length>(head.match(/,/g)||[]).length?';':',';
+ const rows=[];let row=[],field='',quoted=false,closed=false;
+ for(let i=0;i<input.length;i++){
+  const ch=input[i];
+  if(quoted){if(ch==='"'){if(input[i+1]==='"'){field+='"';i++;}else{quoted=false;closed=true;}}else field+=ch;continue;}
+  if(ch==='"'){if(field!==''||closed)throw Error('Некорректные кавычки в CSV');quoted=true;continue;}
+  if(ch===delimiter||ch==='\n'||ch==='\r'){
+   row.push(field);field='';closed=false;
+   if(ch!==delimiter){if(row.some(v=>v.trim()!==''))rows.push(row);row=[];if(ch==='\r'&&input[i+1]==='\n')i++;}
+   if(rows.length>1501)throw Error('CSV ограничен 1500 строками');continue;
+  }
+  if(closed&&!/\s/.test(ch))throw Error('Лишние символы после закрывающей кавычки');
+  field+=ch;
+ }
+ if(quoted)throw Error('Не закрыта кавычка CSV');
+ row.push(field);if(row.some(v=>v.trim()!==''))rows.push(row);
+ if(!rows.length)throw Error('CSV пуст');
+ return {delimiter,rows};
+}
+function reviewImport(text,kind='sales',previousSales=[]){
+ const errors=[],issues=[];
+ if(!Object.hasOwn(required,kind))return {valid:false,errors:['Неизвестный тип выгрузки'],issues:[],rows:[],kind};
+ let parsed;
+ try{parsed=csvRows(text);}catch(e){return {valid:false,errors:[e.message],issues:[],rows:[],kind};}
+ const [head,...lines]=parsed.rows,cols=head.map(x=>x.trim());
+ const missing=required[kind].filter(x=>!cols.includes(x));
+ const duplicateColumns=cols.filter((x,i)=>cols.indexOf(x)!==i);
+ if(missing.length)errors.push('Нет столбцов: '+missing.join(', '));
+ if(duplicateColumns.length)errors.push('Дубли названий столбцов: '+[...new Set(duplicateColumns)].join(', '));
+ if(!lines.length)errors.push('Нет строк событий');
+ if(errors.length)return {valid:false,kind,errors,issues,rows:[],columns:cols};
+ const saleIndex=new Map(previousSales.map(x=>[x.id,x]));const seen=new Set();const rowItems=[];
+ for(let i=0;i<lines.length;i++){
+  const cells=lines[i],number=i+2,row={};
+  if(cells.length!==cols.length){issues.push({row:number,reason:'Количество полей не совпадает с заголовком'});continue;}
+  cols.forEach((col,j)=>{row[col]=cells[j].trim();});
+  let reasons=[];
+  for(const col of required[kind])if(row[col]==='')reasons.push('Пустое поле '+col);
+  if(seen.has(row.id))reasons.push('Повторяется ID события');seen.add(row.id);
+  if(!storeIds.has(row.storeId))reasons.push('Неизвестный филиал');
+  if(!productIds.has(row.modelId))reasons.push('Нет SKU в демонстрационном справочнике');
+  if(!['XS','S','M','L','XL'].includes(row.size))reasons.push('Неизвестный размер');
+  const date=kind==='stock'?row.asOf:row.date;
+  if(!validDate(date))reasons.push('Некорректная календарная дата');
+  for(const key of numeric[kind]){
+   const source=row[key],value=Number(source);
+   if(source===''||!Number.isFinite(value)||value<0||value>1e9||(kind==='stock'&&!integer(value,1000000))){reasons.push('Недопустимое значение '+key);}else row[key]=value;
+  }
+  if(kind==='returns'){
+   const sold=saleIndex.get(row.saleId);
+   if(!sold)reasons.push('Возврат не связан с импортированным чеком');
+   else{
+    if(sold.storeId!==row.storeId||sold.modelId!==row.modelId||sold.size!==row.size)reasons.push('SKU/филиал/размер не совпадает с чеком');
+    if(validDate(row.date)&&row.date<sold.date)reasons.push('Возврат раньше чека');
+    if(r5Finite(row.refundedPrice)&&row.refundedPrice>sold.paidPrice)reasons.push('Возврат больше оплаты');
+    if(r5Finite(row.reversedCost)&&row.reversedCost>sold.cost)reasons.push('Сторно себестоимости выше чека');
+   }
+  }
+  if(reasons.length)issues.push({row:number,id:row.id||'—',reason:reasons.join('; ')});
+  else rowItems.push(Object.fromEntries(required[kind].map(k=>[k,row[k]])));
+ }
+ if(kind==='returns'){
+  const bySale=new Set();
+  for(const x of rowItems){if(bySale.has(x.saleId))issues.push({row:'—',id:x.id,reason:'Повторное сторнирование одного чека'});bySale.add(x.saleId);}
+ }
+ const accepted=issues.length?[]:rowItems; // Atomic stage: any invalid row blocks the entire batch.
+ const totals=kind==='sales'?{revenue:SUM(rowItems,x=>x.paidPrice),cost:SUM(rowItems,x=>x.cost),gross:SUM(rowItems,x=>x.paidPrice-x.cost)}:
+  kind==='returns'?{refund:SUM(rowItems,x=>x.refundedPrice),reverseCost:SUM(rowItems,x=>x.reversedCost)}:{units:SUM(rowItems,x=>x.quantity)};
+ return {kind,valid:errors.length===0&&issues.length===0,columns:cols,rows:accepted,inspected:lines.length,validRows:rowItems.length,issues,errors,totals,delimiter:parsed.delimiter,provenance:'Локальная проверка файла; не импортировано в учёт или демопоказатели'};
+}
+const csvCell=v=>{let s=String(v??'');if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';};
+function safeCsv(rows){return '\uFEFF'+rows.map(line=>line.map(csvCell).join(';')).join('\r\n')+'\r\n';}
+function reviewedCsv(review){if(!review.valid)return null;return safeCsv([required[review.kind],...review.rows.map(row=>required[review.kind].map(k=>row[k]))]);}
+function sampleCsv(kind='sales'){
+ if(kind==='stock')return safeCsv([required.stock,['stock-example','2026-11-08','s1','JKT-AURA','L','Графит',3]]);
+ if(kind==='returns')return safeCsv([required.returns,['return-example','2026-11-08','s1','sale-example','JKT-AURA','L',8900,4900]]);
+ return safeCsv([required.sales,['sale-example','2026-11-08','s1','JKT-AURA','L',8900,4900]]);
+}
+
+const monday=date=>{const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()-(d.getUTCDay()+6)%7);return d.toISOString().slice(0,10);};
+const weekNext=(day,n)=>new Date(dateMs(day)+n*7*86400000).toISOString().slice(0,10);
+/** First OBSERVED paid check within the active window, not lifetime customer acquisition. */
+function retentionCohorts(dataset,scope,{weeks=4,minCohort=5}={}){
+ if(!integer(weeks,8)||weeks<1||!integer(minCohort,1000))return {valid:false,errors:['Недопустимые параметры когорт'],cohorts:[]};
+ const returned=new Set(dataset.returns.filter(x=>x.date<=scope.to).map(x=>x.saleId));
+ const paid=scope.sales.filter(x=>x.memberId&&!returned.has(x.id)).sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));
+ const byMember=new Map();
+ for(const sale of paid){if(!byMember.has(sale.memberId))byMember.set(sale.memberId,[]);byMember.get(sale.memberId).push(sale);}
+ const cohorts=new Map();
+ for(const [member,sales] of byMember){const started=monday(sales[0].date);if(!cohorts.has(started))cohorts.set(started,[]);cohorts.get(started).push({id:member,sales});}
+ const result=[...cohorts.entries()].sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12).map(([start,people])=>{
+  const periods=[];
+  for(let week=1;week<=weeks;week++){
+   const end=weekNext(start,week+1);const cutoff=new Date(dateMs(end)-86400000).toISOString().slice(0,10);
+   if(cutoff>scope.to){periods.push({week,rate:null,count:null,complete:false});continue;}
+   let count=0,ids=[];
+   for(const person of people){const hit=person.sales.find(s=>monday(s.date)===weekNext(start,week));if(hit){count++;ids.push(hit.id);}}
+   periods.push({week,rate:count/people.length,count,complete:true,receiptIds:ids.slice(0,12)});
+  }
+  return {start,customers:people.length,status:people.length>=minCohort?'Описательная когорта':'Малая выборка',periods,firstReceiptIds:people.slice(0,12).map(x=>x.sales[0].id)};
+ });
+ const mature=result.flatMap(c=>c.periods.filter(x=>x.complete).map(x=>({cohort:c.start,n:c.customers,count:x.count,week:x.week})));
+ return {valid:true,cohorts:result,members:byMember.size,sourceReceipts:paid.length,excludedReturns:scope.sales.filter(x=>x.memberId&&returned.has(x.id)).length,
+  anonymousSales:scope.sales.filter(x=>!x.memberId).length,weekOne:mature.filter(x=>x.week===1).length?SUM(mature.filter(x=>x.week===1),x=>x.count)/SUM(mature.filter(x=>x.week===1),x=>x.n):null,
+  limitations:['Первое наблюдение в выбранном периоде не равно первому визиту за всю жизнь.','Когорта определяется только по синтетическим идентификаторам программы лояльности.','Будущие недели не включаются в знаменатель и показаны как незавершённые.']};
+}
+
+/** Budget-constrained collection hypothesis. Distinct event streams cannot be summed into unique buyers. */
+function collectionPlan(dataset,scope,{budget=80000,cap=12,reserve=1,leadDays=21,category='all',seasonFactor=1}={}){
+ const errors=[];
+ if(!r5Finite(budget)||budget<0||budget>1e9)errors.push('Бюджет от 0 до 1 млрд ₽');
+ if(!integer(cap,150))errors.push('Количество единиц от 0 до 150');
+ if(!integer(reserve,100))errors.push('Резерв от 0 до 100');
+ if(!integer(leadDays,365))errors.push('Срок поставки от 0 до 365 дней');
+ if(!r5Finite(seasonFactor)||seasonFactor<.25||seasonFactor>3)errors.push('Сезонный коэффициент от 0,25 до 3');
+ if(category!=='all'&&!dataset.products.some(p=>p.category===category))errors.push('Неизвестная категория');
+ if(errors.length)return {valid:false,errors,rows:[],selected:[],spent:0,remaining:0};
+ const groups=new Map(),key=e=>e.storeId+'|'+e.modelId+'|'+e.size;
+ const ensure=e=>{const k=key(e);if(!groups.has(k))groups.set(k,{key:k,storeId:e.storeId,modelId:e.modelId,size:e.size,color:'Графит',requests:0,preorders:0,deposits:0,preferences:0,sales:0,returns:0,stock:0,ids:[]});return groups.get(k);};
+ const add=(src,field,filter=()=>true)=>{for(const e of src){if(!filter(e))continue;const p=product(e.modelId);if(category!=='all'&&p.category!==category)continue;const g=ensure(e);g[field]++;if(g.ids.length<15)g.ids.push(e.id);}};
+ add(scope.requests,'requests',e=>!e.purchased);
+ add(scope.preorders,'preorders',e=>e.status!=='Отменён');
+ add(scope.preorders,'deposits',e=>e.status!=='Отменён'&&e.depositPaid);
+ add(scope.preferences,'preferences');
+ add(scope.sales,'sales');
+ add(scope.returns,'returns');
+ for(const e of scope.stock){const p=product(e.modelId);if(category!=='all'&&p.category!==category)continue;if(e.color==='Графит')ensure(e).stock+=e.quantity;}
+ const rows=[...groups.values()].map(g=>{
+  const p=product(g.modelId),netSales=Math.max(0,g.sales-g.returns);
+  const weighted=g.deposits*.85+(g.preorders-g.deposits)*.35+g.requests*.28+g.preferences*.08+netSales*.06;
+  const signal=Math.ceil(weighted*seasonFactor),need=Math.max(0,signal-Math.max(0,g.stock-reserve));
+  const confidence=g.deposits>0||g.requests>=5?'Умеренная':g.requests>0||g.preorders>0?'Ограниченная':'Недостаточно прямых сигналов';
+  const score=g.deposits*10+g.requests*4+g.preorders*3+g.preferences*.4+netSales*.1;
+  return {...g,product:p.name,category:p.category,cost:p.cost,unitGross:p.price-p.cost,score,netSales,need,confidence,orderUnits:0,plannedCost:0,estimatedGross:0};
+ }).filter(x=>x.requests+x.preorders+x.preferences>0).sort((a,b)=>b.score-a.score||a.key.localeCompare(b.key));
+ let remaining=budget,units=0;
+ for(const r of rows){if(units>=cap)break;const affordable=r.cost>0?Math.floor(remaining/r.cost):0;const qty=Math.min(r.need,affordable,cap-units);
+  if(qty<=0)continue;r.orderUnits=qty;r.plannedCost=qty*r.cost;r.estimatedGross=qty*r.unitGross;remaining=money(remaining-r.plannedCost);units+=qty;}
+ const selected=rows.filter(x=>x.orderUnits>0);
+ return {valid:true,rows,selected,spent:money(budget-remaining),remaining,units,unmet:SUM(rows,r=>Math.max(0,r.need-r.orderUnits)),leadDays,category,
+  warnings:['Сигналы из разных каналов могут относиться к одному покупателю. Это не число уникальных заказов.',
+   'Остатки - только учётный снимок, не гарантированная физическая доступность.',
+   'Ожидаемая валовая прибыль не учитывает нереализованный товар, возвраты, налоги и маркетинг.']};
+}
+function collectionCsv(plan){return safeCsv([['SKU','Размер','Филиал','Модель','Запросы','Предзаказы','Оплаченные задатки','Пожелания','Наличие','Предлагаемые единицы','Себестоимость за ед.','Затраты сценария','Уверенность','ID оснований'],
+ ...plan.rows.map(r=>[r.modelId,r.size,r.storeId,r.product,r.requests,r.preorders,r.deposits,r.preferences,r.stock,r.orderUnits,r.cost,r.plannedCost,r.confidence,r.ids.join(' | ')])]);}
+
+function quantile(values,p){if(!values.length)return null;const a=[...values].sort((x,y)=>x-y);const pos=(a.length-1)*p,lo=Math.floor(pos),hi=Math.ceil(pos);return Math.round(a[lo]+(a[hi]-a[lo])*(pos-lo));}
+function serviceHealth(scope,{sla=120,minSamples=10}={}){
+ const errors=[];
+ if(!integer(sla,7200)||sla<1)errors.push('SLA должен быть от 1 до 7200 секунд');
+ if(!integer(minSamples,1000)||minSamples<1)errors.push('Минимальная выборка должна быть от 1 до 1000');
+ if(errors.length)return {valid:false,errors,byStore:[],all:null};
+ const summarise=(events,fittings,storeId)=>{
+  const measured=events.filter(e=>r5Finite(e.responseSeconds)&&e.responseSeconds>=0),lat=measured.map(e=>e.responseSeconds),breaches=measured.filter(e=>e.responseSeconds>sla);
+  const notPurchased=fittings.filter(e=>!e.purchased),reasoned=notPurchased.filter(e=>e.reason&&e.reasonType==='со слов покупателя');
+  const reasonCounts={};for(const e of reasoned)reasonCounts[e.reason]=(reasonCounts[e.reason]||0)+1;
+  return {storeId,requests:events.length,sample:measured.length,p50:quantile(lat,.5),p90:quantile(lat,.9),breaches:breaches.length,
+   breachRate:measured.length?breaches.length/measured.length:null,resolved:events.filter(e=>e.resolved).length,resolutionRate:events.length?events.filter(e=>e.resolved).length/events.length:null,
+   fittingCount:fittings.length,notPurchased:notPurchased.length,reasoned:reasoned.length,unknownReasons:notPurchased.length-reasoned.length,
+   reasons:Object.entries(reasonCounts).sort((a,b)=>b[1]-a[1]).map(([reason,count])=>({reason,count})),adequate:measured.length>=minSamples,
+   evidenceIds:breaches.slice(0,10).map(x=>x.id),fittingIds:reasoned.slice(0,10).map(x=>x.id)};
+ };
+ return {valid:true,all:summarise(scope.assistance,scope.fittings,'all'),byStore:STORES.map(s=>summarise(scope.assistance.filter(x=>x.storeId===s.id),scope.fittings.filter(x=>x.storeId===s.id),s.id)),sla,minSamples,
+  limitations:['Время реакции измерено по QR-обращениям, а не по всем посетителям.','Причина отказа отражена только там, где покупатель сам назвал её.','Сравнение скорости и покупки не является доказательством влияния на продажи.']};
+}
+function serviceCsv(report){return safeCsv([['Филиал','Событий','p50 сек','p90 сек','Выше SLA','Разрешены','Примерки без покупки','Названа причина','Неизвестная причина','ID просрочек'],...report.byStore.map(r=>[r.storeId,r.requests,r.p50??'',r.p90??'',r.breaches,r.resolved,r.notPurchased,r.reasoned,r.unknownReasons,r.evidenceIds.join(' | ')])]);}
+
+const BENCHMARK_METRICS={grossProfit:'Валовая прибыль',margin:'Валовая маржа',conversion:'Конверсия визитов',unmetPer100:'Запросы без покупки / 100 визитов',serviceP90:'p90 ответа, сек'};
+function branchBenchmark(dataset,scope,{metric='grossProfit',minDays=7}={}){
+ const errors=[];if(!Object.hasOwn(BENCHMARK_METRICS,metric))errors.push('Неизвестный показатель');
+ if(!integer(minDays,90)||minDays<1)errors.push('Минимальная длительность от 1 до 90 дней');
+ if(errors.length)return {valid:false,errors,rows:[]};
+ const days=Math.round((dateMs(scope.to)-dateMs(scope.from))/86400000)+1;
+ const rows=STORES.map(store=>{
+  const s=scopeData(dataset,{...scope.filter,period:'custom',from:scope.from,to:scope.to,store:store.id});
+  const lat=s.assistance.map(e=>e.responseSeconds).filter(x=>r5Finite(x)&&x>=0);
+  const normalized=s.totals.visits===null||s.totals.visits===0?null:s.totals.unsoldRequests/s.totals.visits*100;
+  const m={grossProfit:s.totals.grossProfit,margin:s.totals.grossMargin,conversion:s.totals.conversion,unmetPer100:normalized,serviceP90:quantile(lat,.9)};
+  const value=m[metric];
+  return {id:store.id,name:store.name,value,metrics:m,days,visits:s.totals.visits,revenue:s.totals.revenue,grossProfit:s.totals.grossProfit,
+   saleCount:s.sales.length,returns:s.returns.length,requests:s.requests.length,assistance:s.assistance.length,
+   evidenceIds:[...s.sales.slice(0,3).map(x=>x.id),...s.requests.slice(0,3).map(x=>x.id),...s.assistance.slice(0,3).map(x=>x.id)],
+   adequate:days>=minDays&&s.sales.length>=10&&(metric==='serviceP90'?lat.length>=10:metric==='conversion'||metric==='unmetPer100'?s.totals.visits!==null&&s.totals.visits>=50:true)};
+ });
+ const lowerIsBetter=metric==='serviceP90'||metric==='unmetPer100';
+ const ranked=[...rows].sort((a,b)=>{if(a.value===null)return 1;if(b.value===null)return -1;return (lowerIsBetter?1:-1)*(a.value-b.value);});
+ return {valid:true,metric,label:BENCHMARK_METRICS[metric],rows,ranked,days,comparable:rows.every(x=>x.adequate),
+  caveats:[scope.filter.category!=='all'||scope.filter.model!=='all'||scope.filter.size!=='all'?'Для товарных фильтров посещения не относятся к выбранному SKU, поэтому конверсия и запросы на 100 визитов скрываются.':null,
+   'Различия между филиалами могут объясняться трафиком, ассортиментом и локальными условиями. Это не доказанная причинность.',
+   'Филиалы сопоставляются по одинаковому периоду; источник — синтетические чековые и операционные события.'].filter(Boolean)};
+}
+function benchmarkCsv(report){return safeCsv([['Филиал','Период, дней','Выручка','Валовая прибыль','Чеков','Возвратов','Запросов','Помощь','Выбранный показатель','Достаточно данных','ID оснований'],...report.rows.map(r=>[r.name,r.days,r.revenue,r.grossProfit,r.saleCount,r.returns,r.requests,r.assistance,r.value??'',r.adequate?'Да':'Нет',r.evidenceIds.join(' | ')])]);}
+
+function cohortCsv(result){return safeCsv([['Когорта','Покупателей','Надёжность',...Array.from({length:8},(_,i)=>'Неделя '+(i+1))],...result.cohorts.map(c=>[c.start,c.customers,c.status,...Array.from({length:8},(_,i)=>c.periods[i]?(c.periods[i].complete?((c.periods[i].rate*100).toFixed(1)+'%'):'Не завершена'):'')])]);}
+
+// MODULE r5_views.mjs
+/** R5 quiet-luxury user journeys, no synthetic amounts presented as actual uploads. */
+
+
+
+const r5Money=n=>n===null||n===undefined?'—':MONEY(n);
+const r5Number=n=>n===null||n===undefined?'—':NUMBER(n);
+const r5Percent=n=>n===null||n===undefined?'—':PERCENT(n);
+const r5Heading=(index,kicker,title,desc)=>`<header class="r5-heading"><p class="r5-overline">OSMANX / EXECUTIVE R5 · ${index}<span>ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ</span></p><small>${esc(kicker)}</small><h1>${title}</h1><p>${esc(desc)}</p></header>`;
+const r5Stat=(label,value,note='')=>`<div class="r5-stat"><span>${esc(label)}</span><strong>${value}</strong>${note?`<small>${esc(note)}</small>`:''}</div>`;
+const r5Input=(field,label,value,{min=0,max=999999,step=1}={})=>`<label class="r5-control"><span>${esc(label)}</span><input type="number" data-r5-field="${field}" value="${esc(String(value??''))}" min="${min}" max="${max}" step="${step}" /></label>`;
+const r5Warning=(msg)=>`<p class="r5-warning">${icon('info',16)} ${esc(msg)}</p>`;
+const r5Label=(title)=>`<h2 class="r5-label">${esc(title)}</h2>`;
+const r5Stamp=()=>`<p class="r5-stamp">OSMANX WORLD · PRIVATE EXECUTIVE INTELLIGENCE · НЕ ПОДКЛЮЧЕНО К 1С</p>`;
+const r5Table=(heads,rows,empty='Нет данных по выбранным условиям')=>rows.length?`<div class="r5-table-wrap"><table class="r5-table"><thead><tr>${heads.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`:`<p class="r5-empty">${esc(empty)}</p>`;
+const r5Td=(value)=>`<td>${esc(String(value??'—'))}</td>`;
+
+function renderR5DataRoom(state){
+ const r=state.preview;const k=state.kind;
+ const names={sales:'Продажи',returns:'Возвраты',stock:'Учётные остатки'};
+ return `${r5Heading('01','LOCAL DATA CONTRACT','Данные должны <em>выдержать проверку.</em>','Проверьте локальную CSV-выгрузку до пилота. Файл не отправляется в сеть и не меняет цифры демонстрационного кабинета.')}
+ <section class="r5-stats">${r5Stat('Статус пакета',r?(r.valid?'Проверен':'Есть ошибки'):'Не проверен','Не означает импорт в 1С')}${r5Stat('Проверено строк',r?r5Number(r.inspected||0):'—')}${r5Stat('Ошибок и пропусков',r?r5Number((r.issues?.length||0)+(r.errors?.length||0)):'—')}${r5Stat('Локальный набор чеков',r5Number(state.validatedSales?.length||0),'Только в памяти вкладки')}</section>
+ <div class="r5-grid"><section class="r5-panel">${r5Label('Просмотр и проверка выгрузки')}
+ <label class="r5-control"><span>Вид документа</span><select data-r5-field="kind">${Object.entries(names).map(([key,label])=>`<option value="${key}" ${k===key?'selected':''}>${label}</option>`).join('')}</select></label>
+ <label class="r5-control r5-upload"><span>Выберите CSV с устройства (не более 1,2 МБ)</span><input type="file" data-r5-file accept=".csv,text/csv" aria-label="Загрузить CSV" /></label>
+ <label class="r5-control"><span>Или вставьте текст CSV — UTF-8, разделитель ; либо ,</span><textarea data-r5-text rows="8" spellcheck="false" placeholder="id;date;storeId;modelId;size;paidPrice;cost">${esc(state.text||'')}</textarea></label>
+ <div class="r5-actions"><button type="button" class="r5-outline" data-action="r5-sample">Пример ${esc(names[k])}</button><button type="button" class="r5-primary" data-action="r5-review">Проверить файл</button><button type="button" class="r5-quiet-btn" data-action="r5-clear">Очистить</button></div>
+ <p class="r5-small">Колонки и идентификаторы обязательны. Импорт возвращается отклонённым целиком при любой некорректной строке. Чувствительные персональные данные не нужны.</p></section>
+ <section class="r5-panel r5-panel-focus">${r5Label('Протокол приёмки')}
+ ${r?`<div class="r5-big ${r.valid?'':'r5-risk'}">${r.valid?'PASS':'REVIEW'}</div><p>${r.valid?'Структура проверена. Файл не присоединён к демонстрационным показателям.':'Исправьте проблемы; подтверждение и экспорт результата заблокированы.'}</p>
+ ${r.errors?.map(x=>r5Warning(x)).join('')||''}${r.issues?.slice(0,10).map(x=>`<div class="r5-evidence"><code>#${esc(String(x.row))} · ${esc(x.id||'')}</code><span>${esc(x.reason)}</span></div>`).join('')||''}
+ ${r.valid?`<div class="r5-rule"><span>Валовая прибыль по импортированным чекам</span><b>${r.kind==='sales'?r5Money(r.totals.gross):'Не применяется'}</b></div><button class="r5-primary" type="button" data-action="r5-stage">Сохранить для проверки в этой вкладке</button><button class="r5-outline" type="button" data-action="r5-export">Скачать нормализованный CSV</button>`:''}`:
+ `<div class="r5-big">—</div><p>Добавьте файл или воспользуйтесь образцом. Здесь появится построчный протокол.</p>`}
+ <div class="r5-separator"></div><p class="r5-small">Для проверки возврата сначала проверьте и сохраните его исходный чек. Схемы совместимы с подготовленным экспортом учётной системы, но автоматической интеграции с 1С нет.</p></section></div>${r5Stamp()}`;
+}
+function renderR5Cohorts(dataset,scope,opts,selectedStart){
+ const result=retentionCohorts(dataset,scope,opts),selected=result.cohorts.find(x=>x.start===selectedStart)||result.cohorts[0];
+ return `${r5Heading('02','RETENTION EVIDENCE','Возвращаются ли <em>ваши покупатели?</em>','Когорты участников программы лояльности. Учитываются только не возвращённые чеками покупки и завершённые недели наблюдений.')}
+ <section class="r5-stats">${r5Stat('Участников с покупками',r5Number(result.members))}${r5Stat('Кассовых записей в выборке',r5Number(result.sourceReceipts))}${r5Stat('Повтор на следующей неделе',r5Percent(result.weekOne),'Описательная метрика')}${r5Stat('Исключённые возвращённые чеки',r5Number(result.excludedReturns))}</section>
+ <section class="r5-toolbar">${r5Input('cohortWeeks','Недель после первой покупки',opts.weeks,{min:1,max:8})}${r5Input('cohortMin','Минимум участников',opts.minCohort,{min:1,max:1000})}<button type="button" class="r5-outline" data-action="r5-cohort-csv">Скачать когорты CSV</button></section>
+ <div class="r5-grid"><section class="r5-panel">${r5Label('Тепловая карта повторных покупок')}
+ ${r5Table(['Неделя первой покупки','Людей',...Array.from({length:opts.weeks},(_,i)=>'+'+(i+1)+' нед.')],result.cohorts.map(c=>`<tr class="r5-click-row ${selected?.start===c.start?'is-active':''}" data-r5-cohort="${c.start}" tabindex="0"><td><button type="button" data-action="r5-cohort-select" data-value="${c.start}">${esc(c.start)}</button></td><td>${c.customers}</td>${c.periods.map(x=>`<td class="${x.rate===null?'r5-future':x.rate>.25?'r5-strong':'r5-weak'}">${x.rate===null?'—':r5Percent(x.rate)}</td>`).join('')}</tr>`),'Не хватает связанных чеков для когорт')}
+ <p class="r5-small">«—» означает, что неделя ещё не завершена, а не нулевую возвращаемость.</p></section>
+ <section class="r5-panel r5-panel-focus">${r5Label('Разбор выбранной когорты')}
+ ${selected?`<div class="r5-big">${r5Number(selected.customers)}<small>участников</small></div><div class="r5-rule"><span>Неделя</span><b>${selected.start}</b></div><div class="r5-rule"><span>Надёжность</span><b>${esc(selected.status)}</b></div><div class="r5-rule"><span>Чеков-оснований</span><b>${r5Number(selected.firstReceiptIds.length)} из первой выборки</b></div><div class="r5-evidence"><span>Примеры ID</span><code>${esc(selected.firstReceiptIds.join(', '))}</code></div>`:'<p>Недостаточно связанных событий.</p>'}
+ ${result.limitations.map(r5Warning).join('')}<button type="button" class="r5-primary" data-action="r5-cohort-journal" ${!selected?'disabled':''}>Добавить пилот удержания в журнал</button></section></div>${r5Stamp()}`;
+}
+function renderR5Collection(dataset,scope,opts,selectedKey){
+ const plan=collectionPlan(dataset,scope,opts);
+ const selected=plan.rows.find(x=>x.key===selectedKey)||plan.rows[0];
+ return `${r5Heading('03','FUTURE COLLECTION','Закупать осмысленно. <em>Не наугад.</em>','Сигналы запросов, предзаказов, оплаченных задатков и прошлых продаж превращаются в ограниченный бюджетом план для проверки.')}
+ ${plan.valid?`<section class="r5-stats">${r5Stat('Предложено единиц',r5Number(plan.units))}${r5Stat('Стоимость закупочного сценария',r5Money(plan.spent))}${r5Stat('Бюджет остаётся',r5Money(plan.remaining))}${r5Stat('Не покрыто по сценарию',r5Number(plan.unmet),'Не гарантированный спрос')}</section>`:''}
+ <section class="r5-toolbar">${r5Input('collectionBudget','Бюджет, ₽',opts.budget,{min:0,max:1e9,step:1000})}${r5Input('collectionCap','Лимит единиц',opts.cap,{min:0,max:150})}${r5Input('collectionReserve','Неприкосновенный остаток',opts.reserve,{min:0,max:100})}${r5Input('collectionLead','Поставка, дней',opts.leadDays,{min:0,max:365})}${r5Input('collectionFactor','Сезонный коэффициент',opts.seasonFactor,{min:.25,max:3,step:.05})}<label class="r5-control"><span>Категория</span><select data-r5-field="collectionCategory">${['all',...CATEGORIES].map(c=>`<option value="${c}" ${opts.category===c?'selected':''}>${c==='all'?'Все':esc(c)}</option>`).join('')}</select></label></section>
+ ${!plan.valid?`<section class="r5-panel">${plan.errors.map(r5Warning).join('')}</section>`:`<div class="r5-grid"><section class="r5-panel">${r5Label('SKU и размеры для проверки')}
+ <div class="r5-row-list">${plan.rows.slice(0,20).map(x=>`<button type="button" class="r5-select ${selected?.key===x.key?'is-active':''}" data-action="r5-collection-open" data-value="${esc(x.key)}"><span><b>${esc(x.product)} · ${esc(x.size)} · ${esc(x.storeId)}</b><small>${x.requests} запросов · ${x.preorders} заявок · остаток ${x.stock}</small></span><span><b>${x.orderUnits} ед.</b><small>${r5Money(x.plannedCost)}</small></span></button>`).join('')}</div><button type="button" class="r5-outline" data-action="r5-collection-csv">Выгрузить закупочный сценарий CSV</button></section>
+ <section class="r5-panel r5-panel-focus">${r5Label('Экономика выбранного размера')}
+ ${selected?`<div class="r5-big">${r5Number(selected.orderUnits)}<small>ед. к проверке</small></div>
+ <div class="r5-rule"><span>Модель и размер</span><b>${esc(selected.product)} / ${esc(selected.size)}</b></div><div class="r5-rule"><span>Филиал</span><b>${esc(selected.storeId)}</b></div><div class="r5-rule"><span>Запросов без покупки</span><b>${selected.requests}</b></div><div class="r5-rule"><span>Предзаказов / с задатком</span><b>${selected.preorders} / ${selected.deposits}</b></div><div class="r5-rule"><span>Учётный остаток, графит</span><b>${selected.stock} ед.</b></div><div class="r5-rule"><span>Цена закупки за единицу</span><b>${r5Money(selected.cost)}</b></div><div class="r5-rule"><span>Стоимость сценария</span><b>${r5Money(selected.plannedCost)}</b></div><div class="r5-rule"><span>Уверенность</span><b>${esc(selected.confidence)}</b></div><div class="r5-evidence"><code>${esc(selected.ids.slice(0,8).join(' · '))}</code></div>
+ <button type="button" class="r5-primary" data-action="r5-collection-journal" ${selected.orderUnits<1?'disabled':''}>Создать задачу на проверку закупки</button>`:'<p>Нет оснований для расчёта.</p>'}
+ ${plan.warnings.map(r5Warning).join('')}</section></div>`}${r5Stamp()}`;
+}
+function renderR5Service(scope,opts,focus){
+ const r=serviceHealth(scope,opts),selected=r.byStore.find(x=>x.storeId===focus)||r.all;
+ return `${r5Heading('04','SERVICE RESPONSE','Скорость помощи. <em>Без домыслов.</em>','Измеряем добровольные обращения за помощью и зафиксированные причины отказа после примерки. Не приписываем задержкам непроверенные потери продаж.')}
+ ${r.valid?`<section class="r5-stats">${r5Stat('QR-обращений',r5Number(r.all.requests))}${r5Stat('Медиана ответа',r.all.p50===null?'—':r.all.p50+' сек')}${r5Stat('90-й процентиль',r.all.p90===null?'—':r.all.p90+' сек')}${r5Stat('Дольше норматива',r5Percent(r.all.breachRate))}</section>`:''}
+ <section class="r5-toolbar">${r5Input('serviceSla','Норматив ответа, секунд',opts.sla,{min:1,max:7200})}${r5Input('serviceMin','Минимум наблюдений',opts.minSamples,{min:1,max:1000})}<button type="button" class="r5-outline" data-action="r5-service-csv" ${!r.valid?'disabled':''}>Отчёт по филиалам CSV</button></section>
+ ${!r.valid?`<section class="r5-panel">${r.errors.map(r5Warning).join('')}</section>`:`<div class="r5-grid"><section class="r5-panel">${r5Label('Контроль по филиалам')}
+ <div class="r5-row-list">${r.byStore.map(x=>`<button type="button" class="r5-select ${selected.storeId===x.storeId?'is-active':''}" data-action="r5-service-open" data-value="${x.storeId}"><span><b>${esc(STORES.find(s=>s.id===x.storeId).name)}</b><small>${x.requests} событий · ${x.adequate?'описательная выборка':'недостаточно событий'}</small></span><span><b>${x.p90===null?'—':x.p90+' сек'}</b><small>p90 времени ответа</small></span></button>`).join('')}</div></section>
+ <section class="r5-panel r5-panel-focus">${r5Label('Причины и исполнение')}
+ <div class="r5-big">${selected.p90===null?'—':selected.p90}<small>секунд, p90</small></div>
+ <div class="r5-rule"><span>Выше SLA</span><b>${r5Number(selected.breaches)} из ${r5Number(selected.sample)}</b></div><div class="r5-rule"><span>Завершённые обращения</span><b>${r5Percent(selected.resolutionRate)}</b></div><div class="r5-rule"><span>Примерок без покупки</span><b>${r5Number(selected.notPurchased)}</b></div><div class="r5-rule"><span>Названа причина отказа</span><b>${r5Number(selected.reasoned)}</b></div><div class="r5-rule"><span>Причина неизвестна</span><b>${r5Number(selected.unknownReasons)}</b></div>
+ ${selected.reasons.slice(0,3).map(x=>`<div class="r5-rule"><span>${esc(x.reason)}</span><b>${x.count}</b></div>`).join('')}
+ <div class="r5-evidence"><code>${esc(selected.evidenceIds.join(' · ')||'Нет превышений')}</code></div>
+ ${selected.adequate?`<button type="button" class="r5-primary" data-action="r5-service-journal">Создать проверку стандарта сервиса</button>`:r5Warning('Недостаточно событий для устойчивого описательного сравнения.')}
+ ${r.limitations.map(r5Warning).join('')}</section></div>`}${r5Stamp()}`;
+}
+function renderR5Benchmark(dataset,scope,opts,focus){
+ const r=branchBenchmark(dataset,scope,opts),selected=r.rows.find(x=>x.id===focus)||r.rows[0];
+ const max=r.rows.length?Math.max(...r.rows.map(x=>Math.max(0,x.value||0)),.001):1;
+ const showMetric=x=>x.value===null?'—':opts.metric==='grossProfit'?r5Money(x.value):opts.metric==='margin'||opts.metric==='conversion'?r5Percent(x.value):opts.metric==='unmetPer100'?x.value.toFixed(1):r5Number(x.value)+' сек';
+ const metrics={grossProfit:'Валовая прибыль',margin:'Валовая маржа',conversion:'Конверсия входящих',unmetPer100:'Запросы без покупки / 100 визитов',serviceP90:'p90 ответа'};
+ return `${r5Heading('05','BRANCH BENCHMARK','Три филиала. <em>Одна система вопросов.</em>','Сравнение на одинаковом периоде, с раскрытием знаменателя и ограничений. Рейтинг не доказывает качество управления.')}
+ <section class="r5-stats">${r5Stat('Филиалов',r5Number(r.rows.length))}${r5Stat('Дней сопоставления',r5Number(r.days))}${r5Stat('Качество сравнения',r.comparable?'Достаточно':'Проверить','Порог выборки — настраивается')}${r5Stat('Показатель',esc(metrics[opts.metric]||'—'))}</section>
+ <section class="r5-toolbar"><label class="r5-control"><span>Метрика</span><select data-r5-field="benchmarkMetric">${Object.entries(metrics).map(([key,name])=>`<option value="${key}" ${opts.metric===key?'selected':''}>${esc(name)}</option>`).join('')}</select></label>${r5Input('benchmarkMinDays','Минимум дней',opts.minDays,{min:1,max:90})}<button type="button" class="r5-outline" data-action="r5-benchmark-csv">CSV с ID событий</button><button type="button" class="r5-outline" data-action="r5-benchmark-pdf">PDF для собственника</button></section>
+ <div class="r5-grid"><section class="r5-panel">${r5Label('Сопоставление филиалов')}
+ <div class="r5-bars">${r.ranked.map((x,i)=>`<button type="button" class="r5-branch ${selected?.id===x.id?'is-active':''}" data-action="r5-benchmark-open" data-value="${x.id}"><span class="r5-branch-head"><span>0${i+1} · ${esc(x.name)}</span><b>${showMetric(x)}</b></span><span class="r5-track"><i style="width:${x.value===null?'0':Math.max(3,Math.min(100,Math.abs(x.value)/max*100)).toFixed(1)}%"></i></span><small>${r5Number(x.saleCount)} чеков · ${r5Number(x.requests)} запросов · ${x.adequate?'достаточно':'неполная выборка'}</small></button>`).join('')}</div></section>
+ <section class="r5-panel r5-panel-focus">${r5Label('Доказательства выбранного филиала')}
+ ${selected?`<div class="r5-big">${showMetric(selected)}</div><div class="r5-rule"><span>Выручка</span><b>${r5Money(selected.revenue)}</b></div><div class="r5-rule"><span>Валовая прибыль</span><b>${r5Money(selected.grossProfit)}</b></div><div class="r5-rule"><span>Входов по счётчику</span><b>${r5Number(selected.visits)}</b></div><div class="r5-rule"><span>Чеков / возвратов</span><b>${selected.saleCount} / ${selected.returns}</b></div><div class="r5-rule"><span>p90 помощи</span><b>${selected.metrics.serviceP90??'—'} сек</b></div>
+ <div class="r5-evidence"><span>ID исходных событий</span><code>${esc(selected.evidenceIds.join(' · '))}</code></div>
+ <div class="r5-actions"><button type="button" class="r5-primary" data-action="r5-benchmark-drill">Открыть кабинет филиала</button><button type="button" class="r5-outline" data-action="r5-benchmark-journal">Запланировать проверку</button></div>`:'<p>Нет данных.</p>'}
+ ${r.caveats.map(r5Warning).join('')}</section></div>${r5Stamp()}`;
+}
+
+// MODULE r5_report.mjs
+/** Executive branch scorecard, rendered entirely on-device. */
+
+
+function drawScorecard(report){
+ const canvas=document.createElement('canvas');canvas.width=1240;canvas.height=1754;
+ const c=canvas.getContext('2d');if(!c)throw Error('Canvas unavailable');
+ const box=(x,y,w,h,fill)=>{c.fillStyle=fill;c.fillRect(x,y,w,h);};
+ const text=(value,x,y,size=24,color='#272521',bold=false)=>{c.fillStyle=color;c.font=`${bold?'600':'400'} ${size}px Arial,sans-serif`;c.fillText(String(value),x,y);};
+ box(0,0,1240,1754,'#f8f5f0');box(0,0,1240,330,'#181b1e');box(80,74,5,55,'#c4a078');
+ text('OSMANX   /   RETAIL INTELLIGENCE',110,115,31,'#f4eadf',true);
+ text('ATELIER R5 / BRANCH EVIDENCE',80,175,18,'#d6b990',true);
+ c.fillStyle='#f5ebdf';c.font='400 64px Georgia,serif';c.fillText('Три филиала. Один контекст.',80,255);
+ text('Демонстрационные данные  |  '+AS_OF,80,304,21,'#ded2c2');
+ text('ПОКАЗАТЕЛЬ ДЛЯ СРАВНЕНИЯ',80,421,18,'#a0805e',true);
+ text(report.label,80,472,31,'#2d2b28',true);
+ report.ranked.forEach((row,i)=>{
+  const top=530+i*238;box(80,top,1080,205,i%2===0?'#ebe6de':'#f0ece5');box(80,top,6,205,'#c3a783');
+  text('0'+(i+1),105,585,30,'#a0815c');text(row.name,173,585,31,'#302a23',true);
+  const value=row.value===null?'Нет измерения':report.metric==='grossProfit'?MONEY(row.value):report.metric==='margin'||report.metric==='conversion'?PERCENT(row.value):NUMBER(row.value)+(report.metric==='serviceP90'?' сек':'');
+  text(value,173,650,42,'#3a3027');text(`${row.saleCount} чеков  |  ${row.requests} запросов  |  ${row.returns} возвратов`,173,695,19,'#756c62');
+ });
+ box(80,1282,1080,238,'#ece4d8');box(80,1282,5,238,'#a58a67');
+ text('ЧТО НЕЛЬЗЯ УТВЕРЖДАТЬ ПО ЭТИМ ЦИФРАМ',103,1337,19,'#7a6148',true);
+ const cautions=['Разница между филиалами не доказывает эффективность управления.',
+  'Учётный чек не описывает все причины отказа от покупки.',
+  'Данные синтетические. Интеграции с реальной 1С в демо нет.'];
+ cautions.forEach((x,i)=>text('- '+x,103,1391+i*37,19,'#514a42'));
+ box(80,1590,1080,1,'#cfc6ba');text('Период: '+report.days+' дней  |  Показатель: '+report.label,80,1634,18,'#7c6b5a');
+ text('OSMANX WORLD / DEMO ONLY / NOT PROVEN INCREMENTAL PROFIT',80,1690,17,'#a68f76',true);
+ return canvas;
+}
+function branchPdfBlob(report){if(!report.valid)throw Error('Неверные параметры сравнения');const c=drawScorecard(report);return encodePdf(c.toDataURL('image/jpeg',.91),c.width,c.height);}
+function exportBranchPdf(report){const blob=branchPdfBlob(report),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`OSMANX_BRANCH_EVIDENCE_${AS_OF}.pdf`;a.click();setTimeout(()=>URL.revokeObjectURL(url),20000);return blob;}
+
 // MODULE app.mjs
+
+
+
 
 
 
@@ -1549,6 +1974,7 @@ const MODULES=[
 const svgLogo=`<span class="brand-name">OSMAN<span>X</span></span><span class="brand-sub">RETAIL INTELLIGENCE</span>`;
 const NAV=[
  {label:'ОБЗОР',items:[['dashboard','Финансовые возможности','grid'],['demo','Executive Demo · 30 секунд','play'],['decisions','Решения на сегодня','bolt'],['evidence','Проверка цифр','shield'],['transfer-lab','Перемещения: расчёт','layers'],['pilot-lab','Пилотный эксперимент','chart'],['journal','Журнал решений','file'],['calculator','Финансовый симулятор','chart'],['trust-lab','Качество данных','shield'],['demand-match','Поиск размеров по сети','layers'],['margin-stress','Экономика скидок','chart'],['portfolio','Приоритеты и бюджет','target'],['dossier','Документ решений','file']]},
+ {label:'ATELIER R5 · ПРОВЕРКА И РЕШЕНИЯ',items:[['data-room','Проверка CSV-выгрузки','shield'],['cohort-lab','Когорты повторных покупок','chart'],['collection-lab','План будущей коллекции','layers'],['service-lab','Протокол сервиса','target'],['branch-lab','Сравнение филиалов','shops']]},
  {label:'АНАЛИТИЧЕСКИЕ МОДУЛИ',items:MODULES.map((m,i)=>['module:'+i,`${String(i+1).padStart(2,'0')} · ${m[0]}`,i===0?'target':i===7?'chart':'layers'])},
  {label:'ВНЕДРЕНИЕ',items:[['diagnostic','Диагностика за 60 секунд','file'],['presentation','Режим переговоров','shops'],['sources','Источники и 1С','shield']]}
 ];
@@ -1581,11 +2007,16 @@ if(recovered.r4&&typeof recovered.r4==='object'){
   }
  }
 }
+state.r5Data={kind:'sales',text:'',preview:null,validatedSales:[],staged:[]}; // Never persisted: file content stays in RAM only.
+state.r5Cohort={weeks:4,minCohort:5};state.r5CohortSelected='';
+state.r5Collection={budget:80000,cap:12,reserve:1,leadDays:21,category:'all',seasonFactor:1};state.r5CollectionSelected='';
+state.r5Service={sla:120,minSamples:10};state.r5ServiceFocus='all';
+state.r5Benchmark={metric:'grossProfit',minDays:7};state.r5BenchmarkFocus='s1';
 let data=buildDataset('balanced'),timer=null;
 const root=document.getElementById('app');
 const scoped=()=>scopeData(data,{period:state.period,from:state.from,to:state.to,store:state.store,category:state.category,model:state.model,size:state.size});
 const demoScope=()=>scopeData(data,{period:14});
-function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
+function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
 function optionList(options,value){return options.map(([v,l])=>`<option value="${esc(v)}" ${value===v?'selected':''}>${esc(l)}</option>`).join('');}
 function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-open':''}" aria-label="Полная навигация" aria-hidden="${state.mobileOpen?'false':'true'}">
  <div class="drawer-top"><div class="brand"><div class="brand-mark"><span></span><span></span></div><div>${svgLogo}</div></div><button type="button" class="drawer-close" data-action="toggle-menu" aria-label="Закрыть разделы">${icon('close',23)}</button></div>
@@ -1671,7 +2102,7 @@ function renderSources(){const rows=[
  ['Продажа произошла благодаря системе','Контролируемый пилот / сравнение','Нельзя автоматически','Гипотеза до проверки']
 ];return `${renderHeading('1С остаётся. <em>Добавляются вопросы.</em>','DATA ORIGINS / TRUST','Учётная система может быть источником фактов. OSMANX объединяет их с новыми событиями и помогает проверить решения.')}<section class="panel source-panel"><div class="section-title"><div><p class="eyebrow">DATA SOURCE MATRIX</p><h2>Что откуда действительно известно</h2></div>${icon('shield',23)}</div><div class="table-scroll"><table><thead><tr><th>Показатель</th><th>Источник</th><th>Можно получить из учёта?</th><th>Качество вывода</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="integration-note">${icon('lock',19)} <div><strong>1С не подключена в этой демонстрации.</strong><p>Здесь нет фиктивных API, имитации реальных синхронизаций или пользовательских коммерческих данных. Для подключения нужны согласование формата выгрузки, права и контроль качества.</p></div></div></section><section class="source-cards"><div><p class="eyebrow">ФАКТ</p><h3>Подтверждаемое событие</h3><p>Чек, зарегистрированный запрос, физическая сверка, возврат или согласие.</p></div><div><p class="eyebrow">ОЦЕНКА</p><h3>Модель с параметрами</h3><p>Считаем сумму и раскрываем допущения, но не называем предотвращённым убытком.</p></div><div><p class="eyebrow">ГИПОТЕЗА</p><h3>Вопрос для пилота</h3><p>Проверяем причинность контролируемым измерением и отслеживанием расходов.</p></div></section>`;}
 function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>Демонстрационные данные · По состоянию на ${AS_OF}</span></footer>`;}
-function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
+function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
 function stopAuto(){state.auto=false;if(timer){clearInterval(timer);timer=null;}}
 const DURATIONS=[5000,6000,7000,7000,5000];
 function startAuto(){stopAuto();state.auto=true;state.stageStart=performance.now();timer=setInterval(()=>{const elapsed=performance.now()-state.stageStart;const progress=(DURATIONS.slice(0,state.scene).reduce((a,b)=>a+b,0)+Math.min(elapsed,DURATIONS[state.scene]))/30000;const el=document.getElementById('demo-progress-fill');if(el)el.style.width=`${(100*progress).toFixed(2)}%`;if(elapsed>=DURATIONS[state.scene]){if(state.scene===4){stopAuto();render();}else{state.scene++;state.stageStart=performance.now();render();}}},75);render();}
@@ -1721,6 +2152,47 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  }
  else if(a==='r4-dossier-csv'){r4DownloadCsv('OSMANX_R4_DECISION_DOSSIER.csv',dossierCsv(dossierSnapshot(data,scoped(),state.r4Portfolio)));}
  else if(a==='r4-dossier-pdf'){try{exportDossierPdf(dossierSnapshot(data,scoped(),state.r4Portfolio));state.toast='PDF сформирован локально. Это не реальный аудит.';render();}catch(err){toast('PDF не сформирован: '+err.message);}}
+ else if(a==='r5-sample'){state.r5Data.text=sampleCsv(state.r5Data.kind);state.r5Data.preview=null;render();}
+ else if(a==='r5-review'){state.r5Data.preview=reviewImport(state.r5Data.text,state.r5Data.kind,state.r5Data.validatedSales);render();}
+ else if(a==='r5-clear'){state.r5Data.text='';state.r5Data.preview=null;state.r5Data.validatedSales=[];state.r5Data.staged=[];render();}
+ else if(a==='r5-stage'){
+  const checked=state.r5Data.preview;
+  if(!checked?.valid){toast('Есть ошибки проверки CSV');return;}
+  if(checked.kind==='sales')state.r5Data.validatedSales=checked.rows;
+  state.r5Data.staged=checked.rows;state.r5Data.text='';state.r5Data.preview=null;
+  toast('Проверенный пакет сохранён только в памяти вкладки, не в 1С и не в демоаналитике.');
+ }
+ else if(a==='r5-export'){const r=state.r5Data.preview;if(r?.valid)r4DownloadCsv('OSMANX_R5_VALIDATED_'+r.kind+'.csv',reviewedCsv(r));}
+ else if(a==='r5-cohort-select'){state.r5CohortSelected=value;render();}
+ else if(a==='r5-cohort-csv'){const r=retentionCohorts(data,scoped(),state.r5Cohort);if(r.valid)r4DownloadCsv('OSMANX_R5_COHORTS.csv',cohortCsv(r));}
+ else if(a==='r5-cohort-journal'){
+  const r=retentionCohorts(data,scoped(),state.r5Cohort),selected=r.cohorts.find(x=>x.start===state.r5CohortSelected)||r.cohorts[0];
+  if(!selected){toast('Недостаточно связанных чеков');return;}
+  r4AddJournal('Проверить повторные покупки: когорта '+selected.start,'r5-retention',selected.firstReceiptIds);
+ }
+ else if(a==='r5-collection-open'){state.r5CollectionSelected=value;render();}
+ else if(a==='r5-collection-csv'){const r=collectionPlan(data,scoped(),state.r5Collection);if(r.valid)r4DownloadCsv('OSMANX_R5_COLLECTION_PLAN.csv',collectionCsv(r));}
+ else if(a==='r5-collection-journal'){
+  const r=collectionPlan(data,scoped(),state.r5Collection),selected=r.rows.find(x=>x.key===state.r5CollectionSelected)||r.rows[0];
+  if(!selected||selected.orderUnits<1){toast('Нет подтверждённых оснований для пилота');return;}
+  r4AddJournal(`Проверить закупку ${selected.product}, ${selected.size}, ${selected.storeId}, ${selected.orderUnits} ед.`,'r5-collection',selected.ids);
+ }
+ else if(a==='r5-service-open'){state.r5ServiceFocus=value;render();}
+ else if(a==='r5-service-csv'){const r=serviceHealth(scoped(),state.r5Service);if(r.valid)r4DownloadCsv('OSMANX_R5_SERVICE.csv',serviceCsv(r));}
+ else if(a==='r5-service-journal'){
+  const r=serviceHealth(scoped(),state.r5Service),selected=r.byStore.find(x=>x.storeId===state.r5ServiceFocus)||r.all;
+  if(!selected?.adequate){toast('Не хватает событий для пилота');return;}
+  r4AddJournal('Проверить норматив ответа '+r.sla+' сек / '+(selected.storeId==='all'?'сеть':selected.storeId),'r5-service',selected.evidenceIds.concat(selected.fittingIds));
+ }
+ else if(a==='r5-benchmark-open'){state.r5BenchmarkFocus=value;render();}
+ else if(a==='r5-benchmark-csv'){const r=branchBenchmark(data,scoped(),state.r5Benchmark);if(r.valid)r4DownloadCsv('OSMANX_R5_BRANCHES.csv',benchmarkCsv(r));}
+ else if(a==='r5-benchmark-pdf'){try{exportBranchPdf(branchBenchmark(data,scoped(),state.r5Benchmark));toast('PDF-сравнение сформировано локально.');}catch(e){toast('PDF не сформирован: '+e.message);}}
+ else if(a==='r5-benchmark-drill'){state.store=state.r5BenchmarkFocus;goto('dashboard');}
+ else if(a==='r5-benchmark-journal'){
+  const r=branchBenchmark(data,scoped(),state.r5Benchmark),selected=r.rows.find(x=>x.id===state.r5BenchmarkFocus)||r.rows[0];
+  if(!selected?.evidenceIds.length){toast('Недостаточно событий');return;}
+  r4AddJournal('Проверить различия филиала '+selected.name+': '+r.label,'r5-branch',selected.evidenceIds);
+ }
  else if(a==='r3-pilot-save'){
   const r=evaluatePilot({testRequests:scoped().requests.length,testPurchases:scoped().requests.filter(x=>x.purchased&&x.saleId).length,controlRequests:state.r3Pilot.controlRequests===''?null:Number(state.r3Pilot.controlRequests),controlPurchases:state.r3Pilot.controlPurchases===''?null:Number(state.r3Pilot.controlPurchases),unitGross:Number(state.r3Pilot.unitGross),pilotCost:Number(state.r3Pilot.pilotCost)});
   if(!r.valid){state.toast=r.errors.join('; ');render();return;}
@@ -1765,7 +2237,7 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  else if(a==='dismiss-toast'){state.toast=null;render();}
  else if(a==='select-bar'){state.toast='Столбец: '+(target.title||'события');render();}
 }
-function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
+function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
  if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
@@ -1784,6 +2256,25 @@ function r4UpdateField(element){
  };
  if(element.tagName==='INPUT')preserveRerender(element,changes);else{changes();render();}
 }
+function r5UpdateField(element){
+ const k=element.dataset.r5Field,value=element.value,number=value===''?null:Number(value);
+ const change=()=>{
+  if(k==='kind'){state.r5Data.kind=value;state.r5Data.preview=null;}
+  else if(k==='cohortWeeks')state.r5Cohort.weeks=number;
+  else if(k==='cohortMin')state.r5Cohort.minCohort=number;
+  else if(k==='collectionBudget')state.r5Collection.budget=number;
+  else if(k==='collectionCap')state.r5Collection.cap=number;
+  else if(k==='collectionReserve')state.r5Collection.reserve=number;
+  else if(k==='collectionLead')state.r5Collection.leadDays=number;
+  else if(k==='collectionFactor')state.r5Collection.seasonFactor=number;
+  else if(k==='collectionCategory')state.r5Collection.category=value;
+  else if(k==='serviceSla')state.r5Service.sla=number;
+  else if(k==='serviceMin')state.r5Service.minSamples=number;
+  else if(k==='benchmarkMetric')state.r5Benchmark.metric=value;
+  else if(k==='benchmarkMinDays')state.r5Benchmark.minDays=number;
+ };
+ if(element.tagName==='INPUT')preserveRerender(element,change);else{change();render();}
+}
 root.addEventListener('click',handleClick);
 root.addEventListener('change',e=>{
  if(e.target.matches('[data-field]'))handleField(e.target);
@@ -1793,7 +2284,10 @@ root.addEventListener('change',e=>{
   state.r3TransferPlan=null;render();
  }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
  else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
- else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}
+ else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-file]')){
+  const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r5Data.preview={valid:false,errors:['Файл больше 1,2 МБ'],issues:[],inspected:0};render();return;}
+  file.text().then(t=>{state.r5Data.text=t;state.r5Data.preview=null;render();}).catch(err=>toast('Файл не прочитан: '+err.message));
+ }
 });
 root.addEventListener('input',e=>{
  if(e.target.matches('[data-calc]'))handleField(e.target);
@@ -1801,11 +2295,11 @@ root.addEventListener('input',e=>{
   const element=e.target,key=element.dataset.r3Pilot,value=element.value;
   preserveRerender(element,()=>{state.r3Pilot[key]=value;});
  }
- else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}
+ else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
 });
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
-window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
+window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get r5(){const scope=scoped();const c=collectionPlan(data,scope,state.r5Collection),s=serviceHealth(scope,state.r5Service),b=branchBenchmark(data,scope,state.r5Benchmark),h=retentionCohorts(data,scope,state.r5Cohort);return {import:state.r5Data.preview?.valid??null,cohortMembers:h.members,collection:{valid:c.valid,units:c.units,spent:c.spent},service:{valid:s.valid,p90:s.all?.p90},benchmark:{valid:b.valid,metric:b.metric,values:b.rows.map(x=>x.value)}};},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
 render();
 </script></body></html>

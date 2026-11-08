@@ -1,4 +1,4 @@
-name: OSMANX Executive ATELIER R4 - integrity, matching, margin, browser
+name: OSMANX Executive ATELIER R5 - CSV, cohorts, collection, service, branches
 on:
   push:
     paths:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Test financial and five interactive decision workflows
+      - name: Test all legacy and R5 decision workflows
         run: npm test
       - name: Rebuild offline executive edition
         run: python3 scripts/build_standalone.py
@@ -32,6 +32,9 @@ jobs:
           node --check src/r4_core.mjs
           node --check src/r4_views.mjs
           node --check src/r4_dossier.mjs
+          node --check src/r5_core.mjs
+          node --check src/r5_views.mjs
+          node --check src/r5_report.mjs
           node --check build_check.js
           git diff --exit-code -- OSMANX_EXECUTIVE_OFFLINE.html
       - name: Verify required offline assets
@@ -40,6 +43,7 @@ jobs:
           test -s src/luxury.css
           test -s src/r3.css
           test -s src/r4.css
+          test -s src/r5.css
           test -s assets/atelier-scene.webp
   browser:
     runs-on: ubuntu-latest
@@ -56,15 +60,16 @@ jobs:
         run: |
           python -m pip install playwright
           python -m playwright install --with-deps chromium
-      - name: R1/R3/R4 navigation, finance and responsive checks
+      - name: R1/R3/R4/R5 navigation, finance and responsive checks
         run: |
           python scripts/browser_smoke.py
           python scripts/r3_browser_smoke.py
           python scripts/r4_browser_smoke.py
+          python scripts/r5_browser_smoke.py
       - name: Retain screenshots and CSV/PDF evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-r4-atelier-browser-qa
+          name: osmanx-r5-atelier-browser-qa
           path: executive/screenshots/
           retention-days: 14
