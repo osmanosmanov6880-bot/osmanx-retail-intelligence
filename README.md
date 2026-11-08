@@ -1,3 +1,7 @@
+# OSMANX Retail Intelligence R1.7 — Voice Studio
+
+Five integrated modules: versioned conditional questionnaire builder, paired QR/exit kiosks with rotation/revocation, anonymous validated responses, bias-aware insights and evidenced management actions. New tablet: `/static/voice_kiosk.html#PUBLIC_ID.SECRET`; manager: `/static/voice.html`. No public hosting, camera, 1C or physical cash-register integration. [Details](docs/RELEASE_R17.md). Test: `python -m pytest tests/test_r17.py -q`, `python scripts/r17_browser_smoke.py`.
+
 # OSMANX Retail Intelligence R1.6 — Pilot Command
 
 Five evidence-first workflows: scoped pilot portfolio, strict source and frozen-snapshot integrity checks, immutable assumption-only economics, independently reviewed rollout approval and auditable follow-up tasks. Russian premium UI: `/static/command.html`; [release notes](docs/RELEASE_R16.md). Public hosting and hardware connections remain deferred.
