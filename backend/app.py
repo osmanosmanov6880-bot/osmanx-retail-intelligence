@@ -52,6 +52,8 @@ from backend.commerce import (
     reserved_quantity,
 )
 
+from backend.r15 import ensure_schema as ensure_r15_schema, build_router as r15_router
+
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND = ROOT / "frontend"
 DEMO = os.getenv("OSMANX_DEMO_MODE", "0") == "1"
@@ -83,11 +85,12 @@ async def lifespan(_: FastAPI):
         ensure_r13_schema(db)
         from backend.r14 import ensure_schema as ensure_r14_schema
         ensure_r14_schema(db)
+        ensure_r15_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="1.4.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="1.5.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -1120,6 +1123,8 @@ app.include_router(r13_router(admin, db_conn))
 
 from backend.r14 import install as install_r14
 install_r14(app, admin, db_conn)
+
+app.include_router(r15_router(admin, db_conn))
 
 @app.get("/{path:path}",include_in_schema=False)
 def spa(path:str):

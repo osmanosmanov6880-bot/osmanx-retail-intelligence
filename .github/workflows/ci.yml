@@ -33,6 +33,8 @@ jobs:
         run: python -m pytest tests/test_r13.py -q
       - name: R1.4 Integrity Center integration and security tests
         run: python -m pytest tests/test_r14.py tests/test_r14_extended.py -q
+      - name: R1.5 Pilot Studio API tests
+        run: python -m pytest tests/test_r15.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
@@ -54,6 +56,10 @@ jobs:
           node --check frontend/retail_desk.js
           node --check frontend/control.js
           node --check frontend/pulse.js
+      - name: R1.5 frontend syntax
+        run: |
+          node --check frontend/pilot.js
+          node --check frontend/r15_nav.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -82,6 +88,8 @@ jobs:
         run: python scripts/r13_browser_smoke.py
       - name: R1.4 Integrity Center Chromium acceptance
         run: python scripts/r14_browser_smoke.py
+      - name: R1.5 Pilot Studio Chromium acceptance
+        run: python scripts/r15_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -101,5 +109,6 @@ jobs:
             qa/r12-*.png
             qa/r13-*.png
             qa/r14-*.png
+            qa/r15-*.png
           if-no-files-found: ignore
           retention-days: 7
