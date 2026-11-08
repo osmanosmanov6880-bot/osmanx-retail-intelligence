@@ -38,6 +38,7 @@ from backend.kiosk import ensure_schema as ensure_kiosk_schema, policy as kiosk_
 from backend.pos_webhook import ensure_schema as ensure_pos_schema, new_source, derive_secret, verify_source, apply_receipts
 from backend.operations import quality_report
 from backend.workflows import ensure_schema as ensure_workflows_schema, build_router as workflows_router
+from backend.r07 import ensure_schema as ensure_r07_schema, build_router as r07_router
 from backend.commerce import (
     ensure_commerce_schema, inventory_with_availability, matching_available,
     reserve_stock, update_reservation, fitting_report, return_report,
@@ -67,11 +68,12 @@ async def lifespan(_: FastAPI):
         ensure_pos_schema(db)
         ensure_commerce_schema(db)
         ensure_workflows_schema(db)
+        ensure_r07_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="0.6.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="0.7.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -1094,6 +1096,7 @@ def set_decision(decision_key:str,data:DecisionUpdate,slug:str='central',princip
     return {'saved':True,'key':decision_key,'status':data.status}
 
 app.include_router(workflows_router(admin, db_conn))
+app.include_router(r07_router(admin, db_conn))
 
 @app.get("/{path:path}",include_in_schema=False)
 def spa(path:str):

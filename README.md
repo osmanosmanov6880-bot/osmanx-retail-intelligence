@@ -1,3 +1,14 @@
+# OSMANX Retail Intelligence R0.7 — операционный центр
+
+**Пять работающих блоков:** инвентаризация с контролем устаревания, безопасные перемещения между филиалами, QR-кнопка консультанта, сравнение зон магазина, проверяемая сводка директора с CSV. Тёмный русскоязычный интерфейс: `/static/operations.html`. Публичный деплой не выполняется.
+
+- [Описание и ограничения R0.7](docs/RELEASE_R07.md)
+- Локально: `OSMANX_DEMO_MODE=1 python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000`
+- Проверки: `python -m pytest tests -q` и `python scripts/r07_browser_smoke.py`
+- **Не выдавайте** демо за реальные продажи; подключение камер, касс и 1С требует отдельной интеграции.
+
+---
+
 # OSMANX Retail Intelligence R0.6
 
 Five linked production-oriented workflows: demand recovery, supplier purchasing, recorded SKU sales and gross margin, before/after pilot evaluations, and an owner action center. Server deployment intentionally deferred. Tests: `python -m pytest tests -q` and Chromium `python scripts/r06_browser_smoke.py`. Read [R0.6 release details](docs/RELEASE_R06.md). The new operational interface is `/static/workflows.html`.
