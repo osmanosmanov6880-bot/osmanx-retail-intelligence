@@ -28,7 +28,7 @@ const button=(label,action,id,cls='')=>`<button class="button ${cls}" data-actio
 function shell(){
  root.innerHTML=`<main class="app"><header class="top"><div><div class="brand">OSMAN<span>X</span></div><div class="brandline">Retail Intelligence / Strategy R0.8</div></div><div class="toplinks">
  <select id="strategy-store" class="store-select" aria-label="Филиал">${S.stores.map(x=>`<option value="${esc(x.slug)}" ${S.slug===x.slug?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
- <a class="toplink primary" href="/static/operations.html">Операционный центр</a><a class="toplink" href="/static/workflows.html">Закупки R0.6</a><a class="toplink" href="/">Кабинет</a></div></header>
+ <a class="toplink primary" href="/static/evidence.html">Evidence Lab R0.9</a><a class="toplink" href="/static/operations.html">Операционный центр</a><a class="toplink" href="/static/workflows.html">Закупки R0.6</a><a class="toplink" href="/">Кабинет</a></div></header>
  <section class="strategy-hero"><div><span class="strategy-kicker">Коммерческая стратегия / от наблюдений к решениям</span><h1>Умный магазин.<br>Измеримые действия.</h1><p>Спрос превращается в план закупок, поставки становятся проверяемыми, примерки объясняют узкие места, задачи получают ответственных, а директор видит источники каждой цифры.</p></div><div class="strategy-hero-logo">OX.</div></section>
  ${S.config.demo?'<div class="banner">ДЕМО-РЕЖИМ: цифры из искусственного набора данных, не показывайте как результаты реального магазина.</div>':''}
  <nav class="strategy-tabs" role="tablist" aria-label="Разделы стратегии">${tabs.map(([id,label])=>`<button role="tab" aria-selected="${S.tab===id}" data-tab="${id}">${label}</button>`).join('')}</nav>

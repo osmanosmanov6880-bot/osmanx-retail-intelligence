@@ -1,3 +1,14 @@
+# OSMANX Retail Intelligence R0.9 — Evidence Lab
+
+Five real workflows: demand radar, verified recovery cases, finance integrity, pre-registered experiments and immutable evidence dossiers. The software remains local/private — **no public deployment**.
+
+- Open `/static/evidence.html` after local startup.
+- See [R0.9 release notes](docs/RELEASE_R09.md).
+- Verify: `python -m pytest tests/test_r09.py -q`, `python scripts/r09_browser_smoke.py`.
+- Missing stock signals are not guaranteed lost sales. Partial accounting cannot produce a verified profit total.
+
+---
+
 # OSMANX Retail Intelligence R0.8
 
 **Five new commercial decision modules**: restock planning from unmet demand, supplier delivery scorecards, fitting-room insight and evidence-based hypotheses, accountable action queue, and immutable daily management briefs. All in the existing multi-tenant SQLite application; approved dark Russian UI retained. No public deployment.
