@@ -651,6 +651,71 @@ em,.page-heading h1 em{color:var(--gold)!important}
 @media(max-width:1080px){.r8-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.r8-columns{grid-template-columns:1fr}.r8-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.r8-stats{gap:8px}.r8-stat{padding:15px;min-height:128px;gap:11px}.r8-stat strong{font-size:22px}.r8-panel{padding:17px}.r8-controls{gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.r8-actions{flex-direction:column}.r8-button{justify-content:space-between;width:100%}.r8-ledger{grid-template-columns:1fr}.r8-table{min-width:560px}}
 @media(prefers-reduced-motion:reduce){.r8-button{transition:none}}
+
+/* ATELIER R9 — restrained graphite / warm champagne, accessible dense records */
+.r9-intro{position:relative;min-height:218px;padding:28px 0 29px;border-bottom:1px solid rgba(203,185,155,.19);margin-bottom:22px}
+.r9-index{font-size:10px;font-weight:600;letter-spacing:.2em;color:#bcaa90;margin-bottom:23px}
+.r9-intro .eyebrow{font-size:11px;letter-spacing:.16em;color:#b99e78;margin-bottom:12px}
+.r9-intro h1{font-size:clamp(30px,4vw,63px);max-width:950px;font-weight:500;letter-spacing:-.043em;line-height:1.03;color:#ece6dc;margin:0 0 16px}
+.r9-intro h1 em{font-family:Georgia,serif;font-weight:400;color:#bfa689}
+.r9-subtitle{max-width:790px;color:#a6aaad;line-height:1.65;font-size:14px}
+.r9-stamp{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0 23px}
+.r9-badge{font-size:10px;line-height:1.4;font-weight:550;letter-spacing:.045em;white-space:normal;padding:7px 10px;color:#b6bac0;border:1px solid rgba(174,180,189,.23);border-radius:4px;background:rgba(12,17,26,.5)}
+.r9-badge.r9-warn{color:#dfc7a2;border-color:rgba(212,180,130,.3)}
+.r9-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:15px 0 22px}
+.r9-stat{min-width:0;display:flex;flex-direction:column;gap:9px;padding:19px 17px 17px;background:linear-gradient(150deg,rgba(27,34,47,.9),rgba(12,17,26,.92));border:1px solid rgba(185,165,140,.18);border-radius:5px}
+.r9-stat small{color:#c4b59d;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.r9-stat strong{overflow-wrap:anywhere;font-size:clamp(19px,2.3vw,34px);font-weight:500;letter-spacing:-.04em;color:#f3eee5}
+.r9-stat span{color:#8e979e;font-size:11px;line-height:1.45}
+.r9-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(275px,1fr);gap:15px;margin-bottom:28px;align-items:start}
+.r9-box{min-width:0;padding:23px 23px 25px;background:#101722;border:1px solid #2a323f;border-radius:5px;box-shadow:0 24px 60px rgba(0,0,0,.12)}
+.r9-box header{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between;margin-bottom:23px}
+.r9-box header h2{color:#e9e5db;font-size:19px;font-weight:500;letter-spacing:-.018em;margin:0}
+.r9-box header small{color:#8d8e91;font-size:11px}
+.r9-field,.r9-file{display:flex;flex-direction:column;gap:7px;margin:12px 0 17px;font-size:12px;color:#b4b8ba}
+.r9-field input,.r9-field select,.r9-field textarea,.r9-file input{box-sizing:border-box;width:100%;max-width:100%;background:#0a101a;border:1px solid #394355;border-radius:4px;padding:12px;color:#e4e5e3;font:inherit;font-size:13px;outline:none}
+.r9-field textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.65;resize:vertical}
+.r9-file input{padding:9px;font-size:11px}
+.r9-field input:focus,.r9-field select:focus,.r9-field textarea:focus,.r9-file input:focus{outline:2px solid #bca17d;outline-offset:1px}
+.r9-mini{font-size:11px;line-height:1.75;color:#8e979e;overflow-wrap:anywhere}
+.r9-mini code{color:#cabda9;font-size:11px;white-space:normal}
+.r9-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:19px}
+.r9-btn{appearance:none;border-radius:3px;border:1px solid #485260;background:transparent;color:#e5e1d7;padding:12px 14px;font-size:11px;letter-spacing:.015em;font-weight:600;cursor:pointer;transition:background .16s,border-color .16s;max-width:100%;white-space:normal;text-align:center}
+.r9-btn:hover:not(:disabled){background:#263142;border-color:#c2a987}
+.r9-btn.primary{background:#c2aa87;color:#10141d;border-color:#c2aa87}
+.r9-btn.primary:hover:not(:disabled){background:#e0c6a3}
+.r9-btn.muted{color:#9ba0a5;border-color:#394352}
+.r9-btn:disabled{cursor:not-allowed;opacity:.44}
+.r9-btn:focus-visible{outline:2px solid #f1d5ad;outline-offset:3px}
+.r9-notice,.r9-errors{padding:13px 14px;color:#b7b9b8;background:#171f29;border-left:2px solid #b7a07f;font-size:11px;line-height:1.7;margin:14px 0 0;overflow-wrap:anywhere}
+.r9-notice.bad,.r9-errors{border-color:#db897b;background:#241d22;color:#e5bab4}
+.r9-errors p{margin:3px 0}
+.r9-contract p{line-height:1.7;color:#a4abb0;font-size:12px;border-bottom:1px solid #27313d;padding:0 0 13px;margin-bottom:15px}
+.r9-contract b{color:#dbbea0}
+.r9-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid #2a333f;border-radius:3px;margin:10px 0}
+.r9-table{border-collapse:collapse;table-layout:auto;min-width:530px;width:100%;font-size:11px}
+.r9-table th{background:#192231;text-transform:uppercase;font-size:9px;font-weight:600;letter-spacing:.07em;color:#b2a791;text-align:left;white-space:nowrap;padding:12px 10px}
+.r9-table td{padding:12px 10px;border-top:1px solid rgba(110,124,138,.19);color:#ccd0cf;overflow-wrap:break-word;max-width:210px;vertical-align:top}
+.r9-table tr:hover td{background:rgba(190,166,125,.035)}
+.r9-table .r9-empty{text-align:center;color:#919ca5;padding:22px}
+.r9-line{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;border-bottom:1px solid rgba(150,158,170,.18);padding:13px 0;font-size:12px;line-height:1.5}
+.r9-line span{color:#a7abb0;max-width:60%}
+.r9-line b{color:#ede8de;font-weight:600;overflow-wrap:anywhere;text-align:right}
+.r9-major{margin:22px 0 13px;padding:19px;border:1px solid rgba(189,166,126,.32);font-size:33px;letter-spacing:-.045em;color:#d7c3a7}
+.r9-major small{display:block;margin-top:12px;font-size:11px;line-height:1.7;letter-spacing:0;color:#a6adb0}
+.r9-claims{display:grid;gap:11px}
+.r9-claims article{padding:15px;border:1px solid #323945;background:#0d1520;border-left:3px solid #b39a79}
+.r9-claims article small{font-size:10px;color:#bfaa8d;letter-spacing:.07em}
+.r9-claims article h3{margin:9px 0;font-size:14px;font-weight:500;color:#d8d5cc}
+.r9-claims article strong{font-size:22px;font-weight:500;color:#f3eee6;letter-spacing:-.02em}
+.r9-claims article p{margin:7px 0 0;color:#929ba1;font-size:11px;line-height:1.6}
+@media(max-width:1120px){.r9-grid{grid-template-columns:1fr}.r9-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.r9-intro{min-height:0;padding:18px 0 21px}.r9-intro h1{font-size:clamp(29px,9.5vw,48px)}.r9-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.r9-stat{padding:13px 11px}.r9-stat strong{font-size:20px}.r9-box{padding:17px 12px 20px}.r9-grid{gap:12px}.r9-btn{flex:1 1 120px;padding:11px 8px}.r9-stamp{gap:5px}.r9-badge{font-size:9px;padding:6px}.r9-major{font-size:24px}.r9-table{min-width:500px}}
+@media(prefers-reduced-motion:reduce){.r9-btn{transition:none}}
+
+.r9-intro h1{line-height:1.15;overflow-wrap:break-word}
+.r9-intro h1 em{display:inline;line-height:inherit;font-size:.95em}
+@media(max-width:640px){.r9-intro h1{line-height:1.19;letter-spacing:-.035em}.r9-intro h1 em{font-size:.93em}}
 </style></head>
 <body><div id="app"><div class="boot">OSMAN<span>X</span><small>RETAIL INTELLIGENCE</small></div></div>
 <script>// MODULE model.mjs
@@ -2944,7 +3009,352 @@ function buildR8BriefPdf(brief,{date=AS_OF,status='needs-review'}={}){
 }
 function exportR8BriefPdf(brief,options){const blob=buildR8BriefPdf(brief,options);const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='OSMANX_R8_LOCAL_EVIDENCE_BRIEF.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(u),20000);return blob;}
 
+// MODULE r9_core.mjs
+/** OSMANX ATELIER R9 — reconciliation of locally supplied payment and bank files.
+ *  No network, bank API, writes to POS, or persistence of imported rows.
+ *  Absence of a bank row is an evidence gap, NEVER proof of theft or lost money.
+ */
+
+
+
+const R9_SCHEMA=Object.freeze({
+ operations:['id','date','storeId','kind','referenceId','amount','fee','method','batchId'],
+ settlements:['id','date','storeId','batchId','netAmount']
+});
+const R9_MAX_ROWS=1500;
+const r9IdOK=x=>typeof x==='string'&&/^[\p{L}\p{N}][\p{L}\p{N}_.:-]{0,59}$/u.test(x);
+const r9DateOK=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x)&&!Number.isNaN(Date.parse(x+'T12:00:00Z'))&&new Date(x+'T12:00:00Z').toISOString().slice(0,10)===x;
+const r9Cents=x=>Math.round(x*100);
+const r9Rub=x=>Math.round(x)/100;
+const r9Sum=(arr,fn)=>arr.reduce((a,x)=>a+fn(x),0);
+const r9MoneyReg=/^\d{1,10}(?:\.\d{1,2})?$/;
+const r9SignedMoneyReg=/^-?\d{1,10}(?:\.\d{1,2})?$/;
+const r9ValidMoney=(s,signed=false)=>typeof s==='string'&&(signed?r9SignedMoneyReg:r9MoneyReg).test(s)&&Number.isSafeInteger(r9Cents(Number(s)))&&Math.abs(Number(s))<=1e9;
+const r9Unique=a=>[...new Set(a)].sort((x,y)=>x.localeCompare(y,'ru'));
+const r9Digest=s=>{let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619)>>>0;return h.toString(16).padStart(8,'0');};
+function r9Empty(sourceVersion=0){return {operations:[],settlements:[],sourceVersion,origin:'',revision:0};}
+function r9Example(){return {
+ operations:r8Csv([R9_SCHEMA.operations,
+  ['op-01','2026-11-01','store-A','capture','s-101',8900,180,'card','batch-A'],
+  ['op-02','2026-11-01','store-A','capture','s-101',8900,0,'cash',''],
+  ['op-03','2026-11-02','store-B','capture','s-102',8900,178,'card','batch-B'],
+  ['op-04','2026-11-03','store-C','capture','s-103',7000,140,'card','batch-C'],
+  ['op-05','2026-11-05','store-B','refund','r-101',8900,0,'card','batch-B-ref']]),
+ settlements:r8Csv([R9_SCHEMA.settlements,
+  ['sett-01','2026-11-02','store-A','batch-A',8720],
+  ['sett-02','2026-11-03','store-B','batch-B',8722],
+  ['sett-03','2026-11-04','store-C','batch-C',6860],
+  ['sett-04','2026-11-06','store-B','batch-B-ref',-8900]])
+};}
+function r9InspectCsv(kind,text,{asOf=AS_OF}={}){
+ if(!Object.hasOwn(R9_SCHEMA,kind))return {valid:false,rows:[],errors:['Неизвестный вид реестра']};
+ if(typeof text!=='string'||!text.trim()||text.length>1200000)return {valid:false,rows:[],errors:['Пустой или слишком большой CSV (предел 1,2 МБ)']};
+ let parsed;try{parsed=csvRows(text);}catch(e){return {valid:false,rows:[],errors:['CSV: '+e.message]};}
+ const [header,...body]=parsed.rows||[];const fields=(header||[]).map(v=>v.trim()),expected=R9_SCHEMA[kind];
+ if(fields.length!==expected.length||fields.some((v,i)=>v!==expected[i]))return {valid:false,rows:[],errors:['Заголовок должен быть: '+expected.join(';')]};
+ if(!body.length||body.length>R9_MAX_ROWS)return {valid:false,rows:[],errors:['Требуется от 1 до 1500 строк']};
+ const errors=[],rows=[],ids=new Set();
+ for(let i=0;i<body.length;i++){
+  const values=body[i],line=i+2;
+  if(values.length!==fields.length){errors.push(`Строка ${line}: неверное число колонок`);continue;}
+  const o=Object.fromEntries(fields.map((k,j)=>[k,values[j].trim()]));const problems=[];
+  if(!r9IdOK(o.id)||ids.has(o.id))problems.push('недопустимый/повторный ID');else ids.add(o.id);
+  for(const k of ['storeId','batchId','referenceId'])if(k in o&&o[k]!==''&&!r9IdOK(o[k]))problems.push(k+' содержит запрещённые символы');
+  if(!r9IdOK(o.storeId))problems.push('storeId обязателен');
+  if(!r9DateOK(o.date)||o.date>asOf)problems.push('неверная или будущая дата');
+  if(kind==='operations'){
+   if(!['capture','refund'].includes(o.kind))problems.push('kind = capture / refund');
+   if(!r9IdOK(o.referenceId))problems.push('нужна ссылка на чек/возврат');
+   if(!['card','cash'].includes(o.method))problems.push('method = card / cash');
+   if(o.method==='card'&&!r9IdOK(o.batchId))problems.push('для card нужен batchId');
+   if(o.method==='cash'&&o.batchId!=='')problems.push('cash не входит в банковский пакет');
+   if(!r9ValidMoney(o.amount)||Number(o.amount)<=0)problems.push('сумма > 0, до 2 десятичных знаков');
+   if(!r9ValidMoney(o.fee))problems.push('некорректная комиссия');
+   if(!problems.length){o.amount=Number(o.amount);o.fee=Number(o.fee);
+    if(r9Cents(o.fee)>r9Cents(o.amount))problems.push('комиссия превышает операцию');
+    if(o.method==='cash'&&o.fee!==0)problems.push('комиссия cash должна быть 0');
+   }
+  }else{
+   if(!r9IdOK(o.batchId))problems.push('нужен batchId');
+   if(!r9ValidMoney(o.netAmount,true))problems.push('некорректная сумма поступления');
+   if(!problems.length)o.netAmount=Number(o.netAmount);
+  }
+  if(problems.length)errors.push(`Строка ${line}: ${problems.join(', ')}`);else rows.push(o);
+ }
+ return {valid:errors.length===0,errors:errors.slice(0,30),rows:errors.length?[]:rows,inspected:body.length};
+}
+function r9AcceptCsv(ws,oldSet,kind,text,{asOf=AS_OF,origin='local'}={}){
+ const inspected=inspectWorkingSet(ws,{asOf});
+ if(!inspected.valid||!ws.sales?.length)return {accepted:false,workspace:oldSet,errors:['Сначала примите проверенные чеки в ATELIER R8']};
+ if(inspected.example&&origin!=='example'||!inspected.example&&origin!=='local')return {accepted:false,workspace:oldSet,errors:['Учебные и рабочие файлы нельзя смешивать']};
+ const parsed=r9InspectCsv(kind,text,{asOf});if(!parsed.valid)return {accepted:false,workspace:oldSet,errors:parsed.errors};
+ if(oldSet.sourceVersion!==ws.version&&oldSet.revision>0)return {accepted:false,workspace:oldSet,errors:['Набор R8 изменён; очистите предыдущие платёжные файлы']};
+ if(oldSet.origin&&oldSet.origin!==origin)return {accepted:false,workspace:oldSet,errors:['Сначала очистите R9: источники разных типов нельзя смешивать']};
+ const accepted={...oldSet,[kind]:parsed.rows,sourceVersion:ws.version,origin,revision:oldSet.revision+1};
+ return {accepted:true,workspace:accepted,errors:[],inspected:parsed.inspected};
+}
+function issue(kind,storeId,ref,expected,observed,description,severity='review'){
+ const key=r9Digest([kind,storeId,ref].join('|'));
+ return {key,kind,storeId,ref,expected:r9Rub(expected),observed:r9Rub(observed),difference:r9Rub(observed-expected),description,severity};
+}
+function r9Reconcile(ws,file){
+ const validR8=inspectWorkingSet(ws),ledger=salesLedger(ws);
+ const errors=[];
+ if(!validR8.valid||!ledger.valid)errors.push('Исходные чеки или возвраты R8 не прошли проверку');
+ if(!file?.operations?.length)errors.push('Нет файла операций эквайринга/кассы');
+ if(file?.revision&&file.sourceVersion!==ws.version)errors.push('Версия чеков изменилась: загрузите платёжные CSV заново');
+ if(file?.origin&&(validR8.example?'example':'local')!==file.origin)errors.push('Тип исходных данных не соответствует рабочему набору');
+ if(errors.length)return {valid:false,errors,issues:[],rows:[],summary:null};
+ const saleById=new Map(ws.sales.map(x=>[x.id,x]));
+ const returnsById=new Map(ws.returns.map(x=>[x.id,x]));
+ const linked=new Map(),issues=[],rows=[];
+ const byKind={capture:new Map(),refund:new Map()};
+ let cardCents=0,cashCents=0,refundCents=0,feesCents=0;
+ for(const p of file.operations){
+  const table=p.kind==='capture'?saleById:returnsById,record=table.get(p.referenceId);
+  const collected=byKind[p.kind],arr=collected.get(p.referenceId)||[];arr.push(p);collected.set(p.referenceId,arr);
+  if(p.kind==='capture'){if(p.method==='cash')cashCents+=r9Cents(p.amount);else cardCents+=r9Cents(p.amount);}else refundCents+=r9Cents(p.amount);
+  feesCents+=r9Cents(p.fee);
+  if(!record){issues.push(issue('orphan-'+p.kind,p.storeId,p.referenceId,0,r9Cents(p.amount),'Операция без документа-основания','critical'));continue;}
+  const documentStore=p.kind==='refund'?(saleById.get(record.saleId)?.storeId):record.storeId;
+  if(documentStore!==p.storeId)issues.push(issue('wrong-store',p.storeId,p.id,0,r9Cents(p.amount),'Филиал операции не совпадает с документом','critical'));
+  if(p.date<record.date)issues.push(issue('before-document',p.storeId,p.id,0,r9Cents(p.amount),'Дата оплаты раньше даты документа','review'));
+ }
+ for(const [kind,records] of [['capture',ws.sales],['refund',ws.returns]]){
+  for(const record of records){const ops=byKind[kind].get(record.id)||[];
+   const required=r9Cents(kind==='capture'?record.revenue:record.refund),received=r9Sum(ops,x=>r9Cents(x.amount));
+   const status=received===required?'matched':received<required?'short':'excess';
+   rows.push({kind,storeId:record.storeId,date:record.date,ref:record.id,required:r9Rub(required),received:r9Rub(received),difference:r9Rub(received-required),status,operations:ops.length});
+   if(received!==required)issues.push(issue(status+'-'+kind,record.storeId,record.id,required,received,kind==='capture'?'Расхождение суммы оплаты и чека':'Расхождение суммы возврата и документа',received>required?'critical':'review'));
+  }
+ }
+ const sourceGrossCents=r9Cents(ledger.gross);
+ const summary={documents:rows.length,matched:rows.filter(x=>x.status==='matched').length,
+  expectedSales:ledger.revenue,expectedRefunds:ledger.refund,expectedNet:ledger.netRevenue,
+  observedCaptures:r9Rub(cardCents+cashCents),observedRefunds:r9Rub(refundCents),fees:r9Rub(feesCents),
+  observedNet:r9Rub(cardCents+cashCents-refundCents),cash:r9Rub(cashCents),card:r9Rub(cardCents),
+  expectedGross:ledger.gross,observedAfterFees:r9Rub(sourceGrossCents-feesCents),
+  difference:r9Rub(cardCents+cashCents-refundCents-r9Cents(ledger.netRevenue)),
+  bankVerified:false,incrementalProven:false};
+ return {valid:true,errors:[],issues,rows,summary,version:file.revision,example:validR8.example,origin:file.origin};
+}
+function r9Settlements(ws,file,{asOf=AS_OF,maxLagDays=3}={}){
+ const audit=r9Reconcile(ws,file);
+ if(!audit.valid)return {valid:false,errors:audit.errors,batches:[],issues:[],totals:null};
+ if(!Number.isSafeInteger(maxLagDays)||maxLagDays<0||maxLagDays>30)return {valid:false,errors:['Задержка: 0–30 суток'],batches:[],issues:[],totals:null};
+ const groups=new Map(),bank=new Map(),issues=[];
+ for(const p of file.operations.filter(x=>x.method==='card')){
+  const key=p.storeId+'|'+p.batchId,entry=groups.get(key)||{key,storeId:p.storeId,batchId:p.batchId,expectedCents:0,count:0,first:p.date,last:p.date};
+  entry.expectedCents+=(p.kind==='capture'?1:-1)*r9Cents(p.amount)-r9Cents(p.fee);entry.count++;
+  entry.first=entry.first<p.date?entry.first:p.date;entry.last=entry.last>p.date?entry.last:p.date;groups.set(key,entry);
+ }
+ for(const s of file.settlements||[]){const key=s.storeId+'|'+s.batchId;const group=bank.get(key)||{items:[],actualCents:0};group.actualCents+=r9Cents(s.netAmount);group.items.push(s);bank.set(key,group);}
+ const batches=[];
+ for(const group of groups.values()){
+  const settlement=bank.get(group.key);const received=settlement?.actualCents??null;
+  const latest=settlement?.items.map(x=>x.date).sort().at(-1)||null;
+  const lag=latest?Math.round((Date.parse(latest+'T12:00:00Z')-Date.parse(group.last+'T12:00:00Z'))/86400000):null;
+  const status=received==null?'not-provided':received===group.expectedCents?'matched':received<group.expectedCents?'short':'excess';
+  const row={...group,expected:r9Rub(group.expectedCents),received:received==null?null:r9Rub(received),difference:received==null?null:r9Rub(received-group.expectedCents),status,settlementDate:latest,lagDays:lag};batches.push(row);
+  if(status!=='matched')issues.push(issue('settlement-'+status,group.storeId,group.batchId,group.expectedCents,received??0,received==null?'Нет подтверждающей строки выписки; не доказана недостача':'Сумма выписки отличается от суммы пакета',status==='not-provided'?'review':'critical'));
+  if(lag!=null&&lag<0)issues.push(issue('settlement-before',group.storeId,group.batchId,0,0,'Дата зачисления раньше последней операции','critical'));
+  else if(lag!=null&&lag>maxLagDays)issues.push(issue('settlement-delay',group.storeId,group.batchId,0,0,`Задержка зачисления ${lag} дней; проверьте банковский договор`));
+ }
+ for(const [key,s] of bank)if(!groups.has(key)){const row=s.items[0];issues.push(issue('unknown-batch',row.storeId,row.batchId,0,s.actualCents,'Зачисление без операций данного пакета','critical'));}
+ batches.sort((a,b)=>a.key.localeCompare(b.key));
+ const provided=batches.filter(x=>x.received!==null),matched=provided.filter(x=>x.status==='matched').length;
+ const totals={batches:batches.length,provided:provided.length,matched,expected:r9Rub(r9Sum(batches,x=>x.expectedCents)),observed:r9Rub(r9Sum(provided,x=>r9Cents(x.received))),pending:batches.length-provided.length,verified:issues.length===0&&audit.issues.length===0&&batches.length>0&&provided.length===batches.length};
+ return {valid:true,errors:[],batches,issues,totals,maxLagDays};
+}
+const R9_STATUSES=Object.freeze(['new','checking','resolved','not-applicable']);
+const R9_REASONS=Object.freeze(['statement-checked','pos-corrected','time-lag-confirmed','duplicate-cleared','manual-review']);
+function r9Cases(audit,settlements,triage={}){
+ if(!audit.valid||!settlements.valid)return {valid:false,items:[],total:0,closed:0};
+ const items=[...audit.issues,...settlements.issues].map(x=>({...x,...(triage[x.key]||{status:'new',reason:''})}));
+ return {valid:true,items,total:items.length,closed:items.filter(x=>['resolved','not-applicable'].includes(x.status)).length,critical:items.filter(x=>x.severity==='critical').length};
+}
+function r9Transition(triage,known,key,nextStatus,reason='',evidenceId=''){
+ if(!known?.items?.some(x=>x.key===key))throw Error('Неизвестное расхождение');
+ if(!R9_STATUSES.includes(nextStatus))throw Error('Недопустимый статус');
+ const previous=triage[key]?.status||'new';
+ const legal={new:['checking'],checking:['resolved','not-applicable','new'],resolved:['checking'], 'not-applicable':['checking']};
+ if(!legal[previous].includes(nextStatus))throw Error('Нельзя перейти из '+previous+' в '+nextStatus);
+ if(['resolved','not-applicable'].includes(nextStatus)&&!R9_REASONS.includes(reason))throw Error('Для закрытия нужна классификация причины');
+ if(['resolved','not-applicable'].includes(nextStatus)&&!/^[-\p{L}\p{N}_.:]{6,40}$/u.test(evidenceId))throw Error('Укажите код подтверждающего документа без персональных данных (6–40 символов)');
+ return {...triage,[key]:{status:nextStatus,reason:['resolved','not-applicable'].includes(nextStatus)?reason:'',evidenceId:['resolved','not-applicable'].includes(nextStatus)?evidenceId:'',at:AS_OF}};
+}
+function r9DailyClose(ws,file,audit){
+ if(!audit.valid)return {valid:false,errors:audit.errors,days:[]};
+ const dayMap=new Map();
+ function get(store,date){const key=store+'|'+date;if(!dayMap.has(key))dayMap.set(key,{storeId:store,date,docsCents:0,eventsCents:0,feesCents:0,captures:0,refunds:0});return dayMap.get(key);}
+ for(const x of ws.sales)get(x.storeId,x.date).docsCents+=r9Cents(x.revenue);
+ for(const x of ws.returns){const sale=ws.sales.find(s=>s.id===x.saleId);if(sale)get(sale.storeId,x.date).docsCents-=r9Cents(x.refund);}
+ for(const x of file.operations){const row=get(x.storeId,x.date);row.eventsCents+=(x.kind==='capture'?1:-1)*r9Cents(x.amount);row.feesCents+=r9Cents(x.fee);if(x.kind==='capture')row.captures++;else row.refunds++;}
+ const days=[...dayMap.values()].map(x=>({storeId:x.storeId,date:x.date,documents:r9Rub(x.docsCents),events:r9Rub(x.eventsCents),fees:r9Rub(x.feesCents),netAfterFees:r9Rub(x.eventsCents-x.feesCents),timingDifference:r9Rub(x.eventsCents-x.docsCents),captures:x.captures,refunds:x.refunds})).sort((a,b)=>a.date.localeCompare(b.date)||a.storeId.localeCompare(b.storeId));
+ return {valid:true,days,disclaimer:'Разница календарных дат не доказывает потери: оплаты и зачисления могут проходить в разные дни.'};
+}
+function r9Pack(ws,file,triage,{maxLagDays=3}={}){
+ const audit=r9Reconcile(ws,file),bank=r9Settlements(ws,file,{maxLagDays});
+ if(!audit.valid||!bank.valid)return {valid:false,errors:[...audit.errors,...bank.errors],claims:[],caseSummary:null};
+ const cases=r9Cases(audit,bank,triage),day=r9DailyClose(ws,file,audit);
+ return {valid:true,errors:[],example:audit.example,origin:file.origin,
+  claims:[{kind:'ДОКУМЕНТ',label:'Оплаченные чеки R8',value:audit.summary.expectedSales,method:'Выручка по загруженным чекам, не банковская выписка'},
+   {kind:'ДОКУМЕНТ',label:'Возвраты R8',value:audit.summary.expectedRefunds,method:'Возвраты по связанным документам'},
+   {kind:'ЗАПИСИ',label:'Поступления по операциям минус возвраты',value:audit.summary.observedNet,method:'Пользовательский CSV операций, без банковского подтверждения'},
+   {kind:'КОМИССИЯ',label:'Комиссии операций',value:audit.summary.fees,method:'Поле fee в загруженном реестре'},
+   {kind:'СЦЕНАРИЙ',label:'Валовая прибыль после комиссии',value:audit.summary.observedAfterFees,method:'Прибыль по чекам минус комиссии, при неполной сверке не подтверждена'},
+   {kind:'КОНТРОЛЬ',label:'Совпавшие банковские пакеты',value:bank.totals.matched,method:'Сопоставление batchId+storeId, не проверка подлинности файла'}],
+  audit,bank,cases,day,closeReady:cases.total===0&&bank.totals.verified,
+  warnings:['Источники предоставлены пользователем и не подтверждают подлинность банка, 1С или POS.',
+   'Расхождение по датам само по себе не означает утрату денежных средств.',
+   'Результат не доказывает дополнительную прибыль или отсутствие мошенничества.']};
+}
+function r9ReportCsv(pack){if(!pack.valid)throw Error('Нет сверенного отчёта');return r8Csv([
+ ['Тип утверждения','Показатель','Значение','Метод'],...pack.claims.map(x=>[x.kind,x.label,x.value,x.method]),
+ ['ИТОГ','Необработанных расхождений',pack.cases.total-pack.cases.closed,'Закрытые кейсы требуют документированной причины'],
+ ['ИТОГ','Банковских пакетов без подтверждения',pack.bank.totals.pending,'Нет строки — не доказана недостача'],
+ ['ОГРАНИЧЕНИЕ','Источники загружены пользователем','Не аудит','Никаких автоматических банковских запросов']]);}
+function r9CasesCsv(cases){return r8Csv([['Хеш кейса','Филиал','Вид','План','Факт','Разница','Статус','Причина'],...cases.items.map(x=>[x.key,x.storeId,x.kind,x.expected,x.observed,x.difference,x.status,x.reason||''])]);}
+function r9DayCsv(day){return r8Csv([['Филиал','Дата','Документы, ₽','Операции, ₽','Комиссия, ₽','Операции за вычетом комиссии','Сдвиг дат, ₽'],...day.days.map(x=>[x.storeId,x.date,x.documents,x.events,x.fees,x.netAfterFees,x.timingDifference])]);}
+function r9BankCsv(bank){return r8Csv([['Филиал','Хеш пакета','Расчёт, ₽','Выписка, ₽','Разница, ₽','Срок дней','Статус'],...bank.batches.map(x=>[x.storeId,r9Digest(x.batchId),x.expected,x.received==null?'Нет подтверждения':x.received,x.difference??'',x.lagDays??'',x.status])]);}
+function r9AggregateSignoff(existing,pack,{status='reviewed'}={}){
+ if(!pack?.valid)throw Error('Нет подтверждённых исходных данных');
+ if(!['reviewed','requires-check','rejected'].includes(status))throw Error('Недопустимый статус решения');
+ if(!Array.isArray(existing)||existing.length>=40)throw Error('Предел локального журнала — 40 решений');
+ const item={seq:existing.length+1,date:AS_OF,status,docs:pack.audit.summary.documents,issues:pack.cases.total,closed:pack.cases.closed,fees:pack.audit.summary.fees,matchedBatches:pack.bank.totals.matched,previous:existing.at(-1)?.fingerprint||'00000000'};
+ item.fingerprint=r9Digest(JSON.stringify(item));return [...existing,item];
+}
+function r9RestoreSignoffs(raw){
+ if(raw?.version!==1||!Array.isArray(raw.items)||raw.items.length>40)return [];
+ const accepted=[];for(const r of raw.items){
+  if(Object.keys(r).sort().join()!==['seq','date','status','docs','issues','closed','fees','matchedBatches','previous','fingerprint'].sort().join())return [];
+  const x={...r};delete x.fingerprint;
+  if(x.seq!==accepted.length+1||x.previous!==(accepted.at(-1)?.fingerprint||'00000000')||!['reviewed','requires-check','rejected'].includes(x.status)||x.fingerprint!==undefined||r.fingerprint!==r9Digest(JSON.stringify(x)))return [];
+  if([x.docs,x.issues,x.closed,x.fees,x.matchedBatches].some(v=>typeof v!=='number'||!Number.isFinite(v)||v<0))return [];
+  accepted.push(r);
+ }return accepted;
+}
+function r9SignoffCsv(items){return r8Csv([['№','Дата','Статус','Документы','Расхождения','Закрыто','Комиссии','Пакеты','Хеш записи'],...items.map(x=>[x.seq,x.date,x.status,x.docs,x.issues,x.closed,x.fees,x.matchedBatches,x.fingerprint])]);}
+
+// MODULE r9_views.mjs
+/** ATELIER R9 / quiet-luxury editorial finance views. Escapes all CSV-derived text. */
+
+
+const r9e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const r9n=n=>n==null?'—':Number(n).toLocaleString('ru-RU',{maximumFractionDigits:2});
+const r9m=n=>n==null?'Нет подтверждения':r9n(n)+' ₽';
+const r9head=(n,eyebrow,title,subtitle)=>`<section class="r9-intro"><div class="r9-index">R9 / ${n} — EXECUTIVE CONTROL</div><p class="eyebrow">${r9e(eyebrow)}</p><h1>${title}</h1><p class="r9-subtitle">${r9e(subtitle)}</p></section>`;
+const r9badge=(label,kind='neutral')=>`<span class="r9-badge r9-${kind}">${r9e(label)}</span>`;
+const r9btn=(action,label,variant='secondary',disabled=false)=>`<button type="button" class="r9-btn ${variant}" data-action="${action}" ${disabled?'disabled':''}>${r9e(label)}</button>`;
+const r9box=(title,content,caption='')=>`<section class="r9-box"><header><h2>${r9e(title)}</h2>${caption?`<small>${r9e(caption)}</small>`:''}</header>${content}</section>`;
+const r9line=(label,value)=>`<div class="r9-line"><span>${r9e(label)}</span><b>${r9e(value)}</b></div>`;
+const r9stats=rows=>`<div class="r9-stats">${rows.map(([label,value,caption])=>`<div class="r9-stat"><small>${r9e(label)}</small><strong>${r9e(value)}</strong><span>${r9e(caption||'')}</span></div>`).join('')}</div>`;
+const r9notice=(text,isBad=false)=>`<div class="r9-notice ${isBad?'bad':''}">${r9e(text)}</div>`;
+const r9issues=messages=>messages.length?`<div role="alert" class="r9-errors">${messages.slice(0,7).map(m=>`<p>${r9e(m)}</p>`).join('')}</div>`:'';
+const r9table=(labels,rows)=>`<div class="r9-table-wrap"><table class="r9-table"><thead><tr>${labels.map(x=>`<th>${r9e(x)}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.map(r=>`<tr>${r.map(x=>`<td>${r9e(x)}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${labels.length}" class="r9-empty">Данных для этой таблицы пока нет</td></tr>`}</tbody></table></div>`;
+const r9_field=(key,label,value,{min=0,max=30,step=1}={})=>`<label class="r9-field"><span>${r9e(label)}</span><input type="number" data-r9-field="${key}" value="${value}" min="${min}" max="${max}" step="${step}" /></label>`;
+const r9_select=(key,label,value,items)=>`<label class="r9-field"><span>${r9e(label)}</span><select data-r9-field="${key}">${items.map(([v,t])=>`<option value="${r9e(v)}" ${value===v?'selected':''}>${r9e(t)}</option>`).join('')}</select></label>`;
+const stamp=(ws,file)=>{const s=inspectWorkingSet(ws);return `<div class="r9-stamp">${r9badge('Локально, без API')}${r9badge(s.example?'УЧЕБНЫЙ CSV':s.counts.sales?'ФАЙЛЫ ПОЛЬЗОВАТЕЛЯ':'НЕТ ПРИНЯТОГО CSV',s.example?'warn':'neutral')}${r9badge(file.revision?'Версия '+file.revision:'Нет принятого реестра')}${r9badge('Синтетические цифры не смешиваются','warn')}</div>`;};
+
+function renderR9Vault(ws,file,form){const s=inspectWorkingSet(ws),count=file.operations.length+file.settlements.length;
+ return r9head('01','PAYMENT DATA ROOM','Оплаты. <em>Только подтверждаемые строки.</em>','Импорт операций кассы/эквайринга и реестра банковских зачислений. Никаких запросов в банк: содержимое файлов предоставляете вы.')+stamp(ws,file)+
+ r9stats([['Чеков в R8',r9n(s.counts.sales),'Требуются до загрузки'],['Платёжных операций',r9n(file.operations.length),'Оплата и возврат'],['Зачислений',r9n(file.settlements.length),'Пакеты по batchId'],['Сырой CSV после обновления','0 файлов','RAM-only, без localStorage']])+
+ `<div class="r9-grid">${r9box('Импорт с атомарной проверкой',
+ r9_select('kind','Файл для загрузки',form.kind,[['operations','Операции кассы и эквайринга'],['settlements','Банковские зачисления']])+`<label class="r9-file"><span>Выберите локальный CSV (до 1,2 МБ)</span><input type="file" accept=".csv,text/csv" data-r9-file aria-label="Загрузить CSV R9" /></label>`+
+ `<label class="r9-field"><span>Или вставьте строки CSV</span><textarea rows="8" data-r9-text spellcheck="false" placeholder="id;date;storeId;...">${r9e(form.text)}</textarea></label>`+
+ `<p class="r9-mini">Ожидаемые столбцы: <code>${r9e(R9_SCHEMA[form.kind].join(';'))}</code></p>`+r9issues(form.errors)+
+ `<div class="r9-actions">${r9btn('r9-accept','Проверить и принять','primary',!form.text.trim()||!s.counts.sales)}${r9btn('r9-examples','Загрузить учебный комплект')}${r9btn('r9-clear','Очистить реестры','muted',!count)}</div>`+
+ r9notice('Старые данные остаются нетронутыми, если хотя бы одна строка ошибочна. При изменении чеков R8 платёжные файлы сбрасываются.'))}
+ ${r9box('Договор источников',`<div class="r9-contract"><p><b>OPERATIONS</b> — каждая операция со ссылкой на чек или документ возврата. Частичные оплаты поддерживаются. Суммы всегда положительные, тип определяет знак.</p><p><b>SETTLEMENTS</b> — строки фактического зачисления по storeId и batchId. Сумма может быть отрицательной при возврате средств.</p><p><b>COMMISSION</b> — комиссия по операции, не включённая в выручку. Для наличных должна равняться нулю.</p><p><b>Согласование</b> — совпадение CSV не доказывает подлинность банковского документа или отсутствие мошенничества.</p></div>`+
+ r9table(['Источник','Строки','Версия'],[['Чеки R8',r9n(s.counts.sales),s.version],['Возвраты R8',r9n(s.counts.returns),s.version],['Платёжные операции',r9n(file.operations.length),file.revision],['Зачисления банка',r9n(file.settlements.length),file.revision]])+
+ `<div class="r9-actions">${r9btn('r9-operations-sample','Шаблон операций CSV')}${r9btn('r9-settlements-sample','Шаблон зачислений CSV')}</div>`,'LOCAL SOURCE CONTRACT')}</div>`;
+}
+function renderR9Matching(ws,file){const r=r9Reconcile(ws,file);
+ return r9head('02','DOCUMENT MATCHING','Чек ≠ поступление. <em>Проверим связь.</em>','Каждая оплата сопоставляется с документом продажи, каждый возврат — с подтверждённым возвратным документом. Несоответствия остаются видимыми.')+stamp(ws,file)+r9issues(r.errors)+
+ (r.valid?r9stats([['Чеков и возвратов',r9n(r.summary.documents),'Документы R8'],['Совпали по суммам',r9n(r.summary.matched),'Проверка с разделением оплат'],['Операций после возвратов',r9m(r.summary.observedNet),'Пользовательский файл'],['Разница с документами',r9m(r.summary.difference),'Не является автоматическим убытком']])+
+ `<div class="r9-grid">${r9box('Сверка по документу',r9table(['Тип','Филиал','Документ','Требуется','По операциям','Разница','Статус'],r.rows.slice(0,40).map(x=>[x.kind==='capture'?'Продажа':'Возврат',x.storeId,x.ref,r9m(x.required),r9m(x.received),r9m(x.difference),x.status==='matched'?'Совпало':x.status==='short'?'Недоплата':'Избыточная сумма']))+
+ `<div class="r9-actions">${r9btn('r9-matching-csv','Скачать расхождения CSV','primary')}</div>`,'Таблица ограничена 40 документами')}
+ ${r9box('Водопад денег',r9line('Продажи по документам',r9m(r.summary.expectedSales))+r9line('Возвраты по документам','− '+r9m(r.summary.expectedRefunds))+r9line('Оплаты по реестру',r9m(r.summary.observedCaptures))+r9line('Возвраты по реестру','− '+r9m(r.summary.observedRefunds))+r9line('Комиссии','− '+r9m(r.summary.fees))+`<div class="r9-major">${r9m(r.summary.observedAfterFees)}<small>Валовая прибыль по документам за вычетом комиссии; не доказанный банковский остаток</small></div>`+
+ r9notice('Частичные оплаты суммируются. Операции без чеков, другая дата или другой филиал требуют проверки.'))}</div>`:
+ r9box('Нет основы для сверки',r9notice('Загрузите чеки в R8 и операции в R9. Показатели не вычисляются из отсутствующих файлов.')));
+}
+function renderR9Bank(ws,file,opts){const p=r9Settlements(ws,file,opts),audit=r9Reconcile(ws,file),close=r9DailyClose(ws,file,audit);
+ return r9head('03','SETTLEMENT & CASH CLOSE','Платёж принят. <em>Зачислен ли пакет?</em>','Сверка эквайринговых пакетов с предоставленной выпиской; видны задержки и отличие даты продажи от даты оплаты.')+stamp(ws,file)+r9issues(p.errors)+
+ (p.valid?r9stats([['Банковских пакетов',r9n(p.totals.batches),'Из операций card'],['Подтверждено по файлам',r9n(p.totals.matched),'Точное совпадение суммы'],['Без строки выписки',r9n(p.totals.pending),'Не означает потерю денег'],['Сумма пакетов, расчётная',r9m(p.totals.expected),'До внешней банковской проверки']])+
+ `<div class="r9-grid">${r9box('Пакеты и зачисления',r9_field('maxLagDays','Допустимая задержка зачисления, дней',opts.maxLagDays)+
+ r9table(['Филиал','Пакет','Расчёт','Выписка','Задержка','Статус'],p.batches.slice(0,40).map(x=>[x.storeId,x.batchId,r9m(x.expected),r9m(x.received),x.lagDays==null?'—':x.lagDays+' дн.',x.status==='matched'?'Совпало':x.status==='not-provided'?'Не подтверждено':'Расхождение']))+
+ `<div class="r9-actions">${r9btn('r9-bank-csv','Экспорт сверки пакетов','primary')}</div>`,'Кассовые операции не относятся к банковскому пакету')}
+ ${r9box('Закрытие по датам',r9table(['Дата','Филиал','Документы','Операции','Комиссии','Сдвиг по датам'],(close.days||[]).slice(0,35).map(x=>[x.date,x.storeId,r9m(x.documents),r9m(x.events),r9m(x.fees),r9m(x.timingDifference)]))+
+ `<div class="r9-actions">${r9btn('r9-daily-csv','Экспорт ежедневного закрытия')}</div>`+r9notice(close.disclaimer||'Дата проведения может отличаться от даты продажи.'))}</div>`:
+ r9box('Загрузка не завершена',r9notice('Нужны валидные операции и документы R8. Без банковской выгрузки статусы останутся неподтверждёнными.')));
+}
+function renderR9Exceptions(ws,file,opts,triage){const a=r9Reconcile(ws,file),b=r9Settlements(ws,file,opts),c=r9Cases(a,b,triage);
+ const issue=c.items.find(x=>x.key===opts.selected)||c.items[0];
+ return r9head('04','EXCEPTION WORKFLOW','Расхождения — <em>в контроль, не в догадки.</em>','Каждый сигнал получает статус, проверку и документированную причину закрытия. Это локальный план работы, не банковская проводка.')+stamp(ws,file)+r9stats([['Найдено сигналов',r9n(c.total),'Сверка платежей и пакетов'],['Критичные',r9n(c.critical||0),'Требуют проверки'],['Закрыто с причиной',r9n(c.closed),'Не означает исчезновение проблемы'],['Сохранение исходных строк','Нет','Только в памяти открытой страницы']])+r9issues(a.errors)+
+ `<div class="r9-grid">${r9box('Реестр исключений',r9table(['Кейс','Филиал','Тип','Разница','Статус'],c.items.slice(0,40).map(x=>[x.key,x.storeId,x.kind,r9m(x.difference),x.status]))+
+ `<div class="r9-actions">${r9btn('r9-cases-csv','Экспорт обезличенных кейсов','primary',!c.valid)}</div>`,'Хеш вместо исходного номера документа')}
+ ${r9box('Протокол конкретного расхождения',issue?`${r9_select('selected','Кейс',issue.key,c.items.map(x=>[x.key,x.key+' · '+x.kind+' · '+x.storeId]))}`+
+ r9line('Описание',issue.description)+r9line('Ожидалось',r9m(issue.expected))+r9line('По CSV',r9m(issue.observed))+r9line('Текущий статус',issue.status)+
+ `${r9_select('reason','Причина проверки',opts.reason,[['','Выберите документированную причину'],['statement-checked','Сверена выписка вручную'],['pos-corrected','Исправлено в POS вне приложения'],['time-lag-confirmed','Подтверждён временной лаг'],['duplicate-cleared','Дубль исключён по документам'],['manual-review','Проверено ответственным']])}`+
+ `<label class="r9-field"><span>Код подтверждающего документа (не имя покупателя)</span><input data-r9-field="evidenceId" value="${r9e(opts.evidenceId||'')}" maxlength="40" placeholder="ACT-2026-001" /></label><div class="r9-actions">${issue.status==='new'?r9btn('r9-triage-start','Начать проверку','primary'):
+ issue.status==='checking'?r9btn('r9-triage-close','Закрыть с выбранной причиной','primary',!opts.reason||!(opts.evidenceId||'').trim())+r9btn('r9-triage-reset','Вернуть в очередь'):
+ r9btn('r9-triage-reopen','Открыть повторно','primary')}</div>`:
+ r9notice('Нет расхождений для обработки. Внешняя независимая проверка источников всё равно требуется.'))}</div>`;
+}
+function renderR9Cfo(ws,file,opts,triage,history){const pack=r9Pack(ws,file,triage,opts);
+ return r9head('05','CFO CONTROL MEMORANDUM','Решение собственника. <em>С проверяемой основой.</em>','Одностраничный PDF и два вида CSV: только агрегированные результаты, явно помеченные ограничения и локальная история решения.')+stamp(ws,file)+r9issues(pack.errors)+
+ (pack.valid?r9stats([['Документов',r9n(pack.audit.summary.documents),'Чеки + возвраты'],['Расхождений',r9n(pack.cases.total),'Включая пакет банка'],['Закрыто с причиной',r9n(pack.cases.closed),'Проверка персоналом'],['Банковская сверка',pack.closeReady?'По CSV совпало':'Нужна проверка','Не проверка подлинности выписки']])+
+ `<div class="r9-grid">${r9box('Доказательные утверждения',`<div class="r9-claims">${pack.claims.map((x,i)=>`<article><small>0${i+1} / ${r9e(x.kind)}</small><h3>${r9e(x.label)}</h3><strong>${i===5?r9n(x.value):r9m(x.value)}</strong><p>${r9e(x.method)}</p></article>`).join('')}</div>`+
+ `<div class="r9-actions">${r9btn('r9-cfo-pdf','Скачать реальный PDF','primary')}${r9btn('r9-cfo-csv','Экспорт финансового досье')}</div>`+pack.warnings.map(x=>r9notice(x)).join(''))}
+ ${r9box('Статус управленческого решения',r9_select('status','Заключение',opts.status,[['requires-check','Источник требует независимой сверки'],['reviewed','Изучено, решение отложено до проверки'],['rejected','Данные отклонены']])+
+ `<div class="r9-actions">${r9btn('r9-cfo-save','Сохранить агрегированный акт','primary')}${r9btn('r9-signoff-csv','История актов в CSV','',!history.length)}${r9btn('r9-history-clear','Очистить историю','muted',!history.length)}</div>`+
+ r9table(['№','Дата','Решение','Расхождений','Совпавших пакетов','Хеш'],history.slice(-12).reverse().map(x=>[x.seq,x.date,x.status,x.issues,x.matchedBatches,x.fingerprint]))+
+ r9notice('В журнал записываются только агрегаты, статус и некриптографическая контрольная сумма. Телефоны и исходные CSV не сохраняются.'))}</div>`:
+ r9box('Досье ещё нельзя составить',r9notice('Примите проверенные чеки и платёжные операции. При неполных данных приложение не создаёт фиктивный финансовый итог.')));
+}
+
+// MODULE r9_pdf.mjs
+/** Client-only R9 PDF. Uses the existing tested PDF writer; no document pixels leave the browser. */
+
+
+function buildR9Pdf(pack,{status='requires-check'}={}){
+ if(!pack?.valid)throw Error('Нет проверенного отчёта R9');
+ if(typeof document==='undefined')throw Error('PDF доступен в браузере');
+ const canvas=document.createElement('canvas');canvas.width=1240;canvas.height=1754;
+ const c=canvas.getContext('2d');if(!c)throw Error('Невозможно создать отчёт');
+ c.fillStyle='#f9f7f2';c.fillRect(0,0,1240,1754);c.fillStyle='#111923';c.fillRect(0,0,1240,335);
+ c.fillStyle='#bba07c';c.fillRect(84,72,5,51);
+ c.fillStyle='#f4f0e6';c.font='bold 29px Arial,sans-serif';c.fillText('OSMANX  /  RETAIL INTELLIGENCE',113,104);
+ c.fillStyle='#cbb493';c.font='17px Arial,sans-serif';c.fillText('ATELIER R9   /   CFO RECONCILIATION',85,164);
+ c.fillStyle='#faf5eb';c.font='48px Arial,sans-serif';c.fillText('Платежи и подтверждения',85,245);
+ c.fillStyle='#a8b2bf';c.font='17px Arial,sans-serif';c.fillText('Дата: '+AS_OF+'   ·   '+(pack.example?'УЧЕБНЫЕ CSV':'ЛОКАЛЬНЫЕ CSV (ИСТОЧНИК НЕ ПРОВЕРЕН)'),85,301);
+ let y=385;
+ for(let i=0;i<pack.claims.length;i++){
+  const item=pack.claims[i];c.fillStyle=i%2?'#f4f0ea':'#ece7de';c.fillRect(80,y-30,1080,152);
+  c.fillStyle='#b29b7a';c.fillRect(80,y-30,4,152);
+  c.fillStyle='#715c44';c.font='bold 14px Arial,sans-serif';c.fillText(String(i+1).padStart(2,'0')+'  /  '+item.kind,103,y);
+  c.fillStyle='#1d2430';c.font='23px Arial,sans-serif';c.fillText(item.label.slice(0,64),103,y+34);
+  c.font='bold 27px Arial,sans-serif';const value=typeof item.value==='number'?item.value.toLocaleString('ru-RU',{maximumFractionDigits:2}):'—';c.fillText(value+(i===5?'':' ₽'),103,y+74);
+  c.fillStyle='#646a70';c.font='15px Arial,sans-serif';c.fillText(item.method.slice(0,100),103,y+101);
+  y+=172;
+ }
+ c.fillStyle='#161c24';c.font='bold 21px Arial,sans-serif';c.fillText('РЕШЕНИЕ И ГРАНИЦЫ ПОДТВЕРЖДЕНИЯ',82,1454);
+ c.fillStyle='#61666c';c.font='17px Arial,sans-serif';
+ const notes=[`Статус собственника: ${status}`,`Расхождений: ${pack.cases.total}, закрыто по протоколу: ${pack.cases.closed}.`,
+  'Выгрузки пользователя не прошли независимую проверку подлинности.',
+  'Отсутствующая строка выписки не означает доказанную недостачу.',
+  'Комиссии и документы не доказывают дополнительную прибыль.'];
+ notes.forEach((s,i)=>c.fillText(s.slice(0,115),85,1496+i*33));
+ c.fillStyle='#c4a77c';c.fillRect(80,1702,1080,1);c.fillStyle='#686d71';c.font='14px Arial,sans-serif';c.fillText('OSMANX WORLD · LOCAL ONLY · USER-SUPPLIED SOURCES · NOT AN EXTERNAL FINANCIAL AUDIT',85,1735);
+ return encodePdf(canvas.toDataURL('image/jpeg',.87),canvas.width,canvas.height);
+}
+function exportR9Pdf(pack,opts){const blob=buildR9Pdf(pack,opts),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='OSMANX_R9_CFO_RECONCILIATION.pdf';link.click();setTimeout(()=>URL.revokeObjectURL(url),12000);return blob;}
+
 // MODULE app.mjs
+
+
+
+
 
 
 
@@ -2983,6 +3393,7 @@ const NAV=[
  {label:'ATELIER R6 · ДОКАЗАТЕЛЬСТВА И ДЕЙСТВИЯ',items:[['mapping-lab','CSV: сопоставление полей','shield'],['demand-trace','Трассировка потерянных покупок','target'],['returns-risk','Возвраты: причины и риск','chart'],['pilot-design','Дизайн контролируемого пилота','layers'],['action-board','Задачи и контроль исполнения','file']]},
  {label:'ATELIER R7 · РЕШЕНИЯ С ДОКАЗАТЕЛЬСТВАМИ',items:[['evidence-gate','Качество выводов','shield'],['network-rebalance','Баланс остатков сети','layers'],['capital-lab','Капитал и ограничения','chart'],['privacy-lab','Политика данных','shield'],['executive-brief','Досье собственника','file']]},
  {label:'ATELIER R8 · ЛОКАЛЬНЫЕ ФАКТЫ',items:[['local-vault','CSV: локальная приёмка','shield'],['local-ledger','Сверка чеков и возвратов','chart'],['local-availability','Наличие и запросы','layers'],['local-recovery','Пилот по согласиям','target'],['local-brief','Отчёт собственника / CSV','file']]},
+ {label:'ATELIER R9 · ПЛАТЁЖНЫЙ КОНТРОЛЬ',items:[['payment-vault','Операции и выписки CSV','shield'],['payment-match','Чеки ↔ оплаты','chart'],['bank-close','Зачисления и закрытие','layers'],['exception-room','Расхождения и разбор','target'],['cfo-report','Финансовое досье PDF','file']]},
  {label:'АНАЛИТИЧЕСКИЕ МОДУЛИ',items:MODULES.map((m,i)=>['module:'+i,`${String(i+1).padStart(2,'0')} · ${m[0]}`,i===0?'target':i===7?'chart':'layers'])},
  {label:'ВНЕДРЕНИЕ',items:[['diagnostic','Диагностика за 60 секунд','file'],['presentation','Режим переговоров','shops'],['sources','Источники и 1С','shield']]}
 ];
@@ -3041,11 +3452,17 @@ state.r8Move={reserve:0,probability:70,fixedCost:100,unitCost:100,maxRoutes:30};
 state.r8Pilot={testShare:50,lift:5,notificationCost:25,fixedCost:500,maxInvites:100,seed:'OSMANX-R8'};
 state.r8Brief={store:'all',status:'needs-review'};
 state.r8Audit=(()=>{try{return restoreR8Audit(JSON.parse(localStorage.getItem('osmanx-r8-aggregate-audit')||'{}'))}catch{return []}})();
+// R9: imported bank/payment rows and triage remain in memory. Only aggregate signoffs persist.
+state.r9Files=r9Empty(state.r8Workspace.version);
+state.r9Form={kind:'operations',text:'',errors:[],origin:'local'};
+state.r9Options={maxLagDays:3,selected:'',reason:'',evidenceId:'',status:'requires-check'};
+state.r9Triage={};
+state.r9Signoffs=(()=>{try{return r9RestoreSignoffs(JSON.parse(localStorage.getItem('osmanx-r9-aggregate-signoffs')||'{}'))}catch{return []}})();
 let data=buildDataset('balanced'),timer=null;
 const root=document.getElementById('app');
 const scoped=()=>scopeData(data,{period:state.period,from:state.from,to:state.to,store:state.store,category:state.category,model:state.model,size:state.size});
 const demoScope=()=>scopeData(data,{period:14});
-function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='mapping-lab'?'Сопоставление CSV':state.page==='demand-trace'?'Трассировка спроса':state.page==='returns-risk'?'Диагностика возвратов':state.page==='pilot-design'?'Дизайн пилота':state.page==='action-board'?'Контроль исполнения':state.page==='evidence-gate'?'Готовность доказательств':state.page==='network-rebalance'?'Баланс остатков сети':state.page==='capital-lab'?'Распределение капитала':state.page==='privacy-lab'?'Политика данных':state.page==='executive-brief'?'Досье собственника':state.page==='local-vault'?'Локальные CSV':state.page==='local-ledger'?'Сверка чеков и возвратов':state.page==='local-availability'?'Наличие и запросы':state.page==='local-recovery'?'Контрольная группа':state.page==='local-brief'?'Досье локальных фактов':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
+function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='mapping-lab'?'Сопоставление CSV':state.page==='demand-trace'?'Трассировка спроса':state.page==='returns-risk'?'Диагностика возвратов':state.page==='pilot-design'?'Дизайн пилота':state.page==='action-board'?'Контроль исполнения':state.page==='evidence-gate'?'Готовность доказательств':state.page==='network-rebalance'?'Баланс остатков сети':state.page==='capital-lab'?'Распределение капитала':state.page==='privacy-lab'?'Политика данных':state.page==='executive-brief'?'Досье собственника':state.page==='local-vault'?'Локальные CSV':state.page==='local-ledger'?'Сверка чеков и возвратов':state.page==='local-availability'?'Наличие и запросы':state.page==='local-recovery'?'Контрольная группа':state.page==='payment-vault'?'Реестр оплат и банка':state.page==='payment-match'?'Сверка платёжных документов':state.page==='bank-close'?'Зачисления и касса':state.page==='exception-room'?'Контроль исключений':state.page==='cfo-report'?'Финансовое досье CFO':state.page==='local-brief'?'Досье локальных фактов':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
 function optionList(options,value){return options.map(([v,l])=>`<option value="${esc(v)}" ${value===v?'selected':''}>${esc(l)}</option>`).join('');}
 function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-open':''}" aria-label="Полная навигация" aria-hidden="${state.mobileOpen?'false':'true'}">
  <div class="drawer-top"><div class="brand"><div class="brand-mark"><span></span><span></span></div><div>${svgLogo}</div></div><button type="button" class="drawer-close" data-action="toggle-menu" aria-label="Закрыть разделы">${icon('close',23)}</button></div>
@@ -3053,9 +3470,15 @@ function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-op
  <nav class="sidebar-nav" aria-label="Разделы приложения">${NAV.map(group=>`<div class="nav-group"><p class="nav-group-title">${group.label}</p>${group.items.map(([id,label,ico])=>`<button type="button" data-page="${id}" class="nav-link ${state.page===id?'active':''}" tabindex="${state.mobileOpen?'0':'-1'}">${icon(ico,17)}<span>${esc(label)}</span>${state.page===id?'<i></i>':''}</button>`).join('')}</div>`).join('')}</nav>
  <div class="sidebar-bottom"><div class="demo-source"><span class="demo-mini-dot"></span>Демонстрационные данные</div><p>OSMANX WORLD · EXECUTIVE SYSTEM</p></div>
  </aside>${state.mobileOpen?'<button type="button" data-action="toggle-menu" class="mobile-backdrop" aria-label="Закрыть меню"></button>':''}`;}
+function activeSourceLabel(){
+ const isR9=['payment-vault','payment-match','bank-close','exception-room','cfo-report'].includes(state.page);
+ const isR8=['local-vault','local-ledger','local-availability','local-recovery','local-brief'].includes(state.page);
+ if(isR9||isR8){const source=inspectWorkingSet(state.r8Workspace);return source.counts.sales>0?(source.example?'УЧЕБНЫЕ CSV (НЕ ДАННЫЕ БИЗНЕСА)':'ЛОКАЛЬНЫЕ CSV (ИСТОЧНИК НЕ ПРОВЕРЕН)'):'ЛОКАЛЬНЫЕ CSV НЕ ЗАГРУЖЕНЫ';}
+ return 'ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ';
+}
 function renderTopbar(){return `<header class="topbar">
  <div class="topbar-left"><button type="button" class="mobile-menu nav-trigger" data-action="toggle-menu" aria-label="Открыть все разделы" aria-expanded="${state.mobileOpen}">${icon('menu',23)}</button><button type="button" class="header-brand" data-page="dashboard"><span class="header-x">X</span><span class="header-brand-text"><b>OSMANX</b><small>RETAIL INTELLIGENCE</small></span></button><span class="header-rule"></span><nav class="header-nav" aria-label="Главная навигация"><button class="${state.page==='dashboard'?'on':''}" data-page="dashboard" type="button">Обзор</button><button class="${state.page==='demo'?'on':''}" data-page="demo" type="button">30 секунд</button><button class="${state.page==='decisions'?'on':''}" data-page="decisions" type="button">Решения</button><button class="${state.page.startsWith('module:')?'on':''}" data-page="module:0" type="button">Аналитика</button></nav></div>
- <div class="topbar-right"><span class="global-demo"><i></i> ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ</span><select class="scenario-select" aria-label="Сценарий демонстрационной сети" data-field="scenario">${optionList(SCENARIOS.map(x=>[x.id,x.name]),state.scenario)}</select><button class="top-demo-btn" type="button" data-page="diagnostic">Проверить магазин ${icon('arrow',15)}</button></div>
+ <div class="topbar-right"><span class="global-demo"><i></i> ${activeSourceLabel()}</span><select class="scenario-select" aria-label="Сценарий демонстрационной сети" data-field="scenario">${optionList(SCENARIOS.map(x=>[x.id,x.name]),state.scenario)}</select><button class="top-demo-btn" type="button" data-page="diagnostic">Проверить магазин ${icon('arrow',15)}</button></div>
  </header>`;}
 function renderFilters(){return `<div class="filters">
  <div class="segmented" role="group" aria-label="Период">${[['1','Сегодня'],['7','7 дней'],['14','14 дней'],['30','30 дней'],['90','90 дней'],['custom','Период']].map(([n,v])=>`<button type="button" data-action="period" data-value="${n}" class="${state.period===n?'active':''}">${v}</button>`).join('')}</div>
@@ -3130,8 +3553,8 @@ function renderSources(){const rows=[
  ['Витрина → вход в магазин','Агрегированные счётчики','При наличии счётчиков','Корреляция'],
  ['Продажа произошла благодаря системе','Контролируемый пилот / сравнение','Нельзя автоматически','Гипотеза до проверки']
 ];return `${renderHeading('1С остаётся. <em>Добавляются вопросы.</em>','DATA ORIGINS / TRUST','Учётная система может быть источником фактов. OSMANX объединяет их с новыми событиями и помогает проверить решения.')}<section class="panel source-panel"><div class="section-title"><div><p class="eyebrow">DATA SOURCE MATRIX</p><h2>Что откуда действительно известно</h2></div>${icon('shield',23)}</div><div class="table-scroll"><table><thead><tr><th>Показатель</th><th>Источник</th><th>Можно получить из учёта?</th><th>Качество вывода</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="integration-note">${icon('lock',19)} <div><strong>1С не подключена в этой демонстрации.</strong><p>Здесь нет фиктивных API, имитации реальных синхронизаций или пользовательских коммерческих данных. Для подключения нужны согласование формата выгрузки, права и контроль качества.</p></div></div></section><section class="source-cards"><div><p class="eyebrow">ФАКТ</p><h3>Подтверждаемое событие</h3><p>Чек, зарегистрированный запрос, физическая сверка, возврат или согласие.</p></div><div><p class="eyebrow">ОЦЕНКА</p><h3>Модель с параметрами</h3><p>Считаем сумму и раскрываем допущения, но не называем предотвращённым убытком.</p></div><div><p class="eyebrow">ГИПОТЕЗА</p><h3>Вопрос для пилота</h3><p>Проверяем причинность контролируемым измерением и отслеживанием расходов.</p></div></section>`;}
-function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>Демонстрационные данные · По состоянию на ${AS_OF}</span></footer>`;}
-function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):state.page==='mapping-lab'?renderR6Mapping(state.r6Mapping):state.page==='demand-trace'?renderR6Demand(data,scoped(),state.r6Demand,state.r6DemandSelected):state.page==='returns-risk'?renderR6Returns(data,scoped(),state.r6Returns,state.r6ReturnsSelected):state.page==='pilot-design'?renderR6Pilot(scoped(),state.r6Pilot):state.page==='action-board'?renderR6Board(state.r6Board,state.scenario,state.r6BoardForm,state.r6BoardSelected,state.r6BoardFilter):state.page==='evidence-gate'?renderR7Gate(data,scoped(),state.r7Gate):state.page==='network-rebalance'?renderR7Rebalance(data,scoped(),state.r7Move,state.r7MoveSelected):state.page==='capital-lab'?renderR7Capital(data,scoped(),state.r7Capital,state.r7Move):state.page==='privacy-lab'?renderR7Privacy(data,scoped(),state.r7Privacy,state.r7PrivacyLedger):state.page==='executive-brief'?renderR7Brief(data,scoped(),{gate:state.r7Gate,rebalance:state.r7Move,capital:state.r7Capital,privacy:state.r7Privacy},state.r6Board,state.r7PrivacyLedger):state.page==='local-vault'?renderR8Intake(state.r8Workspace,state.r8Form):state.page==='local-ledger'?renderR8Ledger(state.r8Workspace,state.r8Ledger):state.page==='local-availability'?renderR8Availability(state.r8Workspace,state.r8Move):state.page==='local-recovery'?renderR8Recovery(state.r8Workspace,state.r8Pilot):state.page==='local-brief'?renderR8Brief(state.r8Workspace,{...state.r8Brief,availability:state.r8Move,pilot:state.r8Pilot},state.r8Audit):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
+function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>${activeSourceLabel()} · По состоянию на ${AS_OF}</span></footer>`;}
+function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):state.page==='mapping-lab'?renderR6Mapping(state.r6Mapping):state.page==='demand-trace'?renderR6Demand(data,scoped(),state.r6Demand,state.r6DemandSelected):state.page==='returns-risk'?renderR6Returns(data,scoped(),state.r6Returns,state.r6ReturnsSelected):state.page==='pilot-design'?renderR6Pilot(scoped(),state.r6Pilot):state.page==='action-board'?renderR6Board(state.r6Board,state.scenario,state.r6BoardForm,state.r6BoardSelected,state.r6BoardFilter):state.page==='evidence-gate'?renderR7Gate(data,scoped(),state.r7Gate):state.page==='network-rebalance'?renderR7Rebalance(data,scoped(),state.r7Move,state.r7MoveSelected):state.page==='capital-lab'?renderR7Capital(data,scoped(),state.r7Capital,state.r7Move):state.page==='privacy-lab'?renderR7Privacy(data,scoped(),state.r7Privacy,state.r7PrivacyLedger):state.page==='executive-brief'?renderR7Brief(data,scoped(),{gate:state.r7Gate,rebalance:state.r7Move,capital:state.r7Capital,privacy:state.r7Privacy},state.r6Board,state.r7PrivacyLedger):state.page==='local-vault'?renderR8Intake(state.r8Workspace,state.r8Form):state.page==='local-ledger'?renderR8Ledger(state.r8Workspace,state.r8Ledger):state.page==='local-availability'?renderR8Availability(state.r8Workspace,state.r8Move):state.page==='local-recovery'?renderR8Recovery(state.r8Workspace,state.r8Pilot):state.page==='local-brief'?renderR8Brief(state.r8Workspace,{...state.r8Brief,availability:state.r8Move,pilot:state.r8Pilot},state.r8Audit):state.page==='payment-vault'?renderR9Vault(state.r8Workspace,state.r9Files,state.r9Form):state.page==='payment-match'?renderR9Matching(state.r8Workspace,state.r9Files):state.page==='bank-close'?renderR9Bank(state.r8Workspace,state.r9Files,state.r9Options):state.page==='exception-room'?renderR9Exceptions(state.r8Workspace,state.r9Files,state.r9Options,state.r9Triage):state.page==='cfo-report'?renderR9Cfo(state.r8Workspace,state.r9Files,state.r9Options,state.r9Triage,state.r9Signoffs):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
 function stopAuto(){state.auto=false;if(timer){clearInterval(timer);timer=null;}}
 const DURATIONS=[5000,6000,7000,7000,5000];
 function startAuto(){stopAuto();state.auto=true;state.stageStart=performance.now();timer=setInterval(()=>{const elapsed=performance.now()-state.stageStart;const progress=(DURATIONS.slice(0,state.scene).reduce((a,b)=>a+b,0)+Math.min(elapsed,DURATIONS[state.scene]))/30000;const el=document.getElementById('demo-progress-fill');if(el)el.style.width=`${(100*progress).toFixed(2)}%`;if(elapsed>=DURATIONS[state.scene]){if(state.scene===4){stopAuto();render();}else{state.scene++;state.stageStart=performance.now();render();}}},75);render();}
@@ -3188,18 +3611,51 @@ function r6InputChange(element){const key=element.dataset.r6Field,raw=element.va
 function handleClick(event){const target=event.target.closest('button[data-action],button[data-page]');if(!target||target.disabled)return;
  if(target.dataset.page){goto(target.dataset.page);return;}
  const a=target.dataset.action,value=target.dataset.value;
- if(a==='r8-kind'){if(!Object.hasOwn(R8_KINDS,value))return;state.r8Form={kind:value,text:'',errors:[],origin:'local'};render();}
+ if(a==='r9-examples'){
+  let next=emptyWorkingSet(),err='';for(const kind of ['sales','returns','requests','stock']){const result=acceptCsv(next,kind,r8Example()[kind],{origin:'example'});if(!result.accepted){err=result.errors.join('; ');break;}next=result.workspace;}
+  if(err){toast(err);return;}let files=r9Empty(next.version);
+  for(const kind of ['operations','settlements']){const result=r9AcceptCsv(next,files,kind,r9Example()[kind],{origin:'example'});if(!result.accepted){toast(result.errors.join('; '));return;}files=result.workspace;}
+  state.r8Workspace=next;state.r9Files=files;state.r9Triage={};state.r9Form={kind:'operations',text:'',errors:[],origin:'local'};toast('Приняты учебные чеки, оплаты и банковские пакеты (не данные бизнеса).');
+ }
+ else if(a==='r9-accept'){
+  const f=state.r9Form,result=r9AcceptCsv(state.r8Workspace,state.r9Files,f.kind,f.text,{origin:f.origin});
+  if(!result.accepted){state.r9Form.errors=result.errors;render();return;}
+  state.r9Files=result.workspace;state.r9Triage={};state.r9Form={...f,text:'',errors:[],origin:'local'};toast('Платёжный CSV принят: '+result.inspected+' строк.');
+ }
+ else if(a==='r9-clear'){state.r9Files=r9Empty(state.r8Workspace.version);state.r9Triage={};state.r9Form={kind:'operations',text:'',errors:[],origin:'local'};toast('Операции и выписки R9 удалены из оперативной памяти.');}
+ else if(a==='r9-operations-sample'){r4DownloadCsv('OSMANX_R9_OPERATIONS_EXAMPLE.csv',r9Example().operations);}
+ else if(a==='r9-settlements-sample'){r4DownloadCsv('OSMANX_R9_SETTLEMENTS_EXAMPLE.csv',r9Example().settlements);}
+ else if(a==='r9-matching-csv'){
+  const audit=r9Reconcile(state.r8Workspace,state.r9Files);
+  if(audit.valid)r4DownloadCsv('OSMANX_R9_RECONCILIATION.csv',r8Csv([['Документ','Тип','Филиал','Необходимо','По операциям','Разница','Статус'],...audit.rows.map(x=>[x.ref,x.kind,x.storeId,x.required,x.received,x.difference,x.status])]));
+ }
+ else if(a==='r9-bank-csv'){const b=r9Settlements(state.r8Workspace,state.r9Files,state.r9Options);if(b.valid)r4DownloadCsv('OSMANX_R9_BANK_BATCHES.csv',r9BankCsv(b));}
+ else if(a==='r9-daily-csv'){const r=r9Reconcile(state.r8Workspace,state.r9Files),d=r9DailyClose(state.r8Workspace,state.r9Files,r);if(d.valid)r4DownloadCsv('OSMANX_R9_DAY_CLOSE.csv',r9DayCsv(d));}
+ else if(a==='r9-cases-csv'){const r=r9Reconcile(state.r8Workspace,state.r9Files),b=r9Settlements(state.r8Workspace,state.r9Files,state.r9Options),c=r9Cases(r,b,state.r9Triage);if(c.valid)r4DownloadCsv('OSMANX_R9_ANONYMOUS_EXCEPTIONS.csv',r9CasesCsv(c));}
+ else if(['r9-triage-start','r9-triage-close','r9-triage-reset','r9-triage-reopen'].includes(a)){
+  const r=r9Reconcile(state.r8Workspace,state.r9Files),b=r9Settlements(state.r8Workspace,state.r9Files,state.r9Options),c=r9Cases(r,b,state.r9Triage);
+  const chosen=c.items.find(x=>x.key===state.r9Options.selected)||c.items[0];if(!chosen)return;
+  try{const next=a==='r9-triage-start'||a==='r9-triage-reopen'?'checking':a==='r9-triage-close'?'resolved':'new';
+   state.r9Triage=r9Transition(state.r9Triage,c,chosen.key,next,state.r9Options.reason,state.r9Options.evidenceId);state.r9Options.selected=chosen.key;state.r9Options.reason='';state.r9Options.evidenceId='';toast('Статус расхождения обновлён. Операций в банке не выполнено.');}
+  catch(e){toast(e.message);}
+ }
+ else if(a==='r9-cfo-csv'){const p=r9Pack(state.r8Workspace,state.r9Files,state.r9Triage,state.r9Options);if(p.valid)r4DownloadCsv('OSMANX_R9_CFO_REPORT.csv',r9ReportCsv(p));}
+ else if(a==='r9-cfo-pdf'){try{const p=r9Pack(state.r8Workspace,state.r9Files,state.r9Triage,state.r9Options);exportR9Pdf(p,{status:state.r9Options.status});toast('Реальный PDF сформирован локально.');}catch(e){toast(e.message);}}
+ else if(a==='r9-cfo-save'){try{const p=r9Pack(state.r8Workspace,state.r9Files,state.r9Triage,state.r9Options);const items=r9AggregateSignoff(state.r9Signoffs,p,{status:state.r9Options.status});localStorage.setItem('osmanx-r9-aggregate-signoffs',JSON.stringify({version:1,items}));state.r9Signoffs=items;toast('Сохранён только агрегированный акт, не исходные строки.');}catch(e){toast('Не сохранено: '+e.message);}}
+ else if(a==='r9-signoff-csv'){r4DownloadCsv('OSMANX_R9_AGGREGATE_SIGNOFFS.csv',r9SignoffCsv(state.r9Signoffs));}
+ else if(a==='r9-history-clear'){state.r9Signoffs=[];try{localStorage.removeItem('osmanx-r9-aggregate-signoffs')}catch{}toast('Агрегированная история очищена.');}
+ else if(a==='r8-kind'){if(!Object.hasOwn(R8_KINDS,value))return;state.r8Form={kind:value,text:'',errors:[],origin:'local'};render();}
  else if(a==='r8-sample-one'){state.r8Form.text=r8Example()[state.r8Form.kind];state.r8Form.origin='example';state.r8Form.errors=[];render();}
  else if(a==='r8-sample-all'){
   let next=emptyWorkingSet(),errors=[];for(const kind of ['sales','returns','requests','stock']){const result=acceptCsv(next,kind,r8Example()[kind],{origin:'example'});if(!result.accepted){errors=result.errors;break;}next=result.workspace;}
-  if(!errors.length){state.r8Workspace=next;state.r8Form={kind:'sales',text:'',errors:[],origin:'local'};toast('Учебный CSV-набор принят. Это не данные вашего бизнеса.');}else{state.r8Form.errors=errors;render();}
+  if(!errors.length){state.r8Workspace=next;state.r9Files=r9Empty(next.version);state.r9Triage={};state.r8Form={kind:'sales',text:'',errors:[],origin:'local'};toast('Учебный CSV-набор принят. Это не данные вашего бизнеса.');}else{state.r8Form.errors=errors;render();}
  }
  else if(a==='r8-accept'){
   const x=state.r8Form,result=acceptCsv(state.r8Workspace,x.kind,x.text,{origin:x.origin});
   if(!result.accepted){state.r8Form.errors=result.errors;render();return;}
-  state.r8Workspace=result.workspace;state.r8Form.errors=[];state.r8Form.text='';state.r8Form.origin='local';toast('Принято '+result.inspected+' строк; версия локального набора '+result.workspace.version+'.');
+  state.r8Workspace=result.workspace;state.r9Files=r9Empty(result.workspace.version);state.r9Triage={};state.r8Form.errors=[];state.r8Form.text='';state.r8Form.origin='local';toast('Принято '+result.inspected+' строк; версия локального набора '+result.workspace.version+'.');
  }
- else if(a==='r8-clear'){state.r8Workspace=emptyWorkingSet();state.r8Form={kind:'sales',text:'',errors:[],origin:'local'};toast('Локальные исходные строки удалены из памяти. Демоданные не изменены.');}
+ else if(a==='r8-clear'){state.r8Workspace=emptyWorkingSet();state.r9Files=r9Empty();state.r9Triage={};state.r8Form={kind:'sales',text:'',errors:[],origin:'local'};toast('Локальные исходные строки удалены из памяти. Демоданные не изменены.');}
  else if(a==='r8-ledger-csv'){const r=salesLedger(state.r8Workspace,state.r8Ledger);if(r.valid)r4DownloadCsv('OSMANX_R8_LOCAL_RECEIPTS.csv',ledgerCsv(r));}
  else if(a==='r8-move-csv'){const r=availabilityPlan(state.r8Workspace,state.r8Move);if(r.valid)r4DownloadCsv('OSMANX_R8_SCENARIO_ROUTES.csv',availabilityCsv(r));}
  else if(a==='r8-move-task'){const r=availabilityPlan(state.r8Workspace,state.r8Move);if(!r.routes?.length){toast('Нет допустимых сценариев');return;}r6Create('Проверить текущие остатки и экономику '+r.routes.length+' маршрутов локального CSV','r8-local-stock',[]);}
@@ -3372,6 +3828,15 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  else if(a==='dismiss-toast'){state.toast=null;render();}
  else if(a==='select-bar'){state.toast='Столбец: '+(target.title||'события');render();}
 }
+function r9InputChange(element){const key=element.dataset.r9Field,value=element.value;
+ const change=()=>{
+  if(key==='kind'){state.r9Form={kind:value,text:'',errors:[],origin:'local'};return;}
+  if(key==='selected'){state.r9Options.selected=value;state.r9Options.reason='';state.r9Options.evidenceId='';return;}
+  if(key==='reason'||key==='status'||key==='evidenceId'){state.r9Options[key]=value;return;}
+  if(key==='maxLagDays')state.r9Options.maxLagDays=value===''?null:Number(value);
+ };
+ if(element.tagName==='INPUT')preserveRerender(element,change);else{change();render();}
+}
 function r8InputChange(element){
  const key=element.dataset.r8Field,raw=element.value;
  const change=()=>{
@@ -3387,7 +3852,7 @@ function r8InputChange(element){
  };
  if(element.tagName==='INPUT')preserveRerender(element,change);else{change();render();}
 }
-function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:element.dataset.r6Field?`[data-r6-field="${element.dataset.r6Field}"]`:element.dataset.r7Field?`[data-r7-field="${element.dataset.r7Field}"]`:element.dataset.r8Field?`[data-r8-field="${element.dataset.r8Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
+function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:element.dataset.r6Field?`[data-r6-field="${element.dataset.r6Field}"]`:element.dataset.r7Field?`[data-r7-field="${element.dataset.r7Field}"]`:element.dataset.r8Field?`[data-r8-field="${element.dataset.r8Field}"]`:element.dataset.r9Field?`[data-r9-field="${element.dataset.r9Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
  if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
@@ -3434,7 +3899,7 @@ root.addEventListener('change',e=>{
   state.r3TransferPlan=null;render();
  }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
  else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
- else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')){r6InputChange(e.target);}else if(e.target.matches('[data-r7-field]')){r7InputChange(e.target);}else if(e.target.matches('[data-r8-field]')){r8InputChange(e.target);}else if(e.target.matches('[data-r8-file]')){const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r8Form.errors=['CSV превышает 1,2 МБ'];render();return;}file.text().then(text=>{state.r8Form.text=text;state.r8Form.origin='local';state.r8Form.errors=[];render();}).catch(err=>toast('CSV не прочитан: '+err.message));}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-file]')){
+ else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')){r6InputChange(e.target);}else if(e.target.matches('[data-r7-field]')){r7InputChange(e.target);}else if(e.target.matches('[data-r8-field]')){r8InputChange(e.target);}else if(e.target.matches('[data-r9-field]')){r9InputChange(e.target);}else if(e.target.matches('[data-r9-file]')){const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r9Form.errors=['CSV превышает 1,2 МБ'];render();return;}file.text().then(t=>{state.r9Form.text=t;state.r9Form.origin='local';state.r9Form.errors=[];render();}).catch(err=>toast('CSV не прочитан: '+err.message));}else if(e.target.matches('[data-r8-file]')){const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r8Form.errors=['CSV превышает 1,2 МБ'];render();return;}file.text().then(text=>{state.r8Form.text=text;state.r8Form.origin='local';state.r8Form.errors=[];render();}).catch(err=>toast('CSV не прочитан: '+err.message));}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-file]')){
   const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r6Mapping.preview={valid:false,errors:['Размер файла превышает 1,2 МБ'],issues:[],rows:[]};render();return;}
   file.text().then(t=>{state.r6Mapping.text=t;state.r6Mapping.mapping=inspectMapping(t,state.r6Mapping.kind).mapping;state.r6Mapping.preview=null;render();}).catch(err=>toast('CSV не прочитан: '+err.message));
  }else if(e.target.matches('[data-r5-file]')){
@@ -3448,12 +3913,12 @@ root.addEventListener('input',e=>{
   const element=e.target,key=element.dataset.r3Pilot,value=element.value;
   preserveRerender(element,()=>{state.r3Pilot[key]=value;});
  }
- else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')&&e.target.tagName==='INPUT'){r6InputChange(e.target);}else if(e.target.matches('[data-r7-field]')&&e.target.tagName==='INPUT'){r7InputChange(e.target);}else if(e.target.matches('[data-r8-field]')&&e.target.tagName==='INPUT'){r8InputChange(e.target);}else if(e.target.matches('[data-r8-text]')){state.r8Form.text=e.target.value;}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-text]')){state.r6Mapping.text=e.target.value;state.r6Mapping.preview=null;state.r6Mapping.mapping=inspectMapping(state.r6Mapping.text,state.r6Mapping.kind).mapping;}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
+ else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')&&e.target.tagName==='INPUT'){r6InputChange(e.target);}else if(e.target.matches('[data-r7-field]')&&e.target.tagName==='INPUT'){r7InputChange(e.target);}else if(e.target.matches('[data-r8-field]')&&e.target.tagName==='INPUT'){r8InputChange(e.target);}else if(e.target.matches('[data-r9-field]')&&e.target.tagName==='INPUT'){r9InputChange(e.target);}else if(e.target.matches('[data-r9-text]')){state.r9Form.text=e.target.value;const accept=root.querySelector('[data-action="r9-accept"]');if(accept)accept.disabled=!state.r9Form.text.trim()||!state.r8Workspace.sales.length;}else if(e.target.matches('[data-r8-text]')){state.r8Form.text=e.target.value;}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-text]')){state.r6Mapping.text=e.target.value;state.r6Mapping.preview=null;state.r6Mapping.mapping=inspectMapping(state.r6Mapping.text,state.r6Mapping.kind).mapping;}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
 });
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
 window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get r5(){const scope=scoped();const c=collectionPlan(data,scope,state.r5Collection),s=serviceHealth(scope,state.r5Service),b=branchBenchmark(data,scope,state.r5Benchmark),h=retentionCohorts(data,scope,state.r5Cohort);return {import:state.r5Data.preview?.valid??null,cohortMembers:h.members,collection:{valid:c.valid,units:c.units,spent:c.spent},service:{valid:s.valid,p90:s.all?.p90},benchmark:{valid:b.valid,metric:b.metric,values:b.rows.map(x=>x.value)}};},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},
- get r6(){const a=traceLostDemand(data,scoped(),state.r6Demand),b=analyzeReturns(data,scoped(),state.r6Returns),c=designPilot(scoped(),state.r6Pilot),d=boardSummary(state.r6Board,state.scenario);return {mapped:state.r6Mapping.preview?.valid??null,demand:{count:a.requestCount,linked:a.buckets.confirmed,net:a.hypotheticalNet},returns:{receipts:b.receipts,returned:b.returns},pilot:{valid:c.valid,needed:c.totalRequired,feasible:c.feasible},board:{total:d.total,open:d.open,closed:d.closed},revenue:scoped().totals.revenue}},get r7(){const s=scoped(),g=decisionEvidenceGate(data,s,state.r7Gate),n=networkRebalance(data,s,state.r7Move),p=capitalAllocation(data,s,state.r7Capital,n),v=privacySimulation(data,s,state.r7Privacy),b=executiveBrief(data,s,{gate:state.r7Gate,rebalance:state.r7Move,capital:state.r7Capital,privacy:state.r7Privacy,board:state.r6Board});return {gate:{ready:g.ready,score:g.score,blockers:g.blockers},network:{routes:n.routes.length,units:n.reservedUnits,net:n.net,unserved:n.unserved},capital:{selected:p.selected.length,spent:p.totalSpend,net:p.adjustedNet},privacy:{retained:v.retained,discarded:v.discarded,entries:state.r7PrivacyLedger.length},brief:{claims:b.statements.length,valid:b.valid}};},get r8(){const w=state.r8Workspace,check=inspectWorkingSet(w),ledger=salesLedger(w),net=availabilityPlan(w,state.r8Move),pilot=recoveryPilot(w,state.r8Pilot);return {counts:check.counts,version:check.version,example:check.example,valid:check.valid,origin:check.source,ledger:{receipts:ledger.sales,net:ledger.netRevenue,gross:ledger.gross},availability:{routes:net.routes?.length,matched:net.matched,net:net.net,moved:net.movedByStock},pilot:{test:pilot.test?.length,control:pilot.control?.length,candidates:pilot.candidates,net:pilot.expectedNet},audit:state.r8Audit.length};},navigate:goto};
+ get r6(){const a=traceLostDemand(data,scoped(),state.r6Demand),b=analyzeReturns(data,scoped(),state.r6Returns),c=designPilot(scoped(),state.r6Pilot),d=boardSummary(state.r6Board,state.scenario);return {mapped:state.r6Mapping.preview?.valid??null,demand:{count:a.requestCount,linked:a.buckets.confirmed,net:a.hypotheticalNet},returns:{receipts:b.receipts,returned:b.returns},pilot:{valid:c.valid,needed:c.totalRequired,feasible:c.feasible},board:{total:d.total,open:d.open,closed:d.closed},revenue:scoped().totals.revenue}},get r7(){const s=scoped(),g=decisionEvidenceGate(data,s,state.r7Gate),n=networkRebalance(data,s,state.r7Move),p=capitalAllocation(data,s,state.r7Capital,n),v=privacySimulation(data,s,state.r7Privacy),b=executiveBrief(data,s,{gate:state.r7Gate,rebalance:state.r7Move,capital:state.r7Capital,privacy:state.r7Privacy,board:state.r6Board});return {gate:{ready:g.ready,score:g.score,blockers:g.blockers},network:{routes:n.routes.length,units:n.reservedUnits,net:n.net,unserved:n.unserved},capital:{selected:p.selected.length,spent:p.totalSpend,net:p.adjustedNet},privacy:{retained:v.retained,discarded:v.discarded,entries:state.r7PrivacyLedger.length},brief:{claims:b.statements.length,valid:b.valid}};},get r8(){const w=state.r8Workspace,check=inspectWorkingSet(w),ledger=salesLedger(w),net=availabilityPlan(w,state.r8Move),pilot=recoveryPilot(w,state.r8Pilot);return {counts:check.counts,version:check.version,example:check.example,valid:check.valid,origin:check.source,ledger:{receipts:ledger.sales,net:ledger.netRevenue,gross:ledger.gross},availability:{routes:net.routes?.length,matched:net.matched,net:net.net,moved:net.movedByStock},pilot:{test:pilot.test?.length,control:pilot.control?.length,candidates:pilot.candidates,net:pilot.expectedNet},audit:state.r8Audit.length};},get r9(){const a=r9Reconcile(state.r8Workspace,state.r9Files),b=r9Settlements(state.r8Workspace,state.r9Files,state.r9Options),c=r9Cases(a,b,state.r9Triage);return {valid:a.valid,records:state.r9Files.operations.length,settlements:state.r9Files.settlements.length,matched:a.summary?.matched??0,delta:a.summary?.difference??null,bankVerified:b.totals?.verified??false,batches:b.totals?.batches??0,exceptions:c.total,closed:c.closed,signoffs:state.r9Signoffs.length,sourceVersion:state.r9Files.sourceVersion};},navigate:goto};
 render();
 </script></body></html>
