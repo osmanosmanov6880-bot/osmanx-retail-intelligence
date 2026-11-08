@@ -9,6 +9,7 @@ function addShortcut(){
   nav.append(a);
   const b=document.createElement('a');b.className='nav-btn r07-nav';b.href='/static/operations.html';
   b.innerHTML='<span style="color:#fb5c73;font-size:19px;font-weight:900">◇</span><span>Контроль магазина</span>';nav.append(b);
+  const integrity=document.createElement('a');integrity.className='nav-btn r14-nav';integrity.href='/static/integrity.html';integrity.innerHTML='<span style="color:#fb5c73;font-size:19px;font-weight:900">✓</span><span>Контроль кассы и расходов</span>';nav.append(integrity);
  }
  const top=document.querySelector('.main .topbar .top-right');
  if(top&&!top.querySelector('.r06-shortcut')){

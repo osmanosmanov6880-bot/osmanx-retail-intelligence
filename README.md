@@ -1,3 +1,13 @@
+# OSMANX Retail Intelligence R1.4 — Integrity Center
+
+Five integrated modules: protected event inbox, receipt reconciliation with exception CSV, gift-cost evidence linked to R1.2 coupons, durable incident history, and executive integrity reporting. Existing R1.3 Merchant Control Room is preserved. **No public deployment.**
+
+- [R1.4 release notes](docs/RELEASE_R14.md)
+- Local interface: `/static/integrity.html`
+- Release checks: `python -m pytest tests/test_r14.py tests/test_r14_extended.py -q` and `python scripts/r14_browser_smoke.py`.
+
+---
+
 # OSMANX Retail Intelligence R1.3 — Merchant Control Room
 
 Five implemented modules: CSV / 1C export mapping with atomic preview and commit; source integrity; size-demand matrix; stock inactivity diagnostics; evidence-bound owner actions. New local interface: `/static/control.html`. [Release notes](docs/RELEASE_R13.md). Public deployment is deferred.
