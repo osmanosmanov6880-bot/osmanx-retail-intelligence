@@ -1,6 +1,8 @@
 import {AS_OF,STORES,CATEGORIES,SIZES,SCENARIOS,AURA,CATALOG,buildDataset,scopeData,product,daysAgo,forecastTransfer,pilotForecast,FUNNEL_STAGES,funnelData,opportunityMetrics,recommendations,diagnosticPlan,MONEY,NUMBER,PERCENT,safeRatio} from './model.mjs';
 import {esc,icon,lineChart,barViz,funnelMarkup,opportunityMap,sourceTag,storeName,rawTable,emptyState} from './ui.mjs';
 import {exportPdf} from './pdf.mjs';
+import {reconcileEvidence,planTransfer,evaluatePilot,restoreJournal,newJournalEntry,transitionJournal,journalStats,JOURNAL_VERSION,evidenceForOpportunity,journalCsv} from './r3_core.mjs';
+import {renderEvidencePage,renderTransferPage,renderPilotPage,renderJournalPage} from './r3_views.mjs';
 
 const MODULES=[
  ['Невидимый спрос','INVISIBLE DEMAND','Увидеть запросы, которые не стали чеками.','Запросы покупателей и связанные продажи','Запустить добровольные уведомления о размере'],
@@ -16,7 +18,7 @@ const MODULES=[
 ];
 const svgLogo=`<span class="brand-name">OSMAN<span>X</span></span><span class="brand-sub">RETAIL INTELLIGENCE</span>`;
 const NAV=[
- {label:'ОБЗОР',items:[['dashboard','Финансовые возможности','grid'],['demo','Executive Demo · 30 секунд','play'],['decisions','Решения на сегодня','bolt'],['calculator','Финансовый симулятор','chart']]},
+ {label:'ОБЗОР',items:[['dashboard','Финансовые возможности','grid'],['demo','Executive Demo · 30 секунд','play'],['decisions','Решения на сегодня','bolt'],['evidence','Проверка цифр','shield'],['transfer-lab','Перемещения: расчёт','layers'],['pilot-lab','Пилотный эксперимент','chart'],['journal','Журнал решений','file'],['calculator','Финансовый симулятор','chart']]},
  {label:'АНАЛИТИЧЕСКИЕ МОДУЛИ',items:MODULES.map((m,i)=>['module:'+i,`${String(i+1).padStart(2,'0')} · ${m[0]}`,i===0?'target':i===7?'chart':'layers'])},
  {label:'ВНЕДРЕНИЕ',items:[['diagnostic','Диагностика за 60 секунд','file'],['presentation','Режим переговоров','shops'],['sources','Источники и 1С','shield']]}
 ];
@@ -30,18 +32,20 @@ const QUESTION_DEFS=[
  {key:'priority',title:'Какой результат сейчас важнее?',subtitle:'Именно его предложим измерять в пилоте.',type:'options',options:['Выручка','Маржа','Ассортимент','Удержание']}
 ];
 const cached={};
-function persist(){try{localStorage.setItem('osmanx-executive-r1',JSON.stringify({decisions:state.decisionState,answers:state.answers}));}catch{}}
+function persist(){try{localStorage.setItem('osmanx-executive-r1',JSON.stringify({decisions:state.decisionState,answers:state.answers,journal:{version:JOURNAL_VERSION,entries:state.r3Journal}}));}catch{}}
 function restore(){try{return JSON.parse(localStorage.getItem('osmanx-executive-r1')||'{}')}catch{return {}}}
 const recovered=restore();
 const state={page:'dashboard',mobileOpen:false,scenario:'balanced',period:'14',store:'all',category:'all',model:'all',size:'all',from:daysAgo(13),to:AS_OF,
  opp:'demand',funnelStage:'request',scene:0,auto:false,slideStart:0,stageStart:0,transferUnits:3,transferProbability:55,transferCost:350,
  moduleIndex:0,lastVerification:null,modelDetail:'JKT-AURA',decisionState:recovered.decisions||{},answers:recovered.answers||{},qStep:0,diagnosticDone:false,presentationPanel:'problem',
+ r3Transfer:{sourceStore:'s2',destinationStore:'s1',modelId:AURA.id,size:'L',color:'Графит',units:3,probability:55,costPerUnit:350,fixedCost:0,days:14},r3TransferPlan:null,
+ r3Pilot:{controlRequests:'',controlPurchases:'',unitGross:4000,pilotCost:1800},r3Journal:restoreJournal(recovered.journal),r3Selected:null,r3Measure:{},
  calculator:{stores:3,requestsPerStore:20,conversion:12,avgTicket:8900,costPerSale:4900,pilotCost:15000},toast:null};
 let data=buildDataset('balanced'),timer=null;
 const root=document.getElementById('app');
 const scoped=()=>scopeData(data,{period:state.period,from:state.from,to:state.to,store:state.store,category:state.category,model:state.model,size:state.size});
 const demoScope=()=>scopeData(data,{period:14});
-function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
+function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
 function optionList(options,value){return options.map(([v,l])=>`<option value="${esc(v)}" ${value===v?'selected':''}>${esc(l)}</option>`).join('');}
 function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-open':''}" aria-label="Полная навигация" aria-hidden="${state.mobileOpen?'false':'true'}">
  <div class="drawer-top"><div class="brand"><div class="brand-mark"><span></span><span></span></div><div>${svgLogo}</div></div><button type="button" class="drawer-close" data-action="toggle-menu" aria-label="Закрыть разделы">${icon('close',23)}</button></div>
@@ -73,6 +77,7 @@ function renderDashboard(){const s=scoped(),t=s.totals,opps=opportunityMetrics(s
  <section class="kpi-grid">${renderKpi('Выручка (нетто)',MONEY(t.revenue),'Продажи за период с учётом возвратов')}${renderKpi('Валовая прибыль',MONEY(t.grossProfit),'Нетто-выручка минус себестоимость','up')}${renderKpi('Конверсия посещений',PERCENT(t.conversion),t.conversion===null?'Нет корректной базы для выбранной SKU-группы':'Чеки / агрегированные посещения')}${renderKpi('Повторные покупки',PERCENT(t.repeatShare),'Доля в разрешённой выборке лояльности')}</section>
  <section class="double-grid lower-section"><div class="panel map-panel"><div class="section-title"><div><p class="eyebrow">RETAIL OPPORTUNITY MAP</p><h2>Карта возможностей</h2><p>Один сигнал — одно основание — одно управленческое действие.</p></div><button type="button" class="icon-btn" data-page="decisions" title="Открыть решения" aria-label="Открыть решения">${icon('arrow',18)}</button></div>${opportunityMap(s,state.opp)}<div class="opportunity-info"><div><p class="mini-label">ВЫБРАННЫЙ СИГНАЛ · ${esc(chosen.uncertainty)}</p><h3>${esc(chosen.label)}</h3><p>Источник: ${esc(chosen.source)}. ${NUMBER(chosen.count)} наблюдений. Это ещё не доказанные потери.</p></div><button class="btn-small" type="button" data-page="decisions">${esc(chosen.action)} ${icon('chevron',14)}</button></div></div>
  <div class="panel trend-panel"><div class="section-title"><div><p class="eyebrow">FINANCIAL MOVEMENT</p><h2>Фактическая динамика</h2><p>Выручка из синтетического реестра чеков и возвратов.</p></div><span class="small-badge">${series.length} дней</span></div><div class="chart-big-number">${MONEY(t.revenue)} <small>нетто</small></div>${lineChart(series.map(x=>x.value),{height:184,price:true})}<div class="chart-axis"><span>${s.from.split('-').reverse().slice(0,2).join('.')}</span><span>${s.to.split('-').reverse().slice(0,2).join('.')}</span></div><div class="metrics-stack"><div><span>Себестоимость</span><b>${MONEY(t.costOfGoods)}</b></div><div><span>Валовая маржинальность</span><b>${PERCENT(t.grossMargin)}</b></div><div><span>Сигналы задержки помощи</span><b>${NUMBER(t.serviceRisk)} событий</b></div></div></div></section>
+ <section class="r3-bridges" aria-label="Инструменты проверки коммерческих решений"><button data-page="evidence" type="button"><span>01 / ПРОВЕРКА ЦИФР</span><strong>От показателя к чеку</strong>${icon('arrow',17)}</button><button data-page="transfer-lab" type="button"><span>02 / ЛОГИСТИКА</span><strong>Проверить перемещение</strong>${icon('arrow',17)}</button><button data-page="pilot-lab" type="button"><span>03 / ИЗМЕРЕНИЕ</span><strong>Проверить эффект пилота</strong>${icon('arrow',17)}</button><button data-page="journal" type="button"><span>04 / ИСПОЛНЕНИЕ</span><strong>Журнал решений</strong>${icon('arrow',17)}</button></section>
  <section class="luxury-next"><div><p class="micro-gold">THE NEXT MOVE</p><h2>Проверим на вашей сети.</h2><p>Не заменяя 1С. Без обещаний прибыли. С измеримой гипотезой и сроком.</p></div><button class="luxury-primary" data-page="diagnostic" type="button">Начать диагностику ${icon('arrow',18)}</button></section>
  <div class="footer-source">${sourceTag('Факт')} ${scopeHint(s)}. Все сведения синтетические; оценки и гипотезы не равны предотвращённым убыткам.</div>`;
 }
@@ -125,7 +130,7 @@ function renderSources(){const rows=[
  ['Продажа произошла благодаря системе','Контролируемый пилот / сравнение','Нельзя автоматически','Гипотеза до проверки']
 ];return `${renderHeading('1С остаётся. <em>Добавляются вопросы.</em>','DATA ORIGINS / TRUST','Учётная система может быть источником фактов. OSMANX объединяет их с новыми событиями и помогает проверить решения.')}<section class="panel source-panel"><div class="section-title"><div><p class="eyebrow">DATA SOURCE MATRIX</p><h2>Что откуда действительно известно</h2></div>${icon('shield',23)}</div><div class="table-scroll"><table><thead><tr><th>Показатель</th><th>Источник</th><th>Можно получить из учёта?</th><th>Качество вывода</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="integration-note">${icon('lock',19)} <div><strong>1С не подключена в этой демонстрации.</strong><p>Здесь нет фиктивных API, имитации реальных синхронизаций или пользовательских коммерческих данных. Для подключения нужны согласование формата выгрузки, права и контроль качества.</p></div></div></section><section class="source-cards"><div><p class="eyebrow">ФАКТ</p><h3>Подтверждаемое событие</h3><p>Чек, зарегистрированный запрос, физическая сверка, возврат или согласие.</p></div><div><p class="eyebrow">ОЦЕНКА</p><h3>Модель с параметрами</h3><p>Считаем сумму и раскрываем допущения, но не называем предотвращённым убытком.</p></div><div><p class="eyebrow">ГИПОТЕЗА</p><h3>Вопрос для пилота</h3><p>Проверяем причинность контролируемым измерением и отслеживанием расходов.</p></div></section>`;}
 function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>Демонстрационные данные · По состоянию на ${AS_OF}</span></footer>`;}
-function render(){root.innerHTML=`${renderSidebar()}<div class="workspace">${renderTopbar()}<main class="main-content">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
+function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
 function stopAuto(){state.auto=false;if(timer){clearInterval(timer);timer=null;}}
 const DURATIONS=[5000,6000,7000,7000,5000];
 function startAuto(){stopAuto();state.auto=true;state.stageStart=performance.now();timer=setInterval(()=>{const elapsed=performance.now()-state.stageStart;const progress=(DURATIONS.slice(0,state.scene).reduce((a,b)=>a+b,0)+Math.min(elapsed,DURATIONS[state.scene]))/30000;const el=document.getElementById('demo-progress-fill');if(el)el.style.width=`${(100*progress).toFixed(2)}%`;if(elapsed>=DURATIONS[state.scene]){if(state.scene===4){stopAuto();render();}else{state.scene++;state.stageStart=performance.now();render();}}},75);render();}
@@ -136,6 +141,36 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  if(target.dataset.page){goto(target.dataset.page);return;}
  const a=target.dataset.action,value=target.dataset.value;
  if(a==='toggle-menu'){state.mobileOpen=!state.mobileOpen;render();}
+ else if(a==='r3-transfer-check'){state.r3TransferPlan=planTransfer(data,state.r3Transfer);render();}
+ else if(a==='r3-transfer-save'){
+  const p=state.r3TransferPlan;
+  if(!p?.valid){state.toast='Сначала подтвердите условия сценария';render();return;}
+  const created=newJournalEntry(state.r3Journal,{title:`Проверить перемещение ${p.units} ед. ${product(p.modelId).name} ${p.size}: ${p.sourceStore} → ${p.destinationStore}`,scenarioId:state.scenario,type:'transfer',evidenceIds:[p.stockSourceId,...p.evidenceIds]});
+  state.r3Journal=created.entries;state.r3Selected=created.created.id;persist();goto('journal');
+ }
+ else if(a==='r3-pilot-save'){
+  const r=evaluatePilot({testRequests:scoped().requests.length,testPurchases:scoped().requests.filter(x=>x.purchased&&x.saleId).length,controlRequests:state.r3Pilot.controlRequests===''?null:Number(state.r3Pilot.controlRequests),controlPurchases:state.r3Pilot.controlPurchases===''?null:Number(state.r3Pilot.controlPurchases),unitGross:Number(state.r3Pilot.unitGross),pilotCost:Number(state.r3Pilot.pilotCost)});
+  if(!r.valid){state.toast=r.errors.join('; ');render();return;}
+  const created=newJournalEntry(state.r3Journal,{title:'Пилот: запрос размера → подтверждённый чек',scenarioId:state.scenario,type:'pilot',evidenceIds:scoped().requests.slice(0,90).map(x=>x.id)});
+  state.r3Journal=created.entries;state.r3Selected=created.created.id;persist();goto('journal');
+ }
+ else if(a==='r3-journal-new'){
+  const item=opportunityMetrics(scoped()).find(x=>x.id===target.dataset.id);
+  if(!item)return;
+  const created=newJournalEntry(state.r3Journal,{title:item.action,scenarioId:state.scenario,type:item.id,evidenceIds:evidenceForOpportunity(scoped(),item.id)});
+  state.r3Journal=created.entries;state.r3Selected=created.created.id;persist();render();
+ }
+ else if(a==='r3-journal-select'){state.r3Selected=target.dataset.id;state.r3Measure={};render();}
+ else if(['r3-journal-progress','r3-journal-measure','r3-journal-close'].includes(a)){
+  try{state.r3Journal=transitionJournal(state.r3Journal,target.dataset.id,a==='r3-journal-progress'?'running':a==='r3-journal-measure'?'measured':'closed',state.r3Measure);state.r3Measure={};persist();render();}
+  catch(error){state.toast=error.message;render();}
+ }
+ else if(a==='r3-journal-export'){
+  const blob=new Blob([journalCsv(state.r3Journal)],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob),anchor=document.createElement('a');
+  anchor.href=url;anchor.download='OSMANX_ATELIER_DEMO_JOURNAL.csv';anchor.click();
+  setTimeout(()=>URL.revokeObjectURL(url),0);
+ }
  else if(a==='period'){state.period=value;render();}
  else if(a==='opp-select'){state.opp=target.dataset.id;render();}
  else if(a==='scene'){sceneChange(Number(value));}
@@ -159,16 +194,24 @@ function handleClick(event){const target=event.target.closest('button[data-actio
 }
 function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
- if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.page='dashboard';render();return;}
+ if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
   if(['transferUnits','transferProbability','transferCost'].includes(f)){state[f]=Number(element.value);state.lastVerification=null;render();return;}}
  if(element.dataset.calc){const k=element.dataset.calc;const raw=Number(element.value);preserveRerender(element,()=>{state.calculator[k]=Number.isFinite(raw)?raw:0});}
 }
 root.addEventListener('click',handleClick);
-root.addEventListener('change',e=>{if(e.target.matches('[data-field]'))handleField(e.target);});
+root.addEventListener('change',e=>{
+ if(e.target.matches('[data-field]'))handleField(e.target);
+ else if(e.target.matches('[data-r3-transfer]')){
+  const key=e.target.dataset.r3Transfer;state.r3Transfer[key]=['units','probability','costPerUnit','fixedCost','days'].includes(key)?(e.target.value===''?null:Number(e.target.value)):e.target.value;
+  if(key==='modelId'){state.r3Transfer.color=product(e.target.value).colors[0];}
+  state.r3TransferPlan=null;render();
+ }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
+ else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
+});
 root.addEventListener('input',e=>{if(e.target.matches('[data-calc]'))handleField(e.target);});
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
-window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},navigate:goto};
+window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
 render();

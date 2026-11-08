@@ -1,6 +1,8 @@
-# OSMANX RETAIL INTELLIGENCE — Executive Edition R2 / ATELIER
+# OSMANX RETAIL INTELLIGENCE — Executive Edition R3 / ATELIER
 
 > «Вы знаете, сколько заработали. А знаете, сколько могли заработать?»
+
+**R3:** пять новых реализованных систем — финансовая сверка событий, stock-constrained перемещения, пилотное сравнение с контрольной группой, журнал решений и расширенная приёмка. [Документация релиза R3](docs/RELEASE_R3.md).
 
 **Полностью интерактивная локальная Executive-демонстрация для демонстрации собственнику розничной сети.** Никаких облачных ключей, фиктивного API и скрытой отправки данных. Все исходные данные синтетические. Проект сделан как **аддитивный интерфейс** к существующему [OSMANX Retail Intelligence R0.7](https://github.com/osmanosmanov6880-bot/osmanx-retail-intelligence), без замены его Python/FastAPI/SQLite частей.
 
@@ -45,10 +47,14 @@ src/model.mjs                     — связанные синтетическ�
 src/ui.mjs                        — графики SVG, воронка, исходные события
 src/app.mjs                       — состояние, маршруты, 10 модулей, демо, опрос
 src/pdf.mjs                       — клиентский PDF без зависимостей
+src/r3_core.mjs                   — доказательная финансовая сверка, перемещения, пилоты, журнал, CSV
+src/r3_views.mjs                  — четыре связанных executive-экрана
+src/r3.css                        — новые премиальные адаптивные стили
 src/styles.css                    — Obsidian Executive + ATELIER luxury-слой, адаптивный дизайн
 assets/icon.svg                   — фирменный значок
 scripts/build_standalone.py       — сборка единого HTML
 scripts/browser_smoke.py          — Chromium 390/768/1440/1920 и PDF
+scripts/r3_browser_smoke.py       — новые пути, CSV, persistence, 4 viewport
 scripts/static_preview.mjs       — вспомогательная статическая QA-копия
 scripts/                           — сборка и проверка
 .github/workflows/                — пример CI для автономного слоя
@@ -76,7 +82,7 @@ npm test
 python3 scripts/browser_smoke.py  # нужен Chromium без запрета навигации
 ```
 
-- **30/30** Node.js тестов пройдены: структура событий, SKU-ссылки, возвраты, 60/32/18/7, 28 000 ₽, формулы, фильтры, 10 экранов, калькулятор, сценарии и опрос.
+- **55/55** Node.js тестов пройдены (R2 + R3): структура событий, SKU-ссылки, возвраты, 60/32/18/7, 28 000 ₽, формулы, фильтры, 10 экранов, калькулятор, сценарии и опрос.
 - Проверен формат созданного средствами PDF writer PDF: `pdfinfo` распознаёт корректный A4, 1 страницу.
 - **Ограничение среды:** установленный Chromium принудительно блокирует все URL (`URLBlocklist: ["*"]`), включая `http://127.0.0.1` и `file://`; браузерные скриншоты и проверка реальных ширин 390/768/1440/1920 **не выполнены**. `scripts/browser_smoke.py` приложен для запуска в свободной среде. CSS адаптирован к этим размерам, но независимая визуальная QA ещё нужна.
 
@@ -86,4 +92,4 @@ python3 scripts/browser_smoke.py  # нужен Chromium без запрета н
 
 **OSMANX WORLD — только демонстрационные данные.**
 
-Текущий релиз и приёмка: [R2 / ATELIER](docs/RELEASE_R2.md).
+Текущий релиз и приёмка: [R3 / ATELIER](docs/RELEASE_R3.md). Предыдущий этап: [R2 / ATELIER](docs/RELEASE_R2.md).

@@ -1,4 +1,4 @@
-name: OSMANX Executive ATELIER - finance, scenarios, browser
+name: OSMANX Executive ATELIER R3 - evidence, decisions, browser
 on:
   push:
     paths:
@@ -28,12 +28,15 @@ jobs:
       - name: Syntax and deterministic bundle verification
         run: |
           node --check src/app.mjs
+          node --check src/r3_core.mjs
+          node --check src/r3_views.mjs
           node --check build_check.js
           git diff --exit-code -- OSMANX_EXECUTIVE_OFFLINE.html
       - name: Verify embedded offline assets
         run: |
           test -s OSMANX_EXECUTIVE_OFFLINE.html
           test -s src/luxury.css
+          test -s src/r3.css
           test -s assets/atelier-scene.webp
   browser:
     runs-on: ubuntu-latest
@@ -51,11 +54,13 @@ jobs:
           python -m pip install playwright
           python -m playwright install --with-deps chromium
       - name: Executive interaction and visual viewport checks
-        run: python scripts/browser_smoke.py
+        run: |
+          python scripts/browser_smoke.py
+          python scripts/r3_browser_smoke.py
       - name: Retain audited screenshots and generated report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-r2-ateler-browser-qa
+          name: osmanx-r3-atelier-browser-qa
           path: executive/screenshots/
           retention-days: 14
