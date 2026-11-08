@@ -146,3 +146,7 @@ python3 scripts/browser_smoke.py  # нужен Chromium без запрета н
 **OSMANX WORLD — только демонстрационные данные.**
 
 Текущий релиз и приёмка: [R3 / ATELIER](docs/RELEASE_R3.md). Предыдущий этап: [R2 / ATELIER](docs/RELEASE_R2.md).
+
+## ATELIER R8 — локальные данные из CSV
+
+Новые пять разделов R8: **Local Source Vault**, **Verified Cashflow**, **Availability Engine**, **Consent-safe Recovery Pilot**, **Director Sign-off**. Теперь можно принять собственные обезличенные продажи, возвраты, запросы и текущие остатки через CSV с любыми SKU без 1С API. Сырой CSV не записывается в `localStorage` и не подмешивается в учебную модель. Подтверждённые в файле суммы и сценарии различаются явно. Формат таблиц, ограничения, проверка и команды — [docs/RELEASE_R8.md](docs/RELEASE_R8.md). Режим не предназначен для обработки персональных данных.
