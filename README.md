@@ -1,3 +1,9 @@
+# OSMANX Retail Intelligence R1.2 — Retail Desk
+
+Five verified workflows: exact external POS receipt lookup/link, cancellation and handoff attestation for one-time coupons, campaign financial controls, 7/30/60-day matured cohorts, and a unified executive scorecard. Premium Russian desktop/mobile interface at `/static/retail_desk.html`. [Technical release notes](docs/RELEASE_R12.md). Public hosting remains deferred.
+
+---
+
 # OSMANX Retail Intelligence R1.1 — Growth Intelligence
 
 Пять новых проверяемых бизнес-модулей: добровольные анонимные карты лояльности, подтверждённые чеки, бюджетируемые бонусные кампании, 30-дневные когорты повторных покупок и рекомендации по ассортименту. Тёмный русскоязычный интерфейс: `/static/growth.html`. Исходники и тесты: [RELEASE_R11](docs/RELEASE_R11.md). Автоматического применения скидок, связи с камерами, сообщения клиентам и публичного развёртывания **нет**.
