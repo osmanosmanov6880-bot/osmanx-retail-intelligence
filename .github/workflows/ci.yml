@@ -37,6 +37,8 @@ jobs:
         run: python -m pytest tests/test_r15.py -q
       - name: R1.6 Pilot Command integration and access checks
         run: python -m pytest tests/test_r16.py -q
+      - name: R1.7 Voice Studio API, isolation and retention tests
+        run: python -m pytest tests/test_r17.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
@@ -66,6 +68,11 @@ jobs:
         run: |
           node --check frontend/command.js
           node --check frontend/r16_nav.js
+      - name: R1.7 frontend syntax
+        run: |
+          node --check frontend/voice.js
+          node --check frontend/voice_kiosk.js
+          node --check frontend/r17_nav.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -98,6 +105,8 @@ jobs:
         run: python scripts/r15_browser_smoke.py
       - name: R1.6 Pilot Command Chromium acceptance
         run: python scripts/r16_browser_smoke.py
+      - name: R1.7 Voice Studio touchscreen browser acceptance
+        run: python scripts/r17_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -119,5 +128,6 @@ jobs:
             qa/r14-*.png
             qa/r15-*.png
             qa/r16-*.png
+            qa/r17-*.png
           if-no-files-found: ignore
           retention-days: 7
