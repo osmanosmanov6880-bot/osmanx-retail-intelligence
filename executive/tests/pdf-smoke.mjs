@@ -1,0 +1,11 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {exportPdf} from '../src/pdf.mjs';
+const jpg=readFileSync('/tmp/osmanx_jpg_b64.txt','utf-8');
+const canvas={width:1240,height:1754,getContext:()=>({fillRect(){},fillText(){},measureText(text){return {width:String(text).length*9}}}),toDataURL:()=>`data:image/jpeg;base64,${jpg}`};
+globalThis.document={createElement:(x)=>x==='canvas'?canvas:{click(){},href:'',download:''}};
+globalThis.URL.createObjectURL=()=>`blob:mock`;
+globalThis.URL.revokeObjectURL=()=>{};
+const plan=[{title:'Спрос',detail:'Записывайте запросы'},{title:'Остатки',detail:'Проверьте склад'},{title:'Пилот',detail:'Измеряйте эффект'}];
+const blob=exportPdf({date:'2026-11-08',answers:{stores:'3'},plan});
+writeFileSync('/tmp/osmanx_pdf_writer_smoke.pdf',Buffer.from(await blob.arrayBuffer()));
+console.log('PDF bytes',blob.size);
