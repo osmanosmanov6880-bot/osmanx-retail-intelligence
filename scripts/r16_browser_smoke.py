@@ -47,9 +47,10 @@ def main():
                         return {'status':res.status_code,'text':res.text,'content_type':res.headers.get('content-type','application/json')}
                     page.expose_function('__bridge',call_api)
                     html=(ROOT/'frontend/command.html').read_text()
+                    html=html.replace('<link rel="stylesheet" href="/static/pilot.css">','')
                     html=html.replace('<link rel="stylesheet" href="/static/command.css">','')
                     html=html.replace('<script type="module" src="/static/command.js"></script>','')
-                    html=html.replace('</head>','<style>'+(ROOT/'frontend/command.css').read_text()+'</style></head>')
+                    html=html.replace('</head>','<style>'+(ROOT/'frontend/pilot.css').read_text()+(ROOT/'frontend/command.css').read_text()+'</style></head>')
                     page.set_content(html,wait_until='domcontentloaded')
                     page.evaluate('''() => {window.__OSMANX_SESSION__={getItem(){return null}};
                         window.fetch=async(url,opts={})=>{const r=await window.__bridge(opts.method||'GET',url,opts.body?JSON.parse(opts.body):null,opts.headers||{});
