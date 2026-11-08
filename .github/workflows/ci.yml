@@ -31,11 +31,14 @@ jobs:
         run: python -m pytest tests/test_r12.py -q
       - name: R1.3 API and business workflow tests
         run: python -m pytest tests/test_r13.py -q
+      - name: R1.4 Integrity Center integration and security tests
+        run: python -m pytest tests/test_r14.py tests/test_r14_extended.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
         run: |
           node --check frontend/app.js
+          node --check frontend/integrity.js
           node --check frontend/commerce_ui.js
           node --check frontend/charts.js
           node --check frontend/icons.js
@@ -77,6 +80,8 @@ jobs:
         run: python scripts/r12_browser_smoke.py
       - name: R1.3 Merchant Control Room browser acceptance
         run: python scripts/r13_browser_smoke.py
+      - name: R1.4 Integrity Center Chromium acceptance
+        run: python scripts/r14_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -95,5 +100,6 @@ jobs:
             qa/r11-*.png
             qa/r12-*.png
             qa/r13-*.png
+            qa/r14-*.png
           if-no-files-found: ignore
           retention-days: 7
