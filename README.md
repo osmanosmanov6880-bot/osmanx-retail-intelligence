@@ -1,3 +1,9 @@
+# OSMANX Retail Intelligence R1.6 — Pilot Command
+
+Five evidence-first workflows: scoped pilot portfolio, strict source and frozen-snapshot integrity checks, immutable assumption-only economics, independently reviewed rollout approval and auditable follow-up tasks. Russian premium UI: `/static/command.html`; [release notes](docs/RELEASE_R16.md). Public hosting and hardware connections remain deferred.
+
+---
+
 # OSMANX Retail Intelligence R1.5 — Pilot Studio
 
 Five verified commercial pilot workflows: frozen test definition, documented source checks, store-local daily metrics, immutable intervention costs and SHA-256 sealed executive evidence. This release is local/private; no real POS, cameras, 1C or public deployment. [Full R1.5 documentation](docs/RELEASE_R15.md). Open `/static/pilot.html` after starting the local application.

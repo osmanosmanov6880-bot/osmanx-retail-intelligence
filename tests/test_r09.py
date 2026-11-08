@@ -2,6 +2,7 @@
 from __future__ import annotations
 import importlib
 from datetime import date,timedelta,datetime,timezone
+from zoneinfo import ZoneInfo
 from fastapi.testclient import TestClient
 import pytest
 
@@ -139,7 +140,9 @@ def test_finance_returns_are_logged_not_bank_refunds(site):
 
 
 def window(days_ago):
-    return (date.today()-timedelta(days=days_ago)).isoformat()
+    # Store-local reporting day, not GitHub runner UTC (may be previous calendar day).
+    store_today=datetime.now(ZoneInfo('Europe/Moscow')).date()
+    return (store_today-timedelta(days=days_ago)).isoformat()
 
 
 def protocol_payload():
@@ -174,7 +177,7 @@ def test_protocol_control_store_scope_and_trend_math(site):
         # Four days of comparable visits; a recorded change does not imply a cause.
         for day_ago,store_id,visits,checks in [(9,sid,100,10),(8,sid,100,10),(3,sid,100,20),(2,sid,100,20),
              (9,other,100,10),(8,other,100,10),(3,other,100,15),(2,other,100,15)]:
-            happened=(datetime.now(timezone.utc)-timedelta(days=day_ago)).replace(hour=12).isoformat(timespec='seconds')
+            happened=(datetime.now(ZoneInfo('Europe/Moscow')).replace(hour=12,minute=0,second=0,microsecond=0)-timedelta(days=day_ago)).astimezone(timezone.utc).isoformat(timespec='seconds')
             con.execute('INSERT INTO visits(store_id,quantity,source,occurred_at,external_id) VALUES(?,?,?,?,?)',
               (store_id,visits,'manual',happened,f'r09-visit-{store_id}-{day_ago}'))
             for n in range(checks):
