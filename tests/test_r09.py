@@ -2,6 +2,7 @@
 from __future__ import annotations
 import importlib
 from datetime import date,timedelta,datetime,timezone
+from zoneinfo import ZoneInfo
 from fastapi.testclient import TestClient
 import pytest
 
@@ -139,7 +140,9 @@ def test_finance_returns_are_logged_not_bank_refunds(site):
 
 
 def window(days_ago):
-    return (date.today()-timedelta(days=days_ago)).isoformat()
+    # Store-local reporting day, not GitHub runner UTC (may be previous calendar day).
+    store_today=datetime.now(ZoneInfo('Europe/Moscow')).date()
+    return (store_today-timedelta(days=days_ago)).isoformat()
 
 
 def protocol_payload():
