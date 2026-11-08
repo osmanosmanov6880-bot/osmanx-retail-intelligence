@@ -60,7 +60,7 @@ function render(){
  const x=S.data,m=x.brief.metrics;const store=S.stores.find(s=>s.slug===S.slug);
  root.innerHTML=`<main class="app"><header class="top"><div><div class="brand">OSMAN<span>X</span></div><div class="brandline">RETAIL OPERATIONS · R0.7</div></div><div class="toplinks">
   <select class="store-select" id="ops-store" aria-label="Выберите филиал">${S.stores.map(st=>`<option value="${esc(st.slug)}" ${st.slug===S.slug?'selected':''}>${esc(st.name)}</option>`).join('')}</select>
-  <a class="toplink" href="/static/workflows.html">Спрос и закупки</a><a class="toplink primary" href="/">Основной кабинет</a></div></header>
+  <a class="toplink primary" href="/static/strategy.html">Стратегия R0.8</a><a class="toplink" href="/static/workflows.html">Спрос и закупки</a><a class="toplink primary" href="/">Основной кабинет</a></div></header>
  <section class="hero"><div><div class="eyebrow">Контроль, точность, решение</div><h1>Операционный центр</h1><p>Работа с реальными остатками, запросами покупателей и измерениями. Без выдуманных продаж, распознавания лиц и непроверенных обещаний прибыли.</p></div><div class="hero-right"><strong>${esc(store?.name||S.slug)}</strong><small>${esc(x.brief.generated_at?.slice(0,16)||'')}</small></div></section>
  ${S.config.demo?'<div class="banner">Демонстрационный режим — искусственные данные подписаны как демо. Подключения физических устройств не симулируются.</div>':''}
  <section class="kpi-grid">

@@ -67,7 +67,7 @@ function render(){
    <header class="wf-header"><div><div class="wf-logo">OSMAN<span>X</span></div><div class="wf-sub">RETAIL INTELLIGENCE · R0.6</div></div>
     <div class="wf-header-actions"><select class="wf-select" id="wf-store" aria-label="Филиал">${S.stores.map(s=>`<option value="${esc(s.slug)}" ${s.slug===S.slug?'selected':''}>${esc(s.name)}</option>`).join('')}</select>
       ${S.config.demo?'<span class="wf-chip attention">ДЕМО · искусственные данные</span>':'<span class="wf-chip positive">Реальная база</span>'}
-      <a class="wf-button red" href="/static/operations.html">Контроль магазина R0.7</a><a class="wf-button" href="/">← Основной кабинет</a></div></header>
+      <a class="wf-button" href="/static/strategy.html">Стратегия R0.8</a><a class="wf-button red" href="/static/operations.html">Контроль магазина R0.7</a><a class="wf-button" href="/">← Основной кабинет</a></div></header>
    <section class="wf-hero"><div><span class="wf-kicker">Коммерческие операции / единая цепочка</span><h1>От спроса до<br>подтверждённой прибыли.</h1><p>Ничего не угадываем: запросы фиксируются, поставки подтверждаются, продажи сверяются с чеками, а решения проверяются на фактических показателях.</p></div>
    <div class="wf-flow">${['Запрос','Закупка','Поступление','Чек','Вывод'].map((x,i)=>`<div class="wf-flow-step"><i></i><small>${i+1}. ${x}</small></div>`).join('')}</div></section>
    <section class="wf-stats" aria-label="Ключевые показатели">

@@ -1,3 +1,15 @@
+# OSMANX Retail Intelligence R0.8
+
+**Five new commercial decision modules**: restock planning from unmet demand, supplier delivery scorecards, fitting-room insight and evidence-based hypotheses, accountable action queue, and immutable daily management briefs. All in the existing multi-tenant SQLite application; approved dark Russian UI retained. No public deployment.
+
+- Open after local startup: `/static/strategy.html` (login to the main dashboard first outside demo mode).
+- [Detailed release and limitations](docs/RELEASE_R08.md).
+- Tests: `python -m pytest tests -q` and `python scripts/r08_browser_smoke.py`.
+- Additional navigation is provided from the R0.6 and R0.7 operational interfaces.
+- Suggestions are **not** forecasts or evidence of missed sales. Purchase order conversion produces a draft and never dispatches it to the supplier.
+
+---
+
 # OSMANX Retail Intelligence R0.7 — операционный центр
 
 **Пять работающих блоков:** инвентаризация с контролем устаревания, безопасные перемещения между филиалами, QR-кнопка консультанта, сравнение зон магазина, проверяемая сводка директора с CSV. Тёмный русскоязычный интерфейс: `/static/operations.html`. Публичный деплой не выполняется.
