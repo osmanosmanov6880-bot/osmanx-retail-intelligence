@@ -4,6 +4,7 @@ Only runs where Chromium navigation is permitted; CI installs a browser explicit
 """
 from pathlib import Path
 import socket
+import re
 import subprocess
 import time
 from playwright.sync_api import sync_playwright
@@ -54,7 +55,7 @@ try:
   page.locator('input[data-r3-transfer="units"]').fill('3')
   page.locator('input[data-r3-transfer="units"]').press('Tab')
   page.locator('button[data-action="r3-transfer-check"]').click()
-  assert '5 550' in page.locator('.r3-result-math').inner_text()
+  assert '5 550' in re.sub(r'\s+', ' ', page.locator('.r3-result-math').inner_text())
   page.locator('button[data-action="r3-transfer-save"]').click()
   assert page.evaluate('window.__OSMANX_DIAGNOSTICS__.state.page')=='journal'
   assert page.evaluate('window.__OSMANX_DIAGNOSTICS__.journal.all')==1
