@@ -1,3 +1,16 @@
+# OSMANX RETAIL INTELLIGENCE — ATELIER R6
+
+**Five new, working executive rooms:** local CSV field mapping with atomic validation; demand-to-receipt evidence; return-cohort risk with Wilson intervals; sample-size and allocation design for a controlled pilot; and a local accountability board with state transitions and evidence-backed outcomes.
+
+- Open `OSMANX_EXECUTIVE_OFFLINE.html` in a modern browser for the self-contained offline demo.
+- For modular development: `python3 -m http.server 4173 --bind 127.0.0.1` and visit `http://127.0.0.1:4173`.
+- Verify: `npm test`, `python3 scripts/build_standalone.py` and `python3 scripts/r6_browser_smoke.py` (Playwright/Chromium).
+- [Full R6 documentation and limitations](docs/RELEASE_R6.md).
+
+**No live 1C, POS or warehouse integration.** Imported CSV is inspected without mixing into synthetic business metrics. Financial predictions are testable hypotheses rather than proven incremental profit.
+
+---
+
 # OSMANX RETAIL INTELLIGENCE — ATELIER R5
 
 **Пять новых реализованных разделов** поверх R4: локальная строгая CSV-приёмка, когорты покупок, ограниченный закупочный сценарий, диагностика QR-сервиса и сравнение трёх филиалов. Все пять экранов интерактивны, с исходными ID, экспортом CSV и при необходимости PDF. Новые проверки: **42 теста**, всего **132/132 Node-тестов** в локальной среде.

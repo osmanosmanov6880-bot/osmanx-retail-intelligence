@@ -546,6 +546,58 @@ em,.page-heading h1 em{color:var(--gold)!important}
 @media(max-width:1050px){.r5-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.r5-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.r5-heading{padding:19px 0 25px}.r5-heading h1{font-size:clamp(32px,9vw,46px)}.r5-stats{gap:8px}.r5-stat{min-height:112px;padding:14px}.r5-stat strong{font-size:clamp(22px,5.7vw,30px)}.r5-panel{padding:17px}.r5-toolbar{gap:9px}.r5-control{flex:1 1 calc(50% - 8px)}.r5-actions>*{flex:1 1 130px}.r5-select{grid-template-columns:minmax(0,1fr) 92px}.r5-overline span{display:block}.r5-branch-head b{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.r5-branch,.r5-select,.r5-primary,.r5-outline{transition:none!important}}
+
+/* ATELIER R6: quiet-luxury evidence rooms. Responsive first; no decorative glow. */
+.r6-head{padding:clamp(26px,4vw,56px) 0 31px;border-bottom:1px solid #544b41;margin-bottom:24px}
+.r6-head small{display:block;color:#d5b994;letter-spacing:.28em;font:500 10px/1.65 Arial,sans-serif;margin-bottom:18px}
+.r6-head h1{font:400 clamp(38px,5.2vw,72px)/1.09 Georgia,'Times New Roman',serif;letter-spacing:-.051em;color:#f4eee6;max-width:1120px;margin:0 0 22px}
+.r6-head h1 em{color:#d9b991;font-style:normal}
+.r6-head p{font:400 13px/1.78 Arial,sans-serif;color:#b3a99d;max-width:720px;margin:0}
+.r6-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 26px}
+.r6-metric{display:flex;flex-direction:column;justify-content:space-between;gap:12px;background:#1a1b1b;border:1px solid #3c3935;padding:clamp(15px,2.1vw,25px);min-height:144px;min-width:0}
+.r6-metric span{font:400 11px/1.55 Arial,sans-serif;color:#b5aa9e}
+.r6-metric strong{font:400 clamp(23px,3vw,41px)/1.09 Georgia,serif;color:#f1e2ce;letter-spacing:-.045em;overflow-wrap:anywhere}
+.r6-metric small{font:400 10px/1.6 Arial,sans-serif;color:#938777}
+.r6-two{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:start;gap:18px;margin:0 0 21px}
+.r6-panel{min-width:0;overflow-wrap:anywhere;background:linear-gradient(160deg,#1d1d1c,#111518 90%);border:1px solid #3d3933;padding:clamp(20px,2.3vw,36px)}
+.r6-panel.r6-accent{border-color:#756046;background:linear-gradient(148deg,#24201b,#111518 80%)}
+.r6-panel h2{font:400 clamp(23px,2.25vw,31px)/1.2 Georgia,serif;letter-spacing:-.025em;color:#eddfce;margin:0 0 26px}
+.r6-panel p{font:400 12px/1.7 Arial,sans-serif;color:#b8afa2}
+.r6-panel .r5-control{flex:1 1 165px}
+.r6-wide{display:block;width:100%}
+.r6-wide textarea{min-height:185px;resize:vertical}
+.r6-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 13px;min-width:0}
+.r6-list{max-height:610px;overflow:auto;overscroll-behavior:contain}
+.r6-select{min-width:0;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:16px 8px;text-align:left;background:transparent;color:#eaded0;border:0;border-bottom:1px solid #413b33;cursor:pointer}
+.r6-select:hover,.r6-select.active{background:#2b251e;box-shadow:inset 2px 0 0 #d5b68e}
+.r6-select>span{min-width:0;display:flex;flex-direction:column;gap:5px}
+.r6-select b{font:500 12px/1.4 Arial,sans-serif;overflow-wrap:anywhere}
+.r6-select small{font:400 10px/1.55 Arial,sans-serif;color:#a4988a;overflow-wrap:anywhere}
+.r6-select strong{font:400 clamp(15px,1.6vw,23px)/1.2 Georgia,serif;color:#d7ba94;text-align:right;overflow-wrap:anywhere}
+.r6-hero-number{font:400 clamp(33px,4vw,57px)/1.1 Georgia,serif;color:#dfc3a1;letter-spacing:-.035em;margin:0 0 27px;overflow-wrap:anywhere}
+.r6-hero-number small{display:block;font:400 11px/1.7 Arial,sans-serif;color:#ab9e8e;letter-spacing:0;margin-top:10px}
+.r6-buckets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.r6-buckets div{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #4b443b;padding:11px 6px;font:400 11px/1.4 Arial,sans-serif;color:#a89c90}
+.r6-buckets b{font:400 21px/1.2 Georgia,serif;color:#e7d4b9}
+.r6-assignments{max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:2px;margin:15px 0}
+.r6-assignments div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;background:#1b1c1a;border:1px solid #383530}
+.r6-assignments code{font:400 11px/1.5 ui-monospace,monospace;color:#d9c2a3}
+.r6-assignments span{font:400 11px/1.5 Arial,sans-serif;color:#ae9e8a}
+.r6-reason-bars div{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid #383530;color:#d2c5b3;font:400 11px/1.45 Arial,sans-serif}
+.r6-reason-bars span{color:#d9bc97}
+.r6-form{border-top:1px solid #51493f;margin-top:25px;padding-top:25px}
+.r6-form h3{font:400 23px/1.2 Georgia,serif;color:#e6d4bb;margin:0 0 17px}
+.r6-timeline{border-left:1px solid #8c7455;margin:20px 5px;padding-left:20px;display:flex;flex-direction:column;gap:12px}
+.r6-timeline div{display:flex;flex-direction:column;gap:5px}
+.r6-timeline b{font:500 12px/1.45 Arial,sans-serif;color:#d5b48b}
+.r6-timeline small{font:400 11px/1.6 Arial,sans-serif;color:#b5a99a}
+.r6-result{padding:16px;border:1px solid #756046;background:#22201a;margin:18px 0}
+.r6-result>strong{font:400 24px/1.3 Georgia,serif;color:#efd8b6}
+.r6-stamp{font:400 9px/1.7 Arial,sans-serif;letter-spacing:.12em;text-align:center;color:#948779;padding:12px 0 25px}
+.r6-panel button:focus-visible,.r6-panel input:focus-visible,.r6-panel textarea:focus-visible,.r6-panel select:focus-visible,.r6-toolbar button:focus-visible{outline:2px solid #e8c99c;outline-offset:3px}
+@media(max-width:1100px){.r6-two{grid-template-columns:1fr}.r6-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.r6-head h1{font-size:clamp(34px,9vw,47px)}.r6-metrics{gap:8px}.r6-metric{min-height:114px;padding:14px}.r6-metric strong{font-size:clamp(20px,5vw,28px)}.r6-panel{padding:18px}.r6-fields{grid-template-columns:1fr}.r6-buckets{grid-template-columns:1fr}.r6-select{grid-template-columns:minmax(0,1fr) 86px}.r6-select strong{font-size:17px}.r6-head{padding:19px 0 24px}.r6-panel .r5-toolbar{flex-direction:column;align-items:stretch}.r6-panel .r5-control{flex:none;width:100%}}
+@media(prefers-reduced-motion:reduce){.r6-select,.r6-panel button{animation:none!important;transition:none!important}}
 </style></head>
 <body><div id="app"><div class="boot">OSMAN<span>X</span><small>RETAIL INTELLIGENCE</small></div></div>
 <script>// MODULE model.mjs
@@ -1947,7 +1999,274 @@ function drawScorecard(report){
 function branchPdfBlob(report){if(!report.valid)throw Error('Неверные параметры сравнения');const c=drawScorecard(report);return encodePdf(c.toDataURL('image/jpeg',.91),c.width,c.height);}
 function exportBranchPdf(report){const blob=branchPdfBlob(report),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`OSMANX_BRANCH_EVIDENCE_${AS_OF}.pdf`;a.click();setTimeout(()=>URL.revokeObjectURL(url),20000);return blob;}
 
+// MODULE r6_core.mjs
+/** ATELIER R6 — five isolated executive decision workflows.
+ * Every financial figure is a synthetic scenario or observed gross, never proven incrementality.
+ * Imported CSV never changes the local demo dataset and no network APIs are called.
+ */
+
+
+
+const r6_kindFields={sales:['id','date','storeId','modelId','size','paidPrice','cost'],returns:['id','date','storeId','saleId','modelId','size','refundedPrice','reversedCost'],stock:['id','asOf','storeId','modelId','size','color','quantity']};
+const r6_aliases={
+ id:['id','ид','номер','код операции','код записи','eventid','event id','transactionid'],
+ date:['date','дата','дата продажи','дата возврата','transactiondate','operationdate'],
+ asOf:['asof','as of','дата остатка','дата среза','дата остатков'],
+ storeId:['storeid','store id','магазин','филиал','точка','склад','store'],
+ modelId:['modelid','model id','sku','артикул','код номенклатуры','номенклатура','товар'],
+ size:['size','размер'],color:['color','цвет'],paidPrice:['paidprice','сумма оплаты','сумма','оплата','выручка','saleprice'],
+ cost:['cost','себестоимость','закупочная цена','себестоимость продажи'],
+ saleId:['saleid','id чека','чек','номер чека','чек id','receiptid'],
+ refundedPrice:['refundedprice','возврат денег','сумма возврата'],
+ reversedCost:['reversedcost','сторно себестоимости','возврат себестоимости'],
+ quantity:['quantity','остаток','количество','qty']
+};
+const r6_canonicalHeader=x=>String(x??'').normalize('NFKC').trim().toLowerCase().replace(/[ _\-]+/g,' ').replace(/\s+/g,' ');
+const r6_SAFE=/^[^=+@\-\t\r\n]/;
+const r6_clean=x=>String(x??'').trim();
+const r6_finite=x=>typeof x==='number'&&Number.isFinite(x);
+const r6_nonNegative=x=>r6_finite(x)&&x>=0;
+const r6_int=x=>Number.isSafeInteger(x)&&x>=0;
+const r6_dateValid=x=>typeof x==='string'&&/^\d{4}-\d\d-\d\d$/.test(x)&&new Date(x+'T12:00:00Z').toISOString?.() !== undefined;
+const r6_csvSafe=v=>{const s=String(v??'');return /^[\s\t\r\n]*[=+@\-]/.test(s)?"'"+s:s;};
+function exportRowsCsv(rows){return '\uFEFF'+rows.map(row=>row.map(value=>`"${r6_csvSafe(value).replace(/"/g,'""')}"`).join(',')).join('\r\n')+'\r\n';}
+function inspectMapping(text,kind='sales'){
+ if(!r6_kindFields[kind])return {valid:false,kind,errors:['Неизвестный тип событий'],columns:[],mapping:{},count:0};
+ let parsed;try{parsed=csvRows(text);}catch(e){return {valid:false,kind,errors:[e.message],columns:[],mapping:{},count:0};}
+ const [head,...rows]=parsed.rows;
+ const columns=head.map(x=>r6_clean(x));const duplicate=columns.filter((x,i)=>columns.findIndex(y=>r6_canonicalHeader(y)===r6_canonicalHeader(x))!==i);
+ const mapping={};for(const field of r6_kindFields[kind]){
+  const names=new Set([field,...r6_aliases[field]||[]].map(r6_canonicalHeader));
+  const found=columns.find(x=>names.has(r6_canonicalHeader(x)));
+  mapping[field]=found||'';
+ }
+ const errors=[];if(duplicate.length)errors.push('Повторяются заголовки: '+[...new Set(duplicate)].join(', '));
+ if(!rows.length)errors.push('Нет строк данных');
+ return {valid:!errors.length,kind,columns,mapping,count:rows.length,errors,delimiter:parsed.delimiter};
+}
+const r6_storeLabel=x=>{
+ const s=r6_clean(x);const normalized=r6_canonicalHeader(s);const match=STORES.find(k=>r6_canonicalHeader(k.name)===normalized||r6_canonicalHeader(k.short)===normalized||k.id===normalized);
+ return match?.id||s;
+};
+/** Preview only, atomic: invalid or ambiguous fields reject the entire mapped batch. */
+function mapAndValidate(text,kind,mapping,previousSales=[]){
+ const schema=inspectMapping(text,kind),errors=[...schema.errors];
+ if(!schema.valid)return {valid:false,errors,issues:[],rows:[],kind};
+ const fields=r6_kindFields[kind];const selections=fields.map(f=>mapping?.[f]||'');
+ if(selections.some(s=>!schema.columns.includes(s)))errors.push('Не все обязательные поля сопоставлены с существующими колонками');
+ if(new Set(selections).size!==selections.length)errors.push('Одна колонка сопоставлена нескольким обязательным полям');
+ if(errors.length)return {valid:false,errors,issues:[],rows:[],kind};
+ const lines=csvRows(text).rows.slice(1),issues=[],converted=[];
+ for(let i=0;i<lines.length;i++){
+  if(lines[i].length!==schema.columns.length){issues.push({row:i+2,reason:'Нарушено число столбцов'});continue;}
+  const o=Object.fromEntries(fields.map((f,k)=>[f,r6_clean(lines[i][schema.columns.indexOf(selections[k])])]));
+  o.storeId=r6_storeLabel(o.storeId);
+  if(!r6_SAFE.test(o.id)){issues.push({row:i+2,reason:'Опасный/пустой идентификатор события'});continue;}
+  converted.push(o);
+ }
+ if(issues.length)return {valid:false,errors,issues,rows:[],kind};
+ const normalizedCsv=exportRowsCsv([fields,...converted.map(o=>fields.map(f=>o[f]))]);
+ const check=reviewImport(normalizedCsv,kind,previousSales);
+ // Do not use the sanitized output of exportRowsCsv to mask unsafe source data.
+ return {...check,valid:check.valid&&errors.length===0,errors:[...errors,...check.errors],issues:[...issues,...(check.issues||[])],kind,normalizedCsv:check.valid?normalizedCsv:null,columnMapping:Object.fromEntries(fields.map((f,k)=>[f,selections[k]])),sourceRows:lines.length,source:'Загруженная CSV-выгрузка в памяти браузера, без импорта'};
+}
+
+/** Request-level evidence audit: no assumed history from an as-of-today stock snapshot. */
+function traceLostDemand(dataset,scope,{probability=20,handling=250,minGross=0}={}){
+ const errors=[];if(!r6_finite(probability)||probability<0||probability>100)errors.push('Вероятность: 0–100%');
+ if(!r6_nonNegative(handling))errors.push('Стоимость обработки не может быть отрицательной');
+ if(!r6_nonNegative(minGross))errors.push('Минимальная маржа не может быть отрицательной');
+ const sales=new Map(dataset.sales.map(s=>[s.id,s]));const stockIndex=new Map();
+ for(const stock of dataset.stock){const key=[stock.modelId,stock.size,stock.color].join('|');if(!stockIndex.has(key))stockIndex.set(key,[]);stockIndex.get(key).push(stock);}
+ const buckets={'confirmed':0,'solution-no-check':0,'cross-branch-now':0,'unresolved':0,'invalid-link':0};
+ const rows=scope.requests.map(req=>{
+  const p=dataset.products.find(x=>x.id===req.modelId);
+  const sale=req.purchased?sales.get(req.saleId):null;
+  const linked=Boolean(sale&&sale.originRequestId===req.id&&sale.modelId===req.modelId&&sale.size===req.size&&sale.storeId===req.storeId);
+  const other=(stockIndex.get([req.modelId,req.size,req.color].join('|'))||[]).filter(s=>s.storeId!==req.storeId&&s.quantity>0&&s.asOf===AS_OF);
+  const classification=req.purchased?(linked?'confirmed':'invalid-link'):req.solutionFound?'solution-no-check':other.length?'cross-branch-now':'unresolved';
+  buckets[classification]++;
+  const unitGross=p?p.price-p.cost:null;
+  const eligible=!req.purchased&&req.consent&&unitGross!==null&&unitGross>=minGross; // no unsolicited outreach
+  const grossScenario=eligible?(unitGross*probability/100-handling):null;
+  return {id:req.id,date:req.date,storeId:req.storeId,modelId:req.modelId,product:p?.name||req.modelId,size:req.size,color:req.color,classification,
+    stockOtherNow:other.map(s=>({storeId:s.storeId,quantity:s.quantity,stockId:s.id})),consent:!!req.consent,linkedSaleId:linked?sale.id:null,observedGross:linked?sale.paidPrice-sale.cost:null,
+    grossScenario,unitGross,evidenceIds:[req.id,...(linked?[sale.id]:[]),...other.map(s=>s.id)].slice(0,12)};
+ });
+ const possible=rows.filter(r=>r.grossScenario!==null&&r.grossScenario>0);
+ return {valid:!errors.length,errors,rows,buckets,requestCount:rows.length,linkedGross:rows.reduce((s,r)=>s+(r.observedGross||0),0),
+   hypotheticalNet:possible.reduce((s,r)=>s+r.grossScenario,0),possibleCount:possible.length,negativeScenarios:rows.filter(r=>r.grossScenario!==null&&r.grossScenario<=0).length,
+   incrementalProven:false,caveats:['Учетные остатки — снимок на текущую дату, а не доказательство доступности на дату обращения.',
+   'Запрос без покупки не равен потерянной продаже. Оценка строится только по согласившимся незавершённым обращениям и ручным допущениям.',
+   'Согласие учитывается отдельно: без него нельзя отправлять персональное уведомление.']};
+}
+
+/** Return denominator = receipts sold in the selected cohort; returns are traced through AS_OF.
+ * Right censoring remains visible. We never claim a batch defect without batch/source evidence.
+ */
+function analyzeReturns(dataset,scope,{dimension='model',minSales=5}={}){
+ const errors=[];if(!['model','size','store'].includes(dimension))errors.push('Неизвестная группировка');
+ if(!r6_int(minSales)||minSales<1||minSales>10000)errors.push('Минимум чеков: от 1 до 10000');
+ if(errors.length)return {valid:false,errors,rows:[],sufficient:0};
+ const groups=new Map();const sourceSales=new Map(scope.sales.map(s=>[s.id,s]));const allReturns=new Map();
+ for(const ret of dataset.returns){if(ret.date>AS_OF)continue;if(!allReturns.has(ret.saleId))allReturns.set(ret.saleId,[]);allReturns.get(ret.saleId).push(ret);}
+ const invalid=[];
+ for(const sale of scope.sales){
+  const key=dimension==='model'?sale.modelId:dimension==='size'?sale.size:sale.storeId;
+  if(!groups.has(key))groups.set(key,{key,receipts:0,returned:0,refunded:0,reverseCost:0,ids:[],reasonCounts:new Map(),firstDate:sale.date});
+  const g=groups.get(key);g.receipts++;g.ids.push(sale.id);if(sale.date<g.firstDate)g.firstDate=sale.date;
+  const matched=(allReturns.get(sale.id)||[]).filter(ret=>ret.storeId===sale.storeId&&ret.modelId===sale.modelId&&ret.size===sale.size&&ret.date>=sale.date);
+  if(matched.length>1)invalid.push('Несколько возвратов к '+sale.id);
+  if(matched.length){g.returned++;const r=matched[0];g.refunded+=r.refundedPrice;g.reverseCost+=r.reversedCost;g.ids.push(r.id);g.reasonCounts.set(r.reason||'Причина неизвестна',(g.reasonCounts.get(r.reason||'Причина неизвестна')||0)+1);}
+ }
+ const rows=[...groups.values()].map(g=>({key:g.key,label:dimension==='model'?(dataset.products.find(x=>x.id===g.key)?.name||g.key):dimension==='store'?(STORES.find(s=>s.id===g.key)?.name||g.key):g.key,
+  receipts:g.receipts,returned:g.returned,rate:safeRatio(g.returned,g.receipts),interval:wilson(g.returned,g.receipts),observedGrossReversed:g.refunded-g.reverseCost,
+  reasons:[...g.reasonCounts.entries()].sort((a,b)=>b[1]-a[1]).map(([name,count])=>({name,count})),sufficient:g.receipts>=minSales,ids:g.ids.slice(0,35),firstDate:g.firstDate})).sort((a,b)=>(b.sufficient-a.sufficient)||((b.rate??0)-(a.rate??0))||b.receipts-a.receipts);
+ const youngest=scope.sales.filter(s=>(Date.parse(AS_OF)-Date.parse(s.date))<14*86400000).length;
+ return {valid:true,errors:invalid,rows,sufficient:rows.filter(r=>r.sufficient).length,receipts:scope.sales.length,returns:rows.reduce((s,r)=>s+r.returned,0),
+  observedGrossReversed:rows.reduce((s,r)=>s+r.observedGrossReversed,0),youngest,causalityProven:false,
+  caveats:['Знаменатель — чеки выбранной когорты продаж; возвраты связаны с ними до даты отчёта, даже если произошли позже выбранного периода.',
+   'Новые чеки ещё не прошли полное окно возможного возврата. Интервалы Wilson показывают неопределённость доли, но не причину.',
+   'Партии поставок отсутствуют в демоданных; дефект партии автоматически не диагностируется.']};
+}
+
+const r6_FNV_SEED=2166136261;
+function r6_fnv(text){let h=r6_FNV_SEED;for(const char of text){h^=char.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+/** Planning only: sample sizing assumes independent request-level randomization, an unverified assumption. */
+function designPilot(scope,{baseline=12,lift=5,unitGross=4000,fixedCost=15000,costPerTreatment=50,days=14,seed='OSMANX-001'}={}){
+ const errors=[];
+ if(!r6_finite(baseline)||baseline<=0||baseline>=100)errors.push('Базовая конверсия строго между 0 и 100%');
+ if(!r6_finite(lift)||lift<=0||baseline+lift>=100)errors.push('Прирост должен быть положительным, сумма с базой меньше 100%');
+ if(!r6_nonNegative(unitGross)||!r6_nonNegative(fixedCost)||!r6_nonNegative(costPerTreatment))errors.push('Финансовые параметры не могут быть отрицательными');
+ if(!r6_int(days)||days<1||days>180)errors.push('Период: от 1 до 180 дней');
+ if(typeof seed!=='string'||seed.length<3||seed.length>36||!/^[\w-]+$/.test(seed))errors.push('Код распределения: 3–36 латинских букв, цифр или дефисов');
+ if(errors.length)return {valid:false,errors,assignments:[],nPerArm:null};
+ const p0=baseline/100,p1=(baseline+lift)/100,pbar=(p0+p1)/2,zA=1.95996398454,zB=.84162123357;
+ const nPerArm=Math.ceil(2*(zA*Math.sqrt(2*pbar*(1-pbar))+zB*Math.sqrt(p0*(1-p0)+p1*(1-p1)))**2/(p1-p0)**2);
+ const requests=scope.requests.filter(x=>!x.purchased);
+ const assignments=requests.map(x=>({requestId:x.id,storeId:x.storeId,date:x.date,arm:((r6_fnv(seed+'|'+x.id)>>>12)&1)===0?'test':'control'}));
+ const testCount=assignments.filter(x=>x.arm==='test').length,controlCount=assignments.length-testCount;
+ const samplePerDay=requests.length/Math.max(1,Math.round((Date.parse(scope.to)-Date.parse(scope.from))/86400000)+1);
+ const estimatedDays=samplePerDay>0?Math.ceil(2*nPerArm/samplePerDay):null;
+ const treated=nPerArm,expectedDifference=treated*(p1-p0),expectedGross=expectedDifference*unitGross;
+ const estimatedCost=fixedCost+treated*costPerTreatment,expectedNet=expectedGross-estimatedCost;
+ return {valid:true,errors:[],nPerArm,totalRequired:2*nPerArm,testCount,controlCount,assignments,estimatedDays,days,feasible:estimatedDays!==null&&estimatedDays<=days,
+   baseline:p0,target:p1,expectedDifference,expectedGross,estimatedCost,expectedNet,breakEvenLift:unitGross>0?((estimatedCost/treated)/unitGross)*100:null,
+   confidence:'План мощности: нормальная аппроксимация, α=5%, мощность≈80%, независимые события; проверка гипотезы ещё не проводилась.',
+   caveats:['Один покупатель может дать несколько запросов: независимость событий пока не подтверждена.',
+    'Распределение детерминировано ID обращения и кодом пилота, это не доказательство отсутствия смещения.',
+    'Финансовый результат — сценарий ожидаемой разницы, не доход и не доказательство эффекта.']};
+}
+function assignmentsCsv(plan){return exportRowsCsv([['ID обращения','Дата','Филиал','Группа','Исходный уровень %','Плановый прирост п.п.'],...plan.assignments.map(x=>[x.requestId,x.date,x.storeId,x.arm,Math.round(plan.baseline*100),Math.round((plan.target-plan.baseline)*100)])]);}
+
+const BOARD_VERSION=1;
+const r6_BOARD_STATUS=['planned','working','review','closed'];
+const BOARD_OWNERS=['Управляющий сети','Управляющий филиалом','Аналитик','Мерчендайзер'];
+function restoreBoard(payload){
+ if(!payload||payload.version!==BOARD_VERSION||!Array.isArray(payload.items))return [];
+ return payload.items.slice(0,100).filter(x=>x&&/^ACT-\d{4,}$/.test(x.id)&&typeof x.title==='string'&&x.title.length<=150&&r6_BOARD_STATUS.includes(x.status)&&Array.isArray(x.history)&&BOARD_OWNERS.includes(x.owner)&&typeof x.due==='string'&&/^\d{4}-\d\d-\d\d$/.test(x.due))
+ .map(x=>({...x,evidenceIds:(Array.isArray(x.evidenceIds)?x.evidenceIds:[]).filter(e=>typeof e==='string').slice(0,50),history:x.history.slice(-30)}));
+}
+function createBoardItem(items,{title,owner='Управляющий сети',due=AS_OF,priority='normal',evidenceIds=[],scenario='balanced',type='verification'}={}){
+ if(items.length>=100)throw Error('Локальный журнал ограничен 100 задачами');
+ const t=r6_clean(title).slice(0,150);if(t.length<5)throw Error('Название задачи должно содержать минимум 5 символов');
+ if(!BOARD_OWNERS.includes(owner))throw Error('Неизвестный исполнитель');
+ if(!['normal','urgent'].includes(priority))throw Error('Некорректный приоритет');
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(due)||Number.isNaN(Date.parse(due+'T12:00:00Z'))||new Date(due+'T12:00:00Z').toISOString().slice(0,10)!==due)throw Error('Некорректный срок');
+ if(!Array.isArray(evidenceIds)||evidenceIds.length>50||evidenceIds.some(x=>typeof x!=='string'||x.length>95))throw Error('Неправильные ссылки на события');
+ const max=items.reduce((m,x)=>Math.max(m,Number(x.id.split('-')[1])||0),0);
+ const entry={id:'ACT-'+String(max+1).padStart(4,'0'),title:t.replace(/[<>]/g,''),owner,due,priority,status:'planned',type,scenario,
+   evidenceIds:[...new Set(evidenceIds)].slice(0,50),outcome:null,history:[{at:AS_OF,from:null,to:'planned',note:'Создан план проверки'}]};
+ return {items:[...items,entry],created:entry};
+}
+function advanceBoard(items,id,next,{outcome=''}={}){
+ const found=items.find(x=>x.id===id);if(!found)throw Error('Задача не найдена');
+ const allowed={planned:['working'],working:['review'],review:['working','closed'],closed:[]};
+ if(!allowed[found.status].includes(next))throw Error('Переход статуса не разрешён');
+ const reason=r6_clean(outcome).slice(0,500);
+ if(next==='closed'&&reason.length<10)throw Error('Для завершения нужно заключение от 10 символов');
+ const updated={...found,status:next,outcome:next==='closed'?reason:found.outcome,history:[...found.history,{at:AS_OF,from:found.status,to:next,note:next==='closed'?reason:'Изменён статус'}].slice(-30)};
+ return items.map(x=>x.id===id?updated:x);
+}
+function boardSummary(items,scenario='balanced',asOf=AS_OF){
+ const list=items.filter(x=>x.scenario===scenario);
+ return {list,total:list.length,open:list.filter(x=>x.status!=='closed').length,closed:list.filter(x=>x.status==='closed').length,
+   overdue:list.filter(x=>x.status!=='closed'&&x.due<asOf).length,urgent:list.filter(x=>x.priority==='urgent'&&x.status!=='closed').length};
+}
+function boardCsv(items){return exportRowsCsv([['ID','Название','Сценарий','Исполнитель','Срок','Приоритет','Статус','Итог','ID событий'],...items.map(x=>[x.id,x.title,x.scenario,x.owner,x.due,x.priority,x.status,x.outcome||'',x.evidenceIds.join(' | ')])]);}
+
+// MODULE r6_views.mjs
+/** ATELIER R6: Russian, editorial decision interfaces. No fake API or modal flows. */
+
+
+
+const r6_money=n=>Number.isFinite(n)?MONEY(n):'—';
+const r6_num=n=>Number.isFinite(n)?NUMBER(n):'—';
+const r6_pct=n=>Number.isFinite(n)?PERCENT(n):'—';
+const r6_escAttr=esc;
+const r6_header=(id,caption,title,subtitle)=>`<section class="r6-head"><small>ATELIER / R6 / ${id} · ${caption}</small><h1>${title}</h1><p>${subtitle}</p></section>`;
+const r6_meta=(label,value,foot='')=>`<div class="r6-metric"><span>${esc(label)}</span><strong>${value}</strong>${foot?`<small>${esc(foot)}</small>`:''}</div>`;
+const r6_stats=items=>`<div class="r6-metrics">${items.join('')}</div>`;
+const r6_pane=(title,content,cls='')=>`<section class="r6-panel ${cls}"><h2>${title}</h2>${content}</section>`;
+const r6_row=(label,value)=>`<div class="r5-rule"><span>${esc(label)}</span><b>${value}</b></div>`;
+const r6_control=(key,label,value,min,max,step=1)=>`<label class="r5-control"><span>${esc(label)}</span><input type="number" data-r6-field="${key}" value="${value??''}" min="${min}" max="${max}" step="${step}" inputmode="decimal" /></label>`;
+const r6_select=(key,label,items,value)=>`<label class="r5-control"><span>${esc(label)}</span><select data-r6-field="${key}">${items.map(([v,t])=>`<option value="${r6_escAttr(v)}" ${v===value?'selected':''}>${esc(t)}</option>`).join('')}</select></label>`;
+const r6_note=(txt)=>`<p class="r5-warning">${esc(txt)}</p>`;
+const r6_stamp='<p class="r6-stamp">ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ · НЕТ ПОДКЛЮЧЕНИЯ К 1С ИЛИ POS · НЕ ДОКАЗЫВАЕТ ПРИРОСТ ПРИБЫЛИ</p>';
+const r6_evidence=ids=>`<div class="r5-evidence"><span>ID исходных событий</span><code>${esc((ids||[]).join(' · ')||'Нет подтверждённых ID')}</code></div>`;
+const r6_btn=(action,label,disabled=false,klass='r5-outline')=>`<button type="button" class="${klass}" data-action="${action}" ${disabled?'disabled':''}>${esc(label)}</button>`;
+
+function renderR6Mapping(state){
+ const audit=inspectMapping(state.text,state.kind),mapping=state.mapping||audit.mapping;
+ const types=[['sales','Чеки'],['returns','Возвраты'],['stock','Остатки']];
+ const fields=state.kind==='sales'?['id','date','storeId','modelId','size','paidPrice','cost']:state.kind==='returns'?['id','date','storeId','saleId','modelId','size','refundedPrice','reversedCost']:['id','asOf','storeId','modelId','size','color','quantity'];
+ const preview=state.preview;
+ return `${r6_header('01','DATA MAPPING','Данные разные. <em>Проверка одна.</em>','Сопоставьте поля выгрузки с единым контрактом. Ошибочный пакет отклоняется целиком. Никаких незаметных изменений учёта.')}
+ ${r6_stats([r6_meta('Строк в выгрузке',r6_num(audit.count)),r6_meta('Сопоставлено полей',r6_num(fields.filter(f=>audit.columns.includes(mapping[f])).length)+' / '+fields.length),r6_meta('Проверка',preview?(preview.valid?'Пройдена':'Есть ошибки'):'Не запущена'),r6_meta('Интеграция с 1С','Не подключена')])}
+ <div class="r6-two">${r6_pane('01 / Входные данные',`<div class="r5-toolbar">${r6_select('mappingKind','Тип документа',types,state.kind)}${r6_btn('r6-mapping-example','Пример выгрузки')}</div><label class="r5-control r6-wide"><span>CSV · до 1,2 МБ, файл остаётся в браузере</span><input type="file" accept=".csv,text/csv,text/plain" data-r6-file="mapping" aria-label="Выбрать локальный CSV" /></label><label class="r5-control r6-wide"><span>Содержимое CSV (можно вставить)</span><textarea rows="9" data-r6-text="mapping" spellcheck="false" placeholder="Добавьте выгрузку либо загрузите CSV">${esc(state.text)}</textarea></label>${audit.errors.map(r6_note).join('')}`)}
+ ${r6_pane('02 / Контракт полей',`<p>Каждое обязательное поле сопоставляется ровно с одной колонкой. Филиалы по названию переводятся в s1–s3; SKU должны быть из демонстрационного каталога.</p><div class="r6-fields">${fields.map(f=>r6_select('map:'+f,f,[['','— не выбрано —'],...audit.columns.map(c=>[c,c])],mapping[f]||'')).join('')}</div><div class="r5-actions">${r6_btn('r6-mapping-verify','Проверить пакет',!audit.valid,'r5-primary')}${r6_btn('r6-mapping-export','Экспортировать нормализованный CSV',!preview?.valid)}</div>${preview?`<div role="status" class="r6-result"><strong>${preview.valid?'Данные прошли контракт':'Пакет не принят'}</strong>${r6_row('Проверенные записи',r6_num(preview.rows?.length))}${(preview.errors||[]).map(r6_note).join('')}${(preview.issues||[]).slice(0,8).map(x=>r6_note('Строка '+x.row+': '+x.reason)).join('')}${preview.valid?r6_note('Только подготовка к интеграции: данные не загружаются в продажи, остатки или 1С.'):''}</div>`:''}`,'r6-accent')}</div>${r6_stamp}`;
+}
+const r6_BUCKET_LABEL={'confirmed':'Связанная покупка','solution-no-check':'Решение найдено · чека нет','cross-branch-now':'Сегодня в другом филиале','unresolved':'Доступность не подтверждена','invalid-link':'Нарушена связь с чеком'};
+function renderR6Demand(dataset,scope,options,selectedId){
+ const r=traceLostDemand(dataset,scope,options),selected=r.rows.find(x=>x.id===selectedId)||r.rows.find(x=>x.classification!=='confirmed')||r.rows[0];
+ return `${r6_header('02','DEMAND TRACE','Где покупка <em>оборвалась?</em>','Каждый запрос имеет отдельный статус, подтверждающий ID и ограничение качества вывода. Общий учётный остаток не заменяет историю доступности.')}
+ ${r6_stats([r6_meta('Запросов в выборке',r6_num(r.requestCount)),r6_meta('Связанные чеки',r6_num(r.buckets.confirmed)),r6_meta('Сегодня есть в другом филиале',r6_num(r.buckets['cross-branch-now']),'Не историческая доступность'),r6_meta('Сценарий при согласии',r.valid?r6_money(r.hypotheticalNet):'—','Оценка, не прирост прибыли')])}
+ <div class="r5-toolbar">${r6_control('demandProbability','Условная вероятность покупки, %',options.probability,0,100)}${r6_control('demandHandling','Издержки на обработку, ₽/запрос',options.handling,0,100000)}${r6_control('demandMinGross','Минимальная валовая маржа, ₽',options.minGross,0,1000000)}${r6_btn('r6-demand-csv','Скачать реестр CSV',!r.valid)}</div>
+ ${r.errors.map(r6_note).join('')}<div class="r6-two">${r6_pane('Классификация обращений',`<div class="r6-buckets">${Object.entries(r.buckets).map(([key,count])=>`<div>${esc(r6_BUCKET_LABEL[key])}<b>${count}</b></div>`).join('')}</div><div class="r6-list">${r.rows.slice(0,65).map(x=>`<button type="button" class="r6-select ${x.id===selected?.id?'active':''}" data-action="r6-demand-select" data-value="${r6_escAttr(x.id)}"><span><b>${esc(x.product)} · ${esc(x.size)}</b><small>${esc(x.storeId)} · ${esc(x.date)} · ${esc(r6_BUCKET_LABEL[x.classification])}</small></span><strong>${x.grossScenario===null?'—':r6_money(x.grossScenario)}</strong></button>`).join('')}</div>`)}
+ ${r6_pane('Раскрытие источников',selected?`<div class="r6-hero-number">${selected.observedGross!==null?r6_money(selected.observedGross):selected.grossScenario===null?'—':r6_money(selected.grossScenario)}<small>${selected.observedGross!==null?'Валовая прибыль по чеку — не инкрементальная':'Расчётный сценарий, без доказанной покупки'}</small></div>${r6_row('Обращение',esc(selected.id))}${r6_row('Категория',esc(r6_BUCKET_LABEL[selected.classification]))}${r6_row('Согласие на уведомления',selected.consent?'Есть':'Нет')}${r6_row('Валовая маржа товара',r6_money(selected.unitGross))}${r6_row('Филиал обращения',esc(selected.storeId))}${r6_row('Снимок других филиалов',selected.stockOtherNow.length?selected.stockOtherNow.map(x=>esc(x.storeId)+' · '+x.quantity+' ед.').join(' / '):'Нет')}${r6_row('Связанный чек',selected.linkedSaleId?esc(selected.linkedSaleId):'Не подтверждён')}${r6_evidence(selected.evidenceIds)}${r6_btn('r6-demand-task','Создать проверку по обращению',!r.valid,'r5-primary')}`:'<p>Нет событий по выбранным фильтрам.</p>','r6-accent')}</div>
+ ${r.caveats.map(r6_note).join('')}${r6_stamp}`;
+}
+function renderR6Returns(dataset,scope,options,selectedId){
+ const r=analyzeReturns(dataset,scope,options),selected=r.rows.find(x=>x.key===selectedId)||r.rows.find(x=>x.sufficient)||r.rows[0];
+ return `${r6_header('03','RETURN EVIDENCE','Возврат — симптом. <em>Причина требует доказательств.</em>','Строим долю возвратов по исходным продажам, а не по числу посетителей. Учитываем неполное окно возврата и доверительный интервал.')}
+ ${r6_stats([r6_meta('Чеков в когорте',r6_num(r.receipts)),r6_meta('Связанных возвратов',r6_num(r.returns)),r6_meta('Доля по когорте',r6_pct(r.receipts?r6_safe(r.returns/r.receipts):null)),r6_meta('Оторванная валовая прибыль',r6_money(r.observedGrossReversed),'Факт возвратов, не экономия')])}
+ <div class="r5-toolbar">${r6_select('returnDimension','Группировка',[['model','Модель'],['size','Размер'],['store','Филиал']],options.dimension)}${r6_control('returnMin','Минимум чеков в группе',options.minSales,1,10000)}${r6_btn('r6-returns-csv','Экспорт отчёта CSV',!r.valid)}</div>
+ <div class="r6-two">${r6_pane('Сигналы возвратов',`<div class="r6-list">${r.rows.slice(0,45).map(x=>`<button type="button" class="r6-select ${selected?.key===x.key?'active':''}" data-action="r6-return-select" data-value="${r6_escAttr(x.key)}"><span><b>${esc(x.label)}</b><small>${x.returned} возвратов / ${x.receipts} чеков · ${x.sufficient?'достаточно для описания':'малый объём'}</small></span><strong>${r6_pct(x.rate)}</strong></button>`).join('')}</div>`)}
+ ${r6_pane('Проверка группы',selected?`<div class="r6-hero-number">${r6_pct(selected.rate)}<small>Наблюдаемая доля возвратов · ${selected.key}</small></div>${r6_row('95% Wilson',selected.interval?`${r6_pct(selected.interval[0])} – ${r6_pct(selected.interval[1])}`:'Недостаточно данных')}${r6_row('Покупки / возвраты',`${selected.receipts} / ${selected.returned}`)}${r6_row('Валовая прибыль, сторнированная возвратами',r6_money(selected.observedGrossReversed))}${selected.reasons.length?`<div class="r6-reason-bars">${selected.reasons.slice(0,6).map(x=>`<div>${esc(x.name)}<span>${x.count}</span></div>`).join('')}</div>`:r6_note('Причины не зарегистрированы у этой группы.')}${r6_evidence(selected.ids)}${r6_btn('r6-return-task','Проверить модель / размер',!selected.sufficient,'r5-primary')}`:'<p>Нет записей для проверки.</p>','r6-accent')}</div>
+ ${r.errors.map(r6_note).join('')}${r.caveats.map(r6_note).join('')}${r6_stamp}`;
+}
+function r6_safe(n){return Number.isFinite(n)?n:null;}
+function renderR6Pilot(scope,options){
+ const r=designPilot(scope,options);
+ return `${r6_header('04','EXPERIMENT DESIGN','Сначала протокол. <em>Потом результат.</em>','Расчёт объёма выборки, разделения участников, расходов и критерия окупаемости. Корреляция после пилота не превратится автоматически в причинный эффект.')}
+ ${r6_stats([r6_meta('Нужно запросов / группу',r.valid?r6_num(r.nPerArm):'—'),r6_meta('Всего по протоколу',r.valid?r6_num(r.totalRequired):'—'),r6_meta('Дней для набора',r.valid?(r.estimatedDays??'—'):'—'),r6_meta('Сценарный нетто-эффект',r.valid?r6_money(r.expectedNet):'—','Прогноз, не обещание')])}
+ <div class="r5-toolbar">${r6_control('pilotBaseline','Базовая конверсия, %',options.baseline,0.1,99,.1)}${r6_control('pilotLift','Минимальный прирост, п.п.',options.lift,.1,90,.1)}${r6_control('pilotUnitGross','Валовая прибыль / чек, ₽',options.unitGross,0,1e7,100)}${r6_control('pilotFixed','Стоимость запуска, ₽',options.fixedCost,0,1e7,500)}${r6_control('pilotPerRequest','Цена обработки обращения, ₽',options.costPerTreatment,0,1e6,10)}${r6_control('pilotDays','Срок пилота, дней',options.days,1,180)}<label class="r5-control"><span>Код распределения</span><input data-r6-field="pilotSeed" value="${r6_escAttr(options.seed)}" maxlength="36" /></label></div>
+ <div class="r6-two">${r6_pane('Протокол эксперимента',r.valid?`<div class="r6-hero-number">${r.feasible?'План набора выполним':'Нужна большая выборка'}<small>По текущей интенсивности зарегистрированных запросов</small></div>${r6_row('Задачи пилота','2 группы, контроль и тест')}${r6_row('Обращений в демопериоде',r.assignments.length)}${r6_row('В тесте / контроле',`${r.testCount} / ${r.controlCount}`)}${r6_row('Уровень значимости','5%')}${r6_row('Плановая мощность','около 80%')}${r6_row('Ожидаемая разница, чеков',r.expectedDifference.toFixed(1))}${r6_row('Стоимость пилота',r6_money(r.estimatedCost))}${r6_row('Порог окупаемости, п.п.',r.breakEvenLift===null?'—':r.breakEvenLift.toFixed(2))}${r.feasible?'':r6_note('При выбранном сроке статистически достаточную выборку получить маловероятно.')}${r.caveats.map(r6_note).join('')}`:r.errors.map(r6_note).join(''))}
+ ${r6_pane('Воспроизводимое распределение',r.valid?`<p>Группы определены хешированием ID запроса и заданного кода. Это вспомогательный план для оценки, не рабочий механизм персональной рассылки.</p><div class="r6-assignments">${r.assignments.slice(0,30).map(x=>`<div><code>${esc(x.requestId)}</code><span>${esc(x.arm==='test'?'Тест':'Контроль')}</span></div>`).join('')}</div><div class="r5-actions">${r6_btn('r6-pilot-csv','Экспорт плана CSV',false)}${r6_btn('r6-pilot-task','Зафиксировать протокол в задачах',false,'r5-primary')}</div>${r6_note('Принудительное участие и персональные контакты в этой демонстрации не собираются.')}`:'<p>Исправьте входные данные, чтобы сформировать протокол.</p>','r6-accent')}</div>${r6_stamp}`;
+}
+const r6_statusName={planned:'План',working:'В работе',review:'Проверка результата',closed:'Закрыта'};
+function renderR6Board(items,scenario,form,selectedId,filter){
+ const s=boardSummary(items,scenario),shown=s.list.filter(x=>filter==='all'||x.status===filter),selected=s.list.find(x=>x.id===selectedId)||shown[0];
+ return `${r6_header('05','EXECUTION BOARD','Решение без исполнителя — <em>не решение.</em>','Локальные проверочные задачи с ответственным, датой, событием-основанием и протоколом смены статусов. Нет реальных уведомлений и складских операций.')}
+ ${r6_stats([r6_meta('Проверок по сценарию',r6_num(s.total)),r6_meta('Открытых',r6_num(s.open)),r6_meta('Просроченных',r6_num(s.overdue),'От даты демонстрации'),r6_meta('Закрытых',r6_num(s.closed))])}
+ <div class="r5-toolbar">${r6_select('boardFilter','Статус',[['all','Все'],...Object.entries(r6_statusName).map(([k,v])=>[k,v])],filter)}${r6_btn('r6-board-export','Экспорт задач CSV',!s.total)}</div>
+ <div class="r6-two">${r6_pane('Проверки и ответственные',`<div class="r6-list">${shown.length?shown.map(x=>`<button type="button" class="r6-select ${selected?.id===x.id?'active':''}" data-action="r6-board-select" data-value="${x.id}"><span><b>${esc(x.title)}</b><small>${esc(x.id)} · ${esc(x.owner)} · срок ${esc(x.due)}</small></span><strong>${esc(r6_statusName[x.status])}</strong></button>`).join(''):'<p>Нет задач по выбранному статусу.</p>'}</div><div class="r6-form"><h3>Новая проверка</h3><label class="r5-control"><span>Что именно проверить</span><input data-r6-form="title" value="${r6_escAttr(form.title)}" maxlength="150" placeholder="Например: сверить размер L в галерее" /></label>${r6_select('boardOwner','Ответственный',BOARD_OWNERS.map(x=>[x,x]),form.owner)}<label class="r5-control"><span>Срок проверки</span><input type="date" data-r6-form="due" value="${r6_escAttr(form.due)}" /></label><label class="r5-control"><span>Приоритет</span><select data-r6-form="priority"><option value="normal" ${form.priority==='normal'?'selected':''}>Обычный</option><option value="urgent" ${form.priority==='urgent'?'selected':''}>Срочный</option></select></label>${r6_btn('r6-board-create','Создать задачу',false,'r5-primary')}</div>`)}
+ ${r6_pane('Исполнение и доказательства',selected?`<div class="r6-hero-number">${esc(r6_statusName[selected.status])}<small>${esc(selected.id)} / ${esc(selected.scenario)}</small></div>${r6_row('Название',esc(selected.title))}${r6_row('Ответственный',esc(selected.owner))}${r6_row('Срок',esc(selected.due))}${r6_row('Приоритет',selected.priority==='urgent'?'Срочный':'Обычный')}${r6_evidence(selected.evidenceIds)}<div class="r6-timeline">${selected.history.map(x=>`<div><b>${esc(r6_statusName[x.to]||x.to)}</b><small>${esc(x.at)} · ${esc(x.note)}</small></div>`).join('')}</div>${selected.status==='review'?`<label class="r5-control"><span>Итог проверки (от 10 символов)</span><textarea rows="3" data-r6-form="outcome" placeholder="Факт, метод измерения и ограничения">${esc(form.outcome)}</textarea></label>`:''}<div class="r5-actions">${selected.status==='planned'?r6_btn('r6-board-start','Взять в работу',false,'r5-primary'):''}${selected.status==='working'?r6_btn('r6-board-review','Передать на проверку',false,'r5-primary'):''}${selected.status==='review'?r6_btn('r6-board-close','Закрыть с выводом',false,'r5-primary')+r6_btn('r6-board-back','Вернуть в работу'):''}</div>${selected.outcome?r6_note('Финальный вывод: '+selected.outcome):''}`:'<p>Выберите задачу или создайте новую.</p>','r6-accent')}</div>${r6_stamp}`;
+}
+
 // MODULE app.mjs
+
+
 
 
 
@@ -1975,6 +2294,7 @@ const svgLogo=`<span class="brand-name">OSMAN<span>X</span></span><span class="b
 const NAV=[
  {label:'ОБЗОР',items:[['dashboard','Финансовые возможности','grid'],['demo','Executive Demo · 30 секунд','play'],['decisions','Решения на сегодня','bolt'],['evidence','Проверка цифр','shield'],['transfer-lab','Перемещения: расчёт','layers'],['pilot-lab','Пилотный эксперимент','chart'],['journal','Журнал решений','file'],['calculator','Финансовый симулятор','chart'],['trust-lab','Качество данных','shield'],['demand-match','Поиск размеров по сети','layers'],['margin-stress','Экономика скидок','chart'],['portfolio','Приоритеты и бюджет','target'],['dossier','Документ решений','file']]},
  {label:'ATELIER R5 · ПРОВЕРКА И РЕШЕНИЯ',items:[['data-room','Проверка CSV-выгрузки','shield'],['cohort-lab','Когорты повторных покупок','chart'],['collection-lab','План будущей коллекции','layers'],['service-lab','Протокол сервиса','target'],['branch-lab','Сравнение филиалов','shops']]},
+ {label:'ATELIER R6 · ДОКАЗАТЕЛЬСТВА И ДЕЙСТВИЯ',items:[['mapping-lab','CSV: сопоставление полей','shield'],['demand-trace','Трассировка потерянных покупок','target'],['returns-risk','Возвраты: причины и риск','chart'],['pilot-design','Дизайн контролируемого пилота','layers'],['action-board','Задачи и контроль исполнения','file']]},
  {label:'АНАЛИТИЧЕСКИЕ МОДУЛИ',items:MODULES.map((m,i)=>['module:'+i,`${String(i+1).padStart(2,'0')} · ${m[0]}`,i===0?'target':i===7?'chart':'layers'])},
  {label:'ВНЕДРЕНИЕ',items:[['diagnostic','Диагностика за 60 секунд','file'],['presentation','Режим переговоров','shops'],['sources','Источники и 1С','shield']]}
 ];
@@ -2012,11 +2332,19 @@ state.r5Cohort={weeks:4,minCohort:5};state.r5CohortSelected='';
 state.r5Collection={budget:80000,cap:12,reserve:1,leadDays:21,category:'all',seasonFactor:1};state.r5CollectionSelected='';
 state.r5Service={sla:120,minSamples:10};state.r5ServiceFocus='all';
 state.r5Benchmark={metric:'grossProfit',minDays:7};state.r5BenchmarkFocus='s1';
+state.r6Mapping={kind:'sales',text:'',mapping:{},preview:null}; // CSV never persisted or mixed with synthetic metrics.
+state.r6Demand={probability:20,handling:250,minGross:0};state.r6DemandSelected='';
+state.r6Returns={dimension:'model',minSales:5};state.r6ReturnsSelected='';
+state.r6Pilot={baseline:12,lift:5,unitGross:4000,fixedCost:15000,costPerTreatment:50,days:14,seed:'OSMANX-001'};
+state.r6Board=(()=>{try{return restoreBoard(JSON.parse(localStorage.getItem('osmanx-r6-executive-board')||'{}'))}catch{return []}})();
+state.r6BoardForm={title:'',owner:'Управляющий сети',due:AS_OF,priority:'normal',outcome:''};
+state.r6BoardSelected='';state.r6BoardFilter='all';
+
 let data=buildDataset('balanced'),timer=null;
 const root=document.getElementById('app');
 const scoped=()=>scopeData(data,{period:state.period,from:state.from,to:state.to,store:state.store,category:state.category,model:state.model,size:state.size});
 const demoScope=()=>scopeData(data,{period:14});
-function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
+function pageTitle(){return state.page==='dashboard'?'Финансовые возможности сети':state.page==='demo'?'Executive Demo':state.page==='decisions'?'Решения на сегодня':state.page==='evidence'?'Аудит показателей':state.page==='transfer-lab'?'Проверка перемещения':state.page==='pilot-lab'?'Проверка пилота':state.page==='journal'?'Журнал решений':state.page==='trust-lab'?'Качество данных':state.page==='demand-match'?'Совпадения спроса':state.page==='margin-stress'?'Экономика скидок':state.page==='portfolio'?'Портфель проверок':state.page==='dossier'?'Досье для собственника':state.page==='data-room'?'Проверка CSV':state.page==='cohort-lab'?'Повторные покупки':state.page==='collection-lab'?'Будущая коллекция':state.page==='service-lab'?'Протокол сервиса':state.page==='branch-lab'?'Сравнение филиалов':state.page==='mapping-lab'?'Сопоставление CSV':state.page==='demand-trace'?'Трассировка спроса':state.page==='returns-risk'?'Диагностика возвратов':state.page==='pilot-design'?'Дизайн пилота':state.page==='action-board'?'Контроль исполнения':state.page==='calculator'?'Финансовый симулятор':state.page==='diagnostic'?'Диагностика бизнеса':state.page==='presentation'?'Презентационный режим':state.page==='sources'?'Источники данных':state.page.startsWith('module:')?MODULES[state.moduleIndex][0]:'Обзор';}
 function optionList(options,value){return options.map(([v,l])=>`<option value="${esc(v)}" ${value===v?'selected':''}>${esc(l)}</option>`).join('');}
 function renderSidebar(){return `<aside class="sidebar ${state.mobileOpen?'is-open':''}" aria-label="Полная навигация" aria-hidden="${state.mobileOpen?'false':'true'}">
  <div class="drawer-top"><div class="brand"><div class="brand-mark"><span></span><span></span></div><div>${svgLogo}</div></div><button type="button" class="drawer-close" data-action="toggle-menu" aria-label="Закрыть разделы">${icon('close',23)}</button></div>
@@ -2102,7 +2430,7 @@ function renderSources(){const rows=[
  ['Продажа произошла благодаря системе','Контролируемый пилот / сравнение','Нельзя автоматически','Гипотеза до проверки']
 ];return `${renderHeading('1С остаётся. <em>Добавляются вопросы.</em>','DATA ORIGINS / TRUST','Учётная система может быть источником фактов. OSMANX объединяет их с новыми событиями и помогает проверить решения.')}<section class="panel source-panel"><div class="section-title"><div><p class="eyebrow">DATA SOURCE MATRIX</p><h2>Что откуда действительно известно</h2></div>${icon('shield',23)}</div><div class="table-scroll"><table><thead><tr><th>Показатель</th><th>Источник</th><th>Можно получить из учёта?</th><th>Качество вывода</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="integration-note">${icon('lock',19)} <div><strong>1С не подключена в этой демонстрации.</strong><p>Здесь нет фиктивных API, имитации реальных синхронизаций или пользовательских коммерческих данных. Для подключения нужны согласование формата выгрузки, права и контроль качества.</p></div></div></section><section class="source-cards"><div><p class="eyebrow">ФАКТ</p><h3>Подтверждаемое событие</h3><p>Чек, зарегистрированный запрос, физическая сверка, возврат или согласие.</p></div><div><p class="eyebrow">ОЦЕНКА</p><h3>Модель с параметрами</h3><p>Считаем сумму и раскрываем допущения, но не называем предотвращённым убытком.</p></div><div><p class="eyebrow">ГИПОТЕЗА</p><h3>Вопрос для пилота</h3><p>Проверяем причинность контролируемым измерением и отслеживанием расходов.</p></div></section>`;}
 function renderFooter(){return `<footer class="app-footer"><span>© OSMANX WORLD · RETAIL INTELLIGENCE / EXECUTIVE EDITION</span><span>Демонстрационные данные · По состоянию на ${AS_OF}</span></footer>`;}
-function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
+function render(){root.innerHTML=`${renderSidebar()}<div class="workspace"><a href="#osmanx-main" class="r3-skip">Перейти к содержимому</a>${renderTopbar()}<main id="osmanx-main" class="main-content" tabindex="-1">${state.page==='dashboard'?renderDashboard():state.page==='demo'?renderDemo():state.page.startsWith('module:')?renderModule(state.moduleIndex):state.page==='decisions'?renderDecisions():state.page==='calculator'?renderCalculator():state.page==='diagnostic'?renderDiagnostic():state.page==='presentation'?renderPresentation():state.page==='evidence'?renderEvidencePage(data,scoped()):state.page==='transfer-lab'?renderTransferPage(data,scoped(),state.r3Transfer,state.r3TransferPlan):state.page==='pilot-lab'?renderPilotPage(data,scoped(),state.r3Pilot):state.page==='journal'?renderJournalPage(scoped(),state.r3Journal,state.r3Selected,state.r3Measure):state.page==='trust-lab'?renderTrustPage(data,scoped(),state.r4AuditStream):state.page==='demand-match'?renderMatchPage(data,scoped(),state.r4Match,state.r4MatchFilter,state.r4MatchSelected):state.page==='margin-stress'?renderMarginPage(data,scoped(),state.r4Margin):state.page==='portfolio'?renderPortfolioPage(data,scoped(),state.r4Portfolio,state.r4PortfolioSelected):state.page==='dossier'?renderDossierPage(data,scoped(),state.r4Portfolio):state.page==='data-room'?renderR5DataRoom(state.r5Data):state.page==='cohort-lab'?renderR5Cohorts(data,scoped(),state.r5Cohort,state.r5CohortSelected):state.page==='collection-lab'?renderR5Collection(data,scoped(),state.r5Collection,state.r5CollectionSelected):state.page==='service-lab'?renderR5Service(scoped(),state.r5Service,state.r5ServiceFocus):state.page==='branch-lab'?renderR5Benchmark(data,scoped(),state.r5Benchmark,state.r5BenchmarkFocus):state.page==='mapping-lab'?renderR6Mapping(state.r6Mapping):state.page==='demand-trace'?renderR6Demand(data,scoped(),state.r6Demand,state.r6DemandSelected):state.page==='returns-risk'?renderR6Returns(data,scoped(),state.r6Returns,state.r6ReturnsSelected):state.page==='pilot-design'?renderR6Pilot(scoped(),state.r6Pilot):state.page==='action-board'?renderR6Board(state.r6Board,state.scenario,state.r6BoardForm,state.r6BoardSelected,state.r6BoardFilter):renderSources()}</main>${state.page==='presentation'?'':renderFooter()}</div>${state.toast?`<div class="toast" role="status">${icon('check',17)} ${esc(state.toast)}<button data-action="dismiss-toast" aria-label="Закрыть" type="button">${icon('close',15)}</button></div>`:''}`;document.title=`${pageTitle()} — OSMANX Retail Intelligence`;}
 function stopAuto(){state.auto=false;if(timer){clearInterval(timer);timer=null;}}
 const DURATIONS=[5000,6000,7000,7000,5000];
 function startAuto(){stopAuto();state.auto=true;state.stageStart=performance.now();timer=setInterval(()=>{const elapsed=performance.now()-state.stageStart;const progress=(DURATIONS.slice(0,state.scene).reduce((a,b)=>a+b,0)+Math.min(elapsed,DURATIONS[state.scene]))/30000;const el=document.getElementById('demo-progress-fill');if(el)el.style.width=`${(100*progress).toFixed(2)}%`;if(elapsed>=DURATIONS[state.scene]){if(state.scene===4){stopAuto();render();}else{state.scene++;state.stageStart=performance.now();render();}}},75);render();}
@@ -2117,10 +2445,65 @@ function r4AddJournal(title,type,ids){
  const j=newJournalEntry(state.r3Journal,{title,scenarioId:state.scenario,type,evidenceIds:[...new Set(ids.filter(Boolean))].slice(0,80)});
  state.r3Journal=j.entries;state.r3Selected=j.created.id;persist();goto('journal');
 }
+function r6SaveBoard(){try{localStorage.setItem('osmanx-r6-executive-board',JSON.stringify({version:BOARD_VERSION,items:state.r6Board}));return true;}catch(e){state.toast='Локальное сохранение недоступно: '+e.message;return false;}}
+function r6Create(title,type,evidenceIds=[]){
+ try{const next=createBoardItem(state.r6Board,{title,owner:'Управляющий филиалом',due:AS_OF,evidenceIds:evidenceIds.filter(Boolean).slice(0,50),scenario:state.scenario,type});
+  state.r6Board=next.items;state.r6BoardSelected=next.created.id;state.r6BoardForm.outcome='';r6SaveBoard();goto('action-board');}
+ catch(e){toast(e.message);}
+}
+function r6InputChange(element){const key=element.dataset.r6Field,raw=element.value,n=raw===''?null:Number(raw);
+ const change=()=>{
+  if(key.startsWith('map:')){state.r6Mapping.mapping[key.slice(4)]=raw;state.r6Mapping.preview=null;}
+  else if(key==='mappingKind'){state.r6Mapping={kind:raw,text:'',mapping:{},preview:null};}
+  else if(key==='demandProbability')state.r6Demand.probability=n;
+  else if(key==='demandHandling')state.r6Demand.handling=n;
+  else if(key==='demandMinGross')state.r6Demand.minGross=n;
+  else if(key==='returnDimension'){state.r6Returns.dimension=raw;state.r6ReturnsSelected='';}
+  else if(key==='returnMin')state.r6Returns.minSales=n;
+  else if(key==='pilotBaseline')state.r6Pilot.baseline=n;
+  else if(key==='pilotLift')state.r6Pilot.lift=n;
+  else if(key==='pilotUnitGross')state.r6Pilot.unitGross=n;
+  else if(key==='pilotFixed')state.r6Pilot.fixedCost=n;
+  else if(key==='pilotPerRequest')state.r6Pilot.costPerTreatment=n;
+  else if(key==='pilotDays')state.r6Pilot.days=n;
+  else if(key==='pilotSeed')state.r6Pilot.seed=raw;
+  else if(key==='boardOwner')state.r6BoardForm.owner=raw;
+  else if(key==='boardFilter'){state.r6BoardFilter=raw;state.r6BoardSelected='';}
+ };
+ if(element.tagName==='INPUT')preserveRerender(element,change);else{change();render();}
+}
 function handleClick(event){const target=event.target.closest('button[data-action],button[data-page]');if(!target||target.disabled)return;
  if(target.dataset.page){goto(target.dataset.page);return;}
  const a=target.dataset.action,value=target.dataset.value;
- if(a==='toggle-menu'){state.mobileOpen=!state.mobileOpen;render();}
+ if(a==='r6-mapping-example'){
+   const k=state.r6Mapping.kind,raw=sampleCsv(k).replace(/^\uFEFF/,'');
+   const aliases={id:'Номер',date:'Дата',asOf:'Дата среза',storeId:'Магазин',modelId:'Артикул',size:'Размер',paidPrice:'Сумма оплаты',cost:'Себестоимость',saleId:'Чек',refundedPrice:'Сумма возврата',reversedCost:'Сторно себестоимости',quantity:'Количество',color:'Цвет'};
+   const table=raw.split(/\r?\n/).filter(Boolean).map(x=>x.split(';').map(v=>v.replace(/^"|"$/g,'')));
+   table[0]=table[0].map(x=>aliases[x]||x);for(let i=1;i<table.length;i++){const storeColumn=table[0].indexOf('Магазин');if(storeColumn>=0&&table[i][storeColumn]==='s1')table[i][storeColumn]='Центральный';}
+   state.r6Mapping.text=exportRowsCsv(table);state.r6Mapping.mapping=inspectMapping(state.r6Mapping.text,k).mapping;state.r6Mapping.preview=null;render();
+ }
+ else if(a==='r6-mapping-verify'){const x=state.r6Mapping;state.r6Mapping.preview=mapAndValidate(x.text,x.kind,x.mapping,state.r5Data.validatedSales);render();}
+ else if(a==='r6-mapping-export'){const x=state.r6Mapping.preview;if(x?.valid)r4DownloadCsv('OSMANX_R6_MAPPED_'+x.kind+'.csv',x.normalizedCsv);}
+ else if(a==='r6-demand-select'){state.r6DemandSelected=value;render();}
+ else if(a==='r6-demand-csv'){const r=traceLostDemand(data,scoped(),state.r6Demand);if(r.valid)r4DownloadCsv('OSMANX_R6_DEMAND_TRACE.csv',exportRowsCsv([['Обращение','Дата','Филиал','Модель','Размер','Статус','Связанный чек','Валовая прибыль по чеку','Сценарная оценка','ID оснований'],...r.rows.map(x=>[x.id,x.date,x.storeId,x.modelId,x.size,x.classification,x.linkedSaleId||'',x.observedGross??'',x.grossScenario??'',x.evidenceIds.join(' | ')])]));}
+ else if(a==='r6-demand-task'){const r=traceLostDemand(data,scoped(),state.r6Demand),x=r.rows.find(y=>y.id===state.r6DemandSelected)||r.rows.find(y=>y.classification!=='confirmed');if(x&&r.valid)r6Create('Сверить причину отсутствия покупки '+x.product+' / '+x.size,'r6-demand',x.evidenceIds);else toast('Нужен корректный запрос');}
+ else if(a==='r6-return-select'){state.r6ReturnsSelected=value;render();}
+ else if(a==='r6-returns-csv'){const r=analyzeReturns(data,scoped(),state.r6Returns);if(r.valid)r4DownloadCsv('OSMANX_R6_RETURNS.csv',exportRowsCsv([['Группа','Чеков','Возвратов','Доля','Wilson мин','Wilson макс','Сторно валовой прибыли','ID оснований'],...r.rows.map(x=>[x.label,x.receipts,x.returned,x.rate??'',x.interval?.[0]??'',x.interval?.[1]??'',x.observedGrossReversed,x.ids.join(' | ')])]));}
+ else if(a==='r6-return-task'){const r=analyzeReturns(data,scoped(),state.r6Returns),x=r.rows.find(y=>y.key===state.r6ReturnsSelected)||r.rows.find(y=>y.sufficient);if(x?.sufficient)r6Create('Проверить причины возвратов '+x.label,'r6-return',x.ids);else toast('Недостаточный объём событий');}
+ else if(a==='r6-pilot-csv'){const r=designPilot(scoped(),state.r6Pilot);if(r.valid)r4DownloadCsv('OSMANX_R6_PILOT_PLAN.csv',assignmentsCsv(r));}
+ else if(a==='r6-pilot-task'){const r=designPilot(scoped(),state.r6Pilot);if(r.valid)r6Create('Согласовать протокол пилота: '+r.totalRequired+' обращений, '+r.days+' дней','r6-pilot',r.assignments.map(x=>x.requestId).slice(0,50));else toast('Исправьте параметры эксперимента');}
+ else if(a==='r6-board-select'){state.r6BoardSelected=value;state.r6BoardForm.outcome='';render();}
+ else if(a==='r6-board-export'){const s=boardSummary(state.r6Board,state.scenario);if(s.total)r4DownloadCsv('OSMANX_R6_ACTIONS.csv',boardCsv(s.list));}
+ else if(a==='r6-board-create'){
+  try{const r=createBoardItem(state.r6Board,{...state.r6BoardForm,scenario:state.scenario});state.r6Board=r.items;state.r6BoardSelected=r.created.id;state.r6BoardForm.title='';state.r6BoardForm.outcome='';r6SaveBoard();render();}catch(e){toast(e.message);}
+ }
+ else if(['r6-board-start','r6-board-review','r6-board-back','r6-board-close'].includes(a)){
+  const selected=boardSummary(state.r6Board,state.scenario).list.find(x=>x.id===state.r6BoardSelected)||boardSummary(state.r6Board,state.scenario).list[0];
+  if(!selected){toast('Выберите задачу');return;}
+  const next={'r6-board-start':'working','r6-board-review':'review','r6-board-back':'working','r6-board-close':'closed'}[a];
+  try{state.r6Board=advanceBoard(state.r6Board,selected.id,next,{outcome:state.r6BoardForm.outcome});state.r6BoardForm.outcome='';r6SaveBoard();render();}catch(e){toast(e.message);}
+ }
+ else if(a==='toggle-menu'){state.mobileOpen=!state.mobileOpen;render();}
  else if(a==='r3-transfer-check'){state.r3TransferPlan=planTransfer(data,state.r3Transfer);render();}
  else if(a==='r3-transfer-save'){
   const p=state.r3TransferPlan;
@@ -2237,7 +2620,7 @@ function handleClick(event){const target=event.target.closest('button[data-actio
  else if(a==='dismiss-toast'){state.toast=null;render();}
  else if(a==='select-bar'){state.toast='Столбец: '+(target.title||'события');render();}
 }
-function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
+function preserveRerender(element,fn){const active=document.activeElement===element,selector=element.dataset.calc?`[data-calc="${element.dataset.calc}"]`:element.dataset.r3Pilot?`[data-r3-pilot="${element.dataset.r3Pilot}"]`:element.dataset.r4Field?`[data-r4-field="${element.dataset.r4Field}"]`:element.dataset.r5Field?`[data-r5-field="${element.dataset.r5Field}"]`:element.dataset.r6Field?`[data-r6-field="${element.dataset.r6Field}"]`:`[data-field="${element.dataset.field}"]`;let start=null,end=null;try{start=element.selectionStart;end=element.selectionEnd}catch{}fn();render();if(active){const replacement=root.querySelector(selector);if(replacement){replacement.focus();try{if(start!=null)replacement.setSelectionRange(start,end)}catch{}}}}
 function handleField(element){const f=element.dataset.field;
  if(f){if(f==='scenario'){state.scenario=element.value;data=buildDataset(element.value);state.opp='demand';state.funnelStage='request';state.r3TransferPlan=null;state.page='dashboard';render();return;}
   if(['period','store','category','model','size','from','to'].includes(f)){state[f]=element.value;if(f==='category')state.model='all';if(f==='from'&&state.from>state.to)state.to=state.from;if(f==='to'&&state.to<state.from)state.from=state.to;render();return;}
@@ -2284,7 +2667,10 @@ root.addEventListener('change',e=>{
   state.r3TransferPlan=null;render();
  }else if(e.target.matches('[data-r3-pilot]')){const key=e.target.dataset.r3Pilot;state.r3Pilot[key]=e.target.value;render();}
  else if(e.target.matches('[data-r3-measure]')){state.r3Measure[e.target.dataset.r3Measure]=e.target.value;}
- else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-file]')){
+ else if(e.target.matches('[data-r4-field]')){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')){r6InputChange(e.target);}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-file]')){
+  const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r6Mapping.preview={valid:false,errors:['Размер файла превышает 1,2 МБ'],issues:[],rows:[]};render();return;}
+  file.text().then(t=>{state.r6Mapping.text=t;state.r6Mapping.mapping=inspectMapping(t,state.r6Mapping.kind).mapping;state.r6Mapping.preview=null;render();}).catch(err=>toast('CSV не прочитан: '+err.message));
+ }else if(e.target.matches('[data-r5-file]')){
   const file=e.target.files?.[0];if(!file)return;if(file.size>1200000){state.r5Data.preview={valid:false,errors:['Файл больше 1,2 МБ'],issues:[],inspected:0};render();return;}
   file.text().then(t=>{state.r5Data.text=t;state.r5Data.preview=null;render();}).catch(err=>toast('Файл не прочитан: '+err.message));
  }
@@ -2295,11 +2681,12 @@ root.addEventListener('input',e=>{
   const element=e.target,key=element.dataset.r3Pilot,value=element.value;
   preserveRerender(element,()=>{state.r3Pilot[key]=value;});
  }
- else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
+ else if(e.target.matches('[data-r4-field]')&&e.target.tagName==='INPUT'){r4UpdateField(e.target);}else if(e.target.matches('[data-r5-field]')&&e.target.tagName==='INPUT'){r5UpdateField(e.target);}else if(e.target.matches('[data-r6-field]')&&e.target.tagName==='INPUT'){r6InputChange(e.target);}else if(e.target.matches('[data-r6-form]')){state.r6BoardForm[e.target.dataset.r6Form]=e.target.value;}else if(e.target.matches('[data-r6-text]')){state.r6Mapping.text=e.target.value;state.r6Mapping.preview=null;state.r6Mapping.mapping=inspectMapping(state.r6Mapping.text,state.r6Mapping.kind).mapping;}else if(e.target.matches('[data-r5-text]')){state.r5Data.text=e.target.value;state.r5Data.preview=null;}
 });
 // Expose *read-only* deterministic verification hooks to browser smoke tests.
 if(window.addEventListener){window.addEventListener('keydown',event=>{if(state.page==='demo'&&['ArrowRight','ArrowLeft',' '].includes(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName)){event.preventDefault();if(event.key===' ')state.auto?stopAuto():startAuto();else sceneChange(state.scene+(event.key==='ArrowRight'?1:-1));if(event.key===' '&&!state.auto)render();}if(event.key==='Escape'&&state.mobileOpen){state.mobileOpen=false;render();}});window.addEventListener('hashchange',()=>{const next=decodeURIComponent(window.location.hash.slice(1));if(next&&next!==state.page&&(NAV.flatMap(x=>x.items).some(([id])=>id===next)||next==='sources'))goto(next);});}
 if(window.location?.hash){const route=decodeURIComponent(window.location.hash.slice(1));if(NAV.flatMap(x=>x.items).some(([id])=>id===route)){state.page=route;if(route.startsWith('module:'))state.moduleIndex=Number(route.split(':')[1])||0;}}
-window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get r5(){const scope=scoped();const c=collectionPlan(data,scope,state.r5Collection),s=serviceHealth(scope,state.r5Service),b=branchBenchmark(data,scope,state.r5Benchmark),h=retentionCohorts(data,scope,state.r5Cohort);return {import:state.r5Data.preview?.valid??null,cohortMembers:h.members,collection:{valid:c.valid,units:c.units,spent:c.spent},service:{valid:s.valid,p90:s.all?.p90},benchmark:{valid:b.valid,metric:b.metric,values:b.rows.map(x=>x.value)}};},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},navigate:goto};
+window.__OSMANX_DIAGNOSTICS__={get state(){return {page:state.page,scene:state.scene,scenario:state.scenario}},get totals(){return scoped().totals},get dataset(){return {products:data.products.length,days:90,stores:data.stores.length}},get journal(){return journalStats(state.r3Journal)},get pilot(){return {...state.r3Pilot}},get r4(){return {audit:auditEvidence(data,scoped()).critical,match:matchDemand(data,scoped(),state.r4Match).totals,margin:discountStress(data,scoped(),state.r4Margin).deltaGross,portfolio:prioritizePortfolio(data,scoped(),state.r4Portfolio).selected.map(x=>x.id)}},get r5(){const scope=scoped();const c=collectionPlan(data,scope,state.r5Collection),s=serviceHealth(scope,state.r5Service),b=branchBenchmark(data,scope,state.r5Benchmark),h=retentionCohorts(data,scope,state.r5Cohort);return {import:state.r5Data.preview?.valid??null,cohortMembers:h.members,collection:{valid:c.valid,units:c.units,spent:c.spent},service:{valid:s.valid,p90:s.all?.p90},benchmark:{valid:b.valid,metric:b.metric,values:b.rows.map(x=>x.value)}};},get reconciliation(){const r=reconcileEvidence(data,scoped());return {issues:r.issues,linkedCount:r.linkedCount,linkedGross:r.linkedGross}},
+ get r6(){const a=traceLostDemand(data,scoped(),state.r6Demand),b=analyzeReturns(data,scoped(),state.r6Returns),c=designPilot(scoped(),state.r6Pilot),d=boardSummary(state.r6Board,state.scenario);return {mapped:state.r6Mapping.preview?.valid??null,demand:{count:a.requestCount,linked:a.buckets.confirmed,net:a.hypotheticalNet},returns:{receipts:b.receipts,returned:b.returns},pilot:{valid:c.valid,needed:c.totalRequired,feasible:c.feasible},board:{total:d.total,open:d.open,closed:d.closed},revenue:scoped().totals.revenue}},navigate:goto};
 render();
 </script></body></html>
