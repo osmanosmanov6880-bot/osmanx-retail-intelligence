@@ -7,6 +7,8 @@ function addShortcut(){
   const a=document.createElement('a');a.className='nav-btn r06-nav';
   a.href=link;a.innerHTML='<span style="color:#fb5c73;font-size:19px;font-weight:900">↗</span><span>Центр закупок и решений</span>';
   nav.append(a);
+  const b=document.createElement('a');b.className='nav-btn r07-nav';b.href='/static/operations.html';
+  b.innerHTML='<span style="color:#fb5c73;font-size:19px;font-weight:900">◇</span><span>Контроль магазина</span>';nav.append(b);
  }
  const top=document.querySelector('.main .topbar .top-right');
  if(top&&!top.querySelector('.r06-shortcut')){
