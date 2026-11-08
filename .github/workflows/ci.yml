@@ -45,6 +45,7 @@ jobs:
           node --check frontend/experience.js
           node --check frontend/growth.js
           node --check frontend/retail_desk.js
+          node --check frontend/control.js
           node --check frontend/pulse.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
@@ -70,11 +71,13 @@ jobs:
         run: python scripts/r11_browser_smoke.py
       - name: R1.2 Retail Desk browser acceptance
         run: python scripts/r12_browser_smoke.py
+      - name: R1.3 Merchant Control Room browser acceptance
+        run: python scripts/r13_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: osmanx-retail-r12-ui
+          name: osmanx-retail-r13-ui
           path: |
             qa/r02-*.png
             qa/r03-*.png
@@ -87,5 +90,6 @@ jobs:
             qa/r10-*.png
             qa/r11-*.png
             qa/r12-*.png
+            qa/r13-*.png
           if-no-files-found: ignore
           retention-days: 7

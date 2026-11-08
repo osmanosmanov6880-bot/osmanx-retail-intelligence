@@ -131,6 +131,16 @@ def apply_import(db:sqlite3.Connection,*,batch_key:str,organization_id:int,check
             raise HTTPException(409,'Данные магазина изменились после предпросмотра; повторите импорт')
         if current['conflicts']:
             raise HTTPException(409,'Чеки с тем же ID имеют другие суммы или даты: '+', '.join(current['conflicts'][:3]))
+        # Prevent incoming stock quantities from invalidating currently held reservations.
+        # The check and inventory writes share the same BEGIN IMMEDIATE lock.
+        if job['kind']=='inventory':
+            from backend.r07 import held_quantity
+            for item in rows:
+                existing=db.execute('SELECT * FROM inventory WHERE store_id=? AND sku=? COLLATE NOCASE',
+                                    (job['store_id'],item['sku'])).fetchone()
+                if existing is not None and item['quantity']<held_quantity(db,existing):
+                    raise HTTPException(409,
+                        'Нельзя уменьшить остаток ниже зарезервированного количества: '+item['sku'])
         for row in rows:
             if job['kind']=='pos':
                 db.execute('INSERT OR IGNORE INTO sales(store_id,amount_kopeks,source,occurred_at,external_id) VALUES(?,?,?,?,?)',

@@ -1,3 +1,9 @@
+# OSMANX Retail Intelligence R1.3 — Merchant Control Room
+
+Five implemented modules: CSV / 1C export mapping with atomic preview and commit; source integrity; size-demand matrix; stock inactivity diagnostics; evidence-bound owner actions. New local interface: `/static/control.html`. [Release notes](docs/RELEASE_R13.md). Public deployment is deferred.
+
+---
+
 # OSMANX Retail Intelligence R1.2 — Retail Desk
 
 Five verified workflows: exact external POS receipt lookup/link, cancellation and handoff attestation for one-time coupons, campaign financial controls, 7/30/60-day matured cohorts, and a unified executive scorecard. Premium Russian desktop/mobile interface at `/static/retail_desk.html`. [Technical release notes](docs/RELEASE_R12.md). Public hosting remains deferred.
