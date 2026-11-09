@@ -1,3 +1,7 @@
+# OSMANX Retail Intelligence R1.8 — Decision Bridge
+
+Five implemented, evidence-first workflows: versioned anonymous Voice signals, SHA-256 pinned hypotheses, atomic Pilot Studio draft linking, accountable manager tasks and scoped executive CSV. The application remains private/local. [R1.8 technical documentation](docs/RELEASE_R18.md). New interface: `/static/bridge.html`.
+
 # OSMANX Retail Intelligence R1.7 — Voice Studio
 
 Five integrated modules: versioned conditional questionnaire builder, paired QR/exit kiosks with rotation/revocation, anonymous validated responses, bias-aware insights and evidenced management actions. New tablet: `/static/voice_kiosk.html#PUBLIC_ID.SECRET`; manager: `/static/voice.html`. No public hosting, camera, 1C or physical cash-register integration. [Details](docs/RELEASE_R17.md). Test: `python -m pytest tests/test_r17.py -q`, `python scripts/r17_browser_smoke.py`.
