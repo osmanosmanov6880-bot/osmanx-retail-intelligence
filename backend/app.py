@@ -56,6 +56,7 @@ from backend.r15 import ensure_schema as ensure_r15_schema, build_router as r15_
 from backend.r17 import ensure_schema as ensure_r17_schema, build_router as r17_router
 from backend.r16 import ensure_schema as ensure_r16_schema, build_router as r16_router
 from backend.r18 import ensure_schema as ensure_r18_schema, build_router as r18_router
+from backend.r19 import ensure_schema as ensure_r19_schema, build_router as r19_router
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND = ROOT / "frontend"
@@ -92,11 +93,12 @@ async def lifespan(_: FastAPI):
         ensure_r17_schema(db)
         ensure_r16_schema(db)
         ensure_r18_schema(db)
+        ensure_r19_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="1.8.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="1.9.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -111,7 +113,7 @@ async def response_guards(request: Request, call_next):
         result.headers["Strict-Transport-Security"] = "max-age=31536000"
     result.headers["X-Frame-Options"] = "SAMEORIGIN"
     result.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
-    if request.url.path.startswith('/api/admin/') or request.url.path.startswith('/api/auth/') or request.url.path.startswith('/api/voice/r17/'):
+    if request.url.path.startswith('/api/admin/') or request.url.path.startswith('/api/auth/') or request.url.path.startswith('/api/voice/r17/') or request.url.path.startswith('/api/voice/r19/'):
         result.headers['Cache-Control'] = 'no-store'
     return result
 
@@ -1134,6 +1136,7 @@ app.include_router(r15_router(admin, db_conn))
 app.include_router(r17_router(admin, db_conn))
 app.include_router(r16_router(admin, db_conn))
 app.include_router(r18_router(admin, db_conn))
+app.include_router(r19_router(admin, db_conn))
 
 @app.get("/{path:path}",include_in_schema=False)
 def spa(path:str):

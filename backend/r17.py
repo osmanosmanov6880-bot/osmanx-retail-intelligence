@@ -513,7 +513,10 @@ def build_router(admin,db_conn):
 
     @router.get('/api/voice/r17/{public_id}/form')
     def public_form(public_id:str,x_voice_key:str|None=Header(default=None,alias='X-OSMANX-Voice-Key'),db:sqlite3.Connection=Depends(db_conn)):
-        p=placement_public(db,public_id,x_voice_key);v=latest_version(db,p)
+        p=placement_public(db,public_id,x_voice_key)
+        from backend.r19 import require_schedule
+        require_schedule(db,p)
+        v=latest_version(db,p)
         return {'name':p['name'],'medium':p['medium'],'form_version':v['revision'],
                 'version_hash':v['content_hash'],'title':db.execute('SELECT title FROM voice_forms_r17 WHERE id=?',(p['form_id'],)).fetchone()[0],
                 'questions':json.loads(v['content_json']), 'notice':'Опрос анонимный. Ответы добровольные. Не вводите персональные данные.'}
@@ -521,7 +524,10 @@ def build_router(admin,db_conn):
     @router.post('/api/voice/r17/{public_id}/open',status_code=201)
     def open_form(public_id:str,body:OpenEvent,x_voice_key:str|None=Header(default=None,alias='X-OSMANX-Voice-Key'),db:sqlite3.Connection=Depends(db_conn)):
         try:
-            _transaction(db);p=placement_public(db,public_id,x_voice_key);v=latest_version(db,p)
+            _transaction(db);p=placement_public(db,public_id,x_voice_key)
+            from backend.r19 import require_schedule
+            require_schedule(db,p)
+            v=latest_version(db,p)
             if v['content_hash']!=body.version_hash:raise HTTPException(409,'Опрос обновлён. Перезагрузите анкету')
             previous=db.execute('SELECT * FROM voice_opens_r17 WHERE placement_id=? AND request_id=?',
                                 (p['id'],body.request_id)).fetchone()
