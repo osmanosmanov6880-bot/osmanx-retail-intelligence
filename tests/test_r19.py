@@ -212,3 +212,13 @@ def test_repeat_schema_migration_keeps_answers(site):
         assert conn.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
         assert not conn.execute('PRAGMA foreign_key_check').fetchall()
         assert conn.execute('SELECT COUNT(*) FROM voice_responses_r17').fetchone()[0]==1
+
+
+def test_legacy_r17_boot_without_field_schema(site):
+    # Prior R1.8 fixtures intentionally initialize only R1.7 and R1.8 tables.
+    # Default-open surveys must not fail when that older schema is loaded.
+    c,h,db=site;p,key=pair(site)
+    with db.connect() as conn:
+        conn.execute('DROP TABLE field_schedule_r19');conn.commit()
+    assert c.get(f"/api/voice/r17/{p['public_id']}/form",headers=key).status_code==200
+    assert reply(c,p,key,'legacy-r17-scheme-form-001').status_code==201

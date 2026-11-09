@@ -115,7 +115,15 @@ def fmt_min(value:int)->str:
 
 
 def schedule_state(db,placement,at=None)->dict:
-    row=db.execute('SELECT * FROM field_schedule_r19 WHERE placement_id=?',(placement['id'],)).fetchone()
+    try:
+        row=db.execute('SELECT * FROM field_schedule_r19 WHERE placement_id=?',(placement['id'],)).fetchone()
+    except sqlite3.OperationalError as error:
+        # Legacy integrations may initialize only R1.7 schema. Such placements
+        # never had a schedule; keep default-open behavior. In the full app,
+        # lifespan always initializes R1.9 tables before serving traffic.
+        if 'no such table: field_schedule_r19' not in str(error):
+            raise
+        row=None
     store=_store_for_placement(db,placement)
     tz=store_tz(store)
     moment=(at or _utc_now()).astimezone(tz)
