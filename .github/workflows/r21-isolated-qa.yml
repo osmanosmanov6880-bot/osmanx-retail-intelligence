@@ -1,0 +1,46 @@
+name: R2.0-R2.1 isolated contract and browser acceptance
+on:
+  pull_request:
+    paths:
+      - 'backend/r20.py'
+      - 'backend/r21.py'
+      - 'frontend/readiness*'
+      - 'frontend/assurance*'
+      - 'qa_contracts/**'
+      - 'scripts/r2*_browser_smoke.py'
+      - '.github/workflows/r21-isolated-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  isolated-r20-r21:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install application and testing dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pytest playwright httpx
+          python -m playwright install --with-deps chromium
+      - name: Check code syntax and isolated SQLite contracts
+        run: |
+          python -m compileall -q backend scripts
+          node --check frontend/readiness.js
+          node --check frontend/assurance.js
+          node --check frontend/r20_nav.js
+          node --check frontend/r21_nav.js
+          python -m pytest qa_contracts/test_r20.py qa_contracts/test_r21.py -q
+      - name: Real API to Chromium acceptance
+        run: |
+          python scripts/r20_browser_smoke.py
+          python scripts/r21_browser_smoke.py
+      - name: Archive browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: osmanx-r20-r21-browser-qa
+          path: qa/r2*.png
+          retention-days: 7
