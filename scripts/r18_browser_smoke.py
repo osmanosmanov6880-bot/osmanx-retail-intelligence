@@ -35,7 +35,7 @@ def main():
         with TestClient(app) as client,sync_playwright() as play:
             from scripts.tests_fixture_r18 import populate
             p,v=populate((client,database),count=4)
-            browser=play.chromium.launch(headless=True,executable_path=shutil.which('chromium') or '/usr/bin/chromium',args=['--no-sandbox','--disable-dev-shm-usage'])
+            browser=play.chromium.launch(headless=True,executable_path=shutil.which('chromium') or None,args=['--no-sandbox','--disable-dev-shm-usage'])
             try:
                 def screen(width,height):
                     page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1,accept_downloads=True)
