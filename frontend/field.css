@@ -1,0 +1,21 @@
+/* OSMANX R1.9 Field Operations — visual grammar shared with Voice Studio. */
+.field-hero .eyebrow{letter-spacing:.22em}.field-hero h1{max-width:960px}.field-hero h1 span{color:#f16b8d}
+.field-panel{margin:0 0 20px}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field-grid .card{min-width:0}
+.terminal-card{border:1px solid #29415d;background:linear-gradient(145deg,#152638,#0d1829);border-radius:15px;padding:20px;display:grid;gap:15px;min-width:0}
+.terminal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.terminal-head h2{font-size:17px;margin:5px 0}
+.terminal-data{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.terminal-data>div{border:1px solid #27405a;border-radius:9px;background:#0c1a2b;padding:12px;min-width:0}
+.terminal-data strong{font-size:17px;display:block;overflow-wrap:anywhere}.terminal-data small{font-size:10px;color:#9bb1c7;line-height:1.5}
+.field-pill{font-size:10px;font-weight:700;border:1px solid #6c849e;padding:7px 10px;border-radius:25px;white-space:nowrap;color:#b8cee1}
+.field-pill.online{color:#94f0ca;border-color:#3d957c;background:#23584442}.field-pill.offline,.field-pill.disabled{color:#f0a2b2;border-color:#905469;background:#45203245}.field-pill.delayed{color:#f7d3a4;border-color:#957452;background:#5f391a40}
+.field-ops{display:flex;gap:8px;flex-wrap:wrap}.field-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.field-day{display:grid;justify-items:center;gap:10px;border:1px solid #35516b;border-radius:9px;padding:14px 4px;font-size:12px;background:#111f31}.field-day input{width:18px;height:18px;accent-color:#e83c60}
+.field-readiness{display:grid;gap:10px;padding:15px;background:#0b192b;border:1px solid #2b435c;border-radius:12px}.field-readiness>div{display:flex;justify-content:space-between;gap:14px;font-size:12px}.field-readiness span{color:#91a9c2}
+.field-warning{padding:13px 16px;border-left:2px solid #f1bd83;border-radius:5px;background:#4f351e44;font-size:12px;line-height:1.65;color:#eacda7}
+.field-warning.critical{border-color:#e83c60;background:#4b203143;color:#fac2cd}
+.field-status-label{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.field-steps{font-size:11px;color:#9caec3;line-height:1.75}
+.field-detail{color:#bed0e1;font-size:11px;line-height:1.7;overflow-wrap:anywhere}
+.field-timestamp{color:#91a9c2;font-size:11px;font-variant-numeric:tabular-nums}
+.field-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#field-content{min-width:0}#field-content .card{overflow-wrap:anywhere}.field-question{border-left:2px solid #df4769;padding:13px 15px;font-size:12px;color:#b5cee4;line-height:1.65;background:#17263b66}
+.field-callout{border:1px solid #2f4b65;background:#12263b;border-radius:14px;padding:24px;line-height:1.8}.field-callout strong{font-size:16px}.field-callout p{font-size:12px;color:#a9bbd0}
+@media(max-width:760px){.field-grid{grid-template-columns:1fr}.field-days{gap:4px}.field-day{font-size:10px;padding:12px 2px}.field-inputs{grid-template-columns:1fr}.terminal-data{grid-template-columns:repeat(2,minmax(0,1fr))}.terminal-head{flex-wrap:wrap}}
+@media(max-width:390px){.terminal-data{grid-template-columns:1fr 1fr}.field-callout{padding:17px}}

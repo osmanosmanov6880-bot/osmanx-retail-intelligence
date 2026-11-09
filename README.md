@@ -1,3 +1,7 @@
+# OSMANX Retail Intelligence R1.9 — Field Operations
+
+Offline-safe anonymous exit questionnaires, authenticated terminal health and fleet, store-local schedules, source quality checks and audited operator incidents. Nine checked R1.9 source changes plus five integration patches; no public deployment. [Release notes](docs/RELEASE_R19.md). Admin UI: `/static/field.html`.
+
 # OSMANX Retail Intelligence R1.8 — Decision Bridge
 
 Five implemented, evidence-first workflows: versioned anonymous Voice signals, SHA-256 pinned hypotheses, atomic Pilot Studio draft linking, accountable manager tasks and scoped executive CSV. The application remains private/local. [R1.8 technical documentation](docs/RELEASE_R18.md). New interface: `/static/bridge.html`.
