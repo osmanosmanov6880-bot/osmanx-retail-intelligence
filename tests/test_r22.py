@@ -15,7 +15,7 @@ from fastapi import HTTPException
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-sys.path.insert(0,str(ROOT/'tests'))
+sys.path.insert(0,str(ROOT/'qa_contracts'))
 from test_r20 import site as base_site, Principal, sha as readiness_sha
 from backend.r22 import build_router, ensure_schema, _readiness
 
