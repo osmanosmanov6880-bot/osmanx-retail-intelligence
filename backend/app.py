@@ -59,6 +59,7 @@ from backend.r18 import ensure_schema as ensure_r18_schema, build_router as r18_
 from backend.r19 import ensure_schema as ensure_r19_schema, build_router as r19_router
 from backend.r20 import ensure_schema as ensure_r20_schema, build_router as r20_router
 from backend.r21 import ensure_schema as ensure_r21_schema, build_router as r21_router
+from backend.r22 import ensure_schema as ensure_r22_schema, build_router as r22_router
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND = ROOT / "frontend"
@@ -98,11 +99,12 @@ async def lifespan(_: FastAPI):
         ensure_r19_schema(db)
         ensure_r20_schema(db)
         ensure_r21_schema(db)
+        ensure_r22_schema(db)
         db.commit()
     yield
 
 
-app = FastAPI(title="OSMANX Retail Intelligence", version="2.1.0", lifespan=lifespan,
+app = FastAPI(title="OSMANX Retail Intelligence", version="2.2.0", lifespan=lifespan,
               docs_url="/api/docs" if DEMO else None, redoc_url=None, openapi_url="/api/openapi.json" if DEMO else None)
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
@@ -1143,6 +1145,7 @@ app.include_router(r18_router(admin, db_conn))
 app.include_router(r19_router(admin, db_conn))
 app.include_router(r20_router(admin, db_conn))
 app.include_router(r21_router(admin, db_conn))
+app.include_router(r22_router(admin, db_conn))
 
 @app.get("/{path:path}",include_in_schema=False)
 def spa(path:str):
