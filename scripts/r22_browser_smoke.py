@@ -8,7 +8,7 @@ import tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tests'))
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tests'));sys.path.insert(0,str(ROOT/'qa_contracts'))
 from test_r20 import site as base_fixture,Principal
 from test_r22 import site as release_fixture,approve_day
 
