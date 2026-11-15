@@ -20,6 +20,23 @@ async function api(path,{method='GET',body}={}){
 }
 async function apiRoot(path){const headers={'Accept':'application/json'};if(token())headers.Authorization=`Bearer ${token()}`;
  const res=await fetch(`/api/admin/${path}`,{headers,cache:'no-store'});if(!res.ok)throw Error('Для доступа нужен действующий вход в кабинет владельца');return res.json();}
+async function startWithReadiness(p){
+  try{return await api(`/pilots/${p.id}/start`,{method:'POST'});}
+  catch(err){
+    if(!err.message.includes('R2.3'))throw err;
+    const portfolio=await apiRoot('r21/portfolio');
+    const entry=(portfolio.stores||[]).find(x=>x.slug===state.slug);
+    if(!entry||entry.status!=='verified'||!entry.readiness_id)
+      throw Error('Перед запуском нужен независимо проверенный отчёт готовности R2.0. Откройте «Готовность магазина».');
+    const headers={'Accept':'application/json','Content-Type':'application/json'};
+    if(token())headers.Authorization=`Bearer ${token()}`;
+    const res=await fetch(`/api/admin/r21/pilots/${p.id}/safe-start`,{method:'POST',headers,cache:'no-store',
+      body:JSON.stringify({readiness_id:entry.readiness_id})});
+    const data=await res.json().catch(()=>({detail:'Сервер не вернул подтверждение'}));
+    if(!res.ok)throw Error(typeof data.detail==='string'?data.detail:`HTTP ${res.status}`);
+    return data;
+  }
+}
 function button(text,attrib='',kind=''){return `<button class="action ${kind}" ${attrib}>${esc(text)}</button>`}
 function card(title,body){return `<section class="card"><h2>${esc(title)}</h2>${body}</section>`}
 function field(text,name,value='',type='text',more=''){return `<label>${esc(text)}<input name="${name}" type="${type}" value="${esc(value)}" ${more}></label>`}
@@ -63,7 +80,7 @@ function renderOverview(target){const p=state.detail?.pilot;const v=state.previe
  ${card('Правила качества',`<p>Базовый и контрольный периоды одинаковой длины. Пилот не получает статус «доказал прибыль» от одной кнопки.</p><p>Если данных мало, источники смешаны или в расчёты попала демонстрация, вывод будет отмечен как неполный.</p>`)}</div>${card('Подготовить новый пилот',create)}</div>`;
  target.querySelector('#new-pilot').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));const body={slug:state.slug,request_id:newid(),title:d.title,hypothesis:d.hypothesis,metric:d.metric,source_mode:d.source_mode,before_start:d.before_start,before_end:d.before_end,after_start:d.after_start,after_end:d.after_end,budget_kopeks:Math.round(Number(d.budget_rub)*100)};
  mutate(async()=>{const created=await api('/pilots',{method:'POST',body});state.selected=created.id})};
- if(p?.status==='draft')target.querySelector('#start-pilot').onclick=()=>mutate(()=>api(`/pilots/${p.id}/start`,{method:'POST'}));
+ if(p?.status==='draft')target.querySelector('#start-pilot').onclick=()=>mutate(()=>startWithReadiness(p));
 }
 function noPilot(target){target.innerHTML=`<div class="empty">Сначала создайте пилот во вкладке «План».</div>`}
 function renderSources(target){if(!state.detail)return noPilot(target);const p=state.detail.pilot;

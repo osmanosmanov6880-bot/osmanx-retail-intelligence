@@ -65,8 +65,12 @@ def attest(site,pid):
 
 
 def activate(site,pid):
-    c,h,_=site
-    assert c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h).status_code==200
+    c,h,db=site
+    # Synthetic test-only activation; R2.3 verifies protected HTTP startup separately.
+    with db.connect() as conn:
+        changed=conn.execute("UPDATE pilots_r15 SET status='running' WHERE id=? AND status='draft'",(pid,))
+        assert changed.rowcount==1
+        conn.commit()
     a=c.post(f'/api/admin/r15/pilots/{pid}/actions',json={'request_id':'r16-action-seed-001','category':'assortment',
         'description':'Ввели учёт отсутствующих размеров и проверили фактическое наличие',
         'cost_kopeks':100000,'evidence':'pilot-manual-17'},headers=h)

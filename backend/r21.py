@@ -372,6 +372,10 @@ def build_router(admin,db_conn):
             previous=db.execute('SELECT * FROM assurance_pilot_starts_r21 WHERE pilot_id=?',(pilot_id,)).fetchone()
             if previous:
                 if previous['readiness_id']!=body.readiness_id:raise HTTPException(409,'Пилот уже запущен с другим заключением')
+                if sha_text(previous['preflight_json'])!=previous['preflight_sha']:
+                    raise HTTPException(409,'Подтверждение ранее разрешённого запуска повреждено')
+                if pilot['status'] not in ('running','completed','cancelled'):
+                    raise HTTPException(409,'Пилот не соответствует ранее выданному разрешению')
                 db.rollback();return {'id':pilot_id,'status':pilot['status'],'duplicate':True,'sha256':previous['preflight_sha']}
             check=_preflight(db,principal,pilot,readiness)
             if not check['ready']:raise HTTPException(409,'Запуск заблокирован: '+check['issues'][0])

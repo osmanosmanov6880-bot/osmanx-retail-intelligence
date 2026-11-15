@@ -338,6 +338,10 @@ def build_router(admin, db_conn):
     @router.post('/pilots/{pilot_id}/start')
     def start(pilot_id:int,principal:Principal=Depends(admin),db:sqlite3.Connection=Depends(db_conn)):
         require_role(principal,'owner','manager')
+        from os import getenv
+        if getenv('OSMANX_DEMO_MODE','0')!='1':
+            get_pilot(db,pilot_id,principal)  # Enforce tenant/branch scope before reporting a startup policy error.
+            raise HTTPException(409,'R2.3: прямой запуск запрещён. Используйте R2.1 safe-start с проверенным readiness_id.')
         db.execute('BEGIN IMMEDIATE')
         p=get_pilot(db,pilot_id,principal)
         if p['status']!='draft':raise HTTPException(409,'Запустить можно только черновик')
