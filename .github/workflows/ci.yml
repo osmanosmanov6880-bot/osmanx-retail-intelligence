@@ -43,7 +43,7 @@ jobs:
         run: python -m pytest tests/test_r18.py -q
       - name: R1.9 Field Operations API, security and offline tests
         run: python -m pytest tests/test_r19.py -q
-      - name: R2.3 Security Center: pilot gate, org scope and offline recovery
+      - name: "R2.3 Security Center: pilot gate, org scope and offline recovery"
         run: python -m pytest tests/test_r23_core.py tests/test_r23_recovery.py tests/test_r23_api.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
