@@ -1,0 +1,47 @@
+name: R2.3 Security Center acceptance
+on:
+  pull_request:
+    paths:
+      - 'backend/r23*'
+      - 'backend/r15.py'
+      - 'backend/r21.py'
+      - 'frontend/r23_*'
+      - 'frontend/security.html'
+      - 'frontend/pilot.js'
+      - 'scripts/r23_*'
+      - 'tests/test_r23*'
+      - '.github/workflows/r23.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security-r23:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install application and test dependencies
+        run: pip install -r requirements.txt pytest httpx playwright
+      - name: R2.3 API, access and verified recovery
+        run: python -m pytest tests/test_r23_core.py tests/test_r23_recovery.py tests/test_r23_api.py -q
+      - name: Python and JS syntax
+        run: |
+          python -m compileall -q backend scripts
+          node --check frontend/r23_security.js
+          node --check frontend/r23_nav.js
+          node --check frontend/pilot.js
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: R2.3 full five-tab desktop/mobile browser test
+        run: python scripts/r23_browser_smoke.py
+      - name: Archive R2.3 browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: osmanx-r23-security-browser
+          path: qa/r23-*.png
+          retention-days: 7
+          if-no-files-found: ignore

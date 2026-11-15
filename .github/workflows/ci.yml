@@ -43,6 +43,8 @@ jobs:
         run: python -m pytest tests/test_r18.py -q
       - name: R1.9 Field Operations API, security and offline tests
         run: python -m pytest tests/test_r19.py -q
+      - name: R2.3 Security Center: pilot gate, org scope and offline recovery
+        run: python -m pytest tests/test_r23_core.py tests/test_r23_recovery.py tests/test_r23_api.py -q
       - name: Check Python syntax
         run: python -m compileall -q backend scripts
       - name: Check frontend JS syntax
@@ -86,6 +88,10 @@ jobs:
           node --check frontend/field.js
           node --check frontend/voice_kiosk.js
           node --check frontend/r19_nav.js
+      - name: R2.3 security frontend syntax
+        run: |
+          node --check frontend/r23_security.js
+          node --check frontend/r23_nav.js
       - name: Install Chromium for browser checks
         run: python -m playwright install --with-deps chromium
       - name: Interactive browser acceptance (dashboard, kiosk, inventory)
@@ -124,6 +130,8 @@ jobs:
         run: python scripts/r18_browser_smoke.py
       - name: R1.9 Field Operations desktop/mobile and offline acceptance
         run: python scripts/r19_browser_smoke.py
+      - name: R2.3 Security Center browser acceptance
+        run: python scripts/r23_browser_smoke.py
       - name: Upload acceptance screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -148,5 +156,6 @@ jobs:
             qa/r17-*.png
             qa/r18-*.png
             qa/r19-*.png
+            qa/r23-*.png
           if-no-files-found: ignore
           retention-days: 7

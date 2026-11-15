@@ -1,3 +1,9 @@
+# OSMANX Retail Intelligence R2.3 — Security Center
+
+Protection for non-demo pilot startup, owner-only tenant integrity audits, independently verified remediation, and offline SQLite restore drills. `/static/security.html`. See [R2.3 release notes](docs/RELEASE_R23.md). No public deployment.
+
+---
+
 # OSMANX Retail Intelligence R1.9 — Field Operations
 
 Offline-safe anonymous exit questionnaires, authenticated terminal health and fleet, store-local schedules, source quality checks and audited operator incidents. Nine checked R1.9 source changes plus five integration patches; no public deployment. [Release notes](docs/RELEASE_R19.md). Admin UI: `/static/field.html`.

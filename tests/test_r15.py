@@ -65,6 +65,16 @@ def action(client,headers,pid,**kwargs):
     return client.post(f'/api/admin/r15/pilots/{pid}/actions',json=body,headers=headers)
 
 
+def activate_for_unit_test(pid):
+    # Synthetic fixture transition for testing analytics, not a client-accessible route.
+    from backend.database import connect, now_iso
+    with connect() as conn:
+        changed=conn.execute("UPDATE pilots_r15 SET status='running',started_at=? WHERE id=? AND status='draft'",(now_iso(),pid))
+        assert changed.rowcount==1
+        conn.commit()
+    return {'status':'running'}
+
+
 def test_new_routes_auth_and_scope(site):
     c,headers,_=site
     assert c.get('/api/admin/r15/pilots').status_code==401
@@ -95,7 +105,8 @@ def test_pilot_source_checks_and_started_transitions(site):
     assert saved.status_code==200,saved.text
     assert 'не равна независимому' in saved.json()['note']
     assert c.post(f'/api/admin/r15/pilots/{pid}/sources',json={'category':'pos','status':'checked','note':'коротко'},headers=h).status_code==422
-    assert c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h).json()['status']=='running'
+    assert c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h).status_code==409
+    assert activate_for_unit_test(pid)['status']=='running'
     assert c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h).status_code==409
     assert len(c.get(f'/api/admin/r15/pilots/{pid}',headers=h).json()['attestations'])==1
 
@@ -140,7 +151,7 @@ def test_source_mode_manual_not_counted_as_sensor(site):
 
 def test_action_idempotency_conflict_and_costs(site):
     c,h,_=site;x,_=pilot(c,h);pid=x.json()['id']
-    c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h)
+    activate_for_unit_test(pid)
     first=action(c,h,pid);assert first.status_code==201,first.text
     assert action(c,h,pid).json()['duplicate']
     assert action(c,h,pid,cost_kopeks=60000).status_code==409
@@ -160,14 +171,14 @@ def test_close_prevents_early_data_approval(site):
         'after_start':str(store_today-timedelta(days=6)),
         'after_end':str(store_today)})
     assert x.status_code==201,x.text
-    pid=x.json()['id'];c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h);action(c,h,pid)
+    pid=x.json()['id'];activate_for_unit_test(pid);action(c,h,pid)
     res=c.post(f'/api/admin/r15/pilots/{pid}/close',json={'decision':'completed','note':'Проверка закончена, результаты фиксируем'},headers=h)
     assert res.status_code==409
     assert 'не завершён' in res.json()['detail']
 
 
 def test_close_snapshot_sha_and_csv_immutable(site):
-    c,h,db=site;x,_=pilot(c,h);pid=x.json()['id'];c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h)
+    c,h,db=site;x,_=pilot(c,h);pid=x.json()['id'];activate_for_unit_test(pid)
     assert c.post(f'/api/admin/r15/pilots/{pid}/close',json={'decision':'completed','note':'Записываю все результаты и ограничения'},headers=h).status_code==409
     assert action(c,h,pid,description='Добавили проверку размеров; =IMPORT("unsafe")').status_code==201
     closed=c.post(f'/api/admin/r15/pilots/{pid}/close',json={'decision':'completed','note':'Измерили данные и честно указали ограничения'},headers=h)
@@ -188,7 +199,7 @@ def test_close_snapshot_sha_and_csv_immutable(site):
 
 def test_cancel_even_if_followup_not_finished(site):
     c,h,_=site;x,_=pilot(c,h);pid=x.json()['id']
-    c.post(f'/api/admin/r15/pilots/{pid}/start',headers=h)
+    activate_for_unit_test(pid)
     result=c.post(f'/api/admin/r15/pilots/{pid}/close',json={'decision':'cancelled','note':'Пилот прекращён по решению руководителя'},headers=h)
     assert result.status_code==200 and result.json()['status']=='cancelled'
 
